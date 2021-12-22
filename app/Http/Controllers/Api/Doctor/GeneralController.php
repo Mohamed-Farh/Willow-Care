@@ -9,15 +9,17 @@ use App\Traits\ApiTraits;
 use App\Traits\HelperTrait;
 use Throwable;
 use App\Models\Specialty;
+use Illuminate\Support\Facades\Auth;
 
 class GeneralController extends Controller
 {
 
     use ApiTraits, HelperTrait, HasApiTokens;
 
-    public function getSpecialties(Request $request){
+    public function getSpecialties(Request $request)
+    {
         try {
-            $lang =  $_GET['lang'];
+            $lang =  Auth::user()->lang;
             if( $lang == 'ar' || $lang == 'en' || $lang =='ro'){
                 $Specialties = Specialty::select('id' ,'name_'.$lang)
                                         ->where('type','Doctor')

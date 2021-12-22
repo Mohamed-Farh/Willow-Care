@@ -24,13 +24,13 @@ class DoctorSeeder extends Seeder
             'email' => 'willow@willow.com',
             'phone' => '123456789',
             'image' => 'images/doctor/profile/1.jpg',
-            'password' => bcrypt('password'),
+            'password' => '$2y$10$Qy/k8zANphJ9LHznuYyXmOy9/..HALXRk9tX4Pxhr0EB6wWIym.ta',
             'phone_verification' => 1,
             'professional_title_id' => 1,
             'is_approved' => 1,
             'graduation_year' => 2000,
             'about'       => $faker->paragraph(),
-            'country_id'          => 4,
+            'country_id'          => 1,
         ]);
 
         for ($i = 1; $i <5; $i++) {
@@ -39,14 +39,14 @@ class DoctorSeeder extends Seeder
                 'email' => $faker->email,
                 'phone' => '9665' . random_int(111111111, 999999999),
                 'image' => 'images/doctor/profile/'.random_int(2, 10).'.jpg',
-                'password' => bcrypt('password'),
+                'password' => '$2y$10$Qy/k8zANphJ9LHznuYyXmOy9/..HALXRk9tX4Pxhr0EB6wWIym.ta',
                 'phone_verification' => 1,
                 'professional_title_id' => random_int(1, 3),
                 'is_approved' => 1,
                 'graduation_year' => random_int(1980, 2020),
                 'gender' => rand(0, 1),
                 'about' => $faker->paragraph(),
-                'country_id' => $faker->numberBetween(5, 100),
+                'country_id' => $faker->numberBetween(1, 5),
             ]);
         }
 

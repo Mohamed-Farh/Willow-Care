@@ -20,26 +20,36 @@ class CountrySeeder extends Seeder
                 'name_ar' => 'مصر',
                 'name_en' => 'Egypt',
                 'name_ro' => 'Egipt',
+                'code' => '002',
+                'flag' => 'images/category/Egypt.jpg',
             ],
             [
                 'name_ar' => 'السعودية',
                 'name_en' => 'Saudi Arabia',
                 'name_ro' => 'Arabia Saudită',
+                'code' => '003',
+                'flag' => 'images/category/Saudi.jpg',
             ],
             [
                 'name_ar' => 'الكويت',
                 'name_en' => 'Kuwait',
                 'name_ro' => 'Kuweit',
+                'code' => '004',
+                'flag' => 'images/category/Kuwait.jpg',
             ],
             [
                 'name_ar' => 'البحرين',
                 'name_en' => 'Bahrain',
                 'name_ro' => 'Bahrain',
+                'code' => '005',
+                'flag' => 'images/category/Bahrain.jpg',
             ],
             [
                 'name_ar' => 'عمان',
                 'name_en' => 'Oman',
                 'name_ro' => 'Oman',
+                'code' => '006',
+                'flag' => 'images/category/Oman.jpg',
             ],
 
         ]);

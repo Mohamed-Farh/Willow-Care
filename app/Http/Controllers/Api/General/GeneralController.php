@@ -29,7 +29,7 @@ class GeneralController extends Controller
     public function login(LoginRequest $request)
     {
 
-        try {
+        // try {
             if ($request->app_type == 1){  // it's mean doctor App
                 $auth = Auth::guard('doctor')->attempt(["phone" => $request->phone, "password" => $request->password]);
                 $auth_user = Doctor::where("phone", $request->phone)->first();
@@ -48,16 +48,16 @@ class GeneralController extends Controller
                 return $this->responseJsonFailed('404', 'the app type is incorrect');
             }
 
-            if (!$auth) {
+            if (!Auth::guard('doctor')->attempt(["phone" => $request->phone, "password" => $request->password])) {
                 return $this->responseJsonFailed('404', 'the phone number or password is incorrect');
             }else{
                 $auth_user->api_token = $apiToke;
                 $auth_user->device_token = $request->device_token;
                 return $this->responseJson("200", "Doctor Login Successfully", new LoginResource($auth_user));
-        }
-        } catch (Throwable $e) {
-            return $this->responseJsonFailed();
-        }
+            }
+        // } catch (Throwable $e) {
+        //     return $this->responseJsonFailed();
+        // }
 
     }
 
