@@ -22,7 +22,6 @@ class TermSeeder extends Seeder
                 'text_ar' => $faker->paragraph(),
                 'text_en' => $faker->paragraph(),
                 'text_ro' => $faker->paragraph(),
-                'type' => rand(0, 1),
                 'app_type' => 'Doctor',
                 'active' => rand(0, 1),
             ]);
