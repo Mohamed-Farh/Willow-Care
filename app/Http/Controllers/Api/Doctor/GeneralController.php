@@ -20,8 +20,12 @@ class GeneralController extends Controller
     {
         try {
             $lang =  Auth::user()->lang;
+            if( $lang == 1){$lang = 'ro';};
+            if( $lang == 2){$lang = 'en';};
+            if( $lang == 3){$lang = 'ar';};
+
             if( $lang == 'ar' || $lang == 'en' || $lang =='ro'){
-                $Specialties = Specialty::select('id' ,'name_'.$lang)
+                $Specialties = Specialty::select('id' ,'name_'.$lang.' as name')
                                         ->where('type','Doctor')
                                         ->where('active','1')
                                         ->get();

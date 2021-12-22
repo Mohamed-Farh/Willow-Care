@@ -66,7 +66,7 @@ class GeneralController extends Controller
         try {
             $lang =  $_GET['lang'];
             if( $lang == 'ar' || $lang == 'en' || $lang =='ro'){
-                $countries = Country::select('id' ,'name_'.$lang, 'flag', 'code')->where('active','1')->get();
+                $countries = Country::select('id' ,'name_'.$lang.' as name', 'flag', 'code')->where('active','1')->get();
                 return $this->responseJson("200", "all countries data", $countries);
             }else{
                 return $this->responseJsonFailed('404','language code is incorrect');
