@@ -18,7 +18,6 @@ class CreateTermsTable extends Migration
             $table->longText('text_ar');
             $table->longText('text_en');
             $table->longText('text_ro');
-            $table->string('type')->comment('0 => Term', '1 => Condition');
             $table->string('app_type')->comment('Doctor', 'Patient');
             $table->boolean('active')->default(1)->comment('0 => Not Active', '1 => Active');
             $table->timestamps();

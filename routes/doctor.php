@@ -31,8 +31,7 @@ Route::middleware(["auth:api-doctor"])->group(function () {
     Route::post('phone-verify',[AuthController::class, 'phoneVerify']);
 
     Route::get('specialties',[GeneralController::class, 'getSpecialties']);
-    Route::get('terms',[GeneralController::class, 'getTerms']);
-    Route::get('conditions',[GeneralController::class, 'getConditions']);
+    Route::get('terms-conditions',[GeneralController::class, 'getTermsAndConditions']);
 
 
 

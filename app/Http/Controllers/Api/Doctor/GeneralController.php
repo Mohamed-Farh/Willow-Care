@@ -24,7 +24,7 @@ class GeneralController extends Controller
         try {
             $lang =  Auth::user()->lang;
             if( $lang == 'ar' || $lang == 'en' || $lang =='ro'){
-                $Specialties = Specialty::select('id' ,'name_'.$lang.' as name')
+                $Specialties = Specialty::select('id' ,'name_'.$lang.' as name' , 'icon')
                                         ->where('type','Doctor')
                                         ->where('active','1')
                                         ->get();
@@ -37,13 +37,12 @@ class GeneralController extends Controller
         }
     }
 
-    public function getTerms(Request $request)
+    public function getTermsAndConditions(Request $request)
     {
         try {
             $lang =  Auth::user()->lang;
             if( $lang == 'ar' || $lang == 'en' || $lang =='ro'){
                 $terms = Term::select('id' ,'text_'.$lang.' as text')
-                                        ->where('type','0')
                                         ->where('active','1')
                                         ->where('app_type','Doctor')
                                         ->get();
@@ -56,24 +55,7 @@ class GeneralController extends Controller
         }
     }
 
-    public function getConditions(Request $request)
-    {
-        try {
-            $lang =  Auth::user()->lang;
-            if( $lang == 'ar' || $lang == 'en' || $lang =='ro'){
-                $terms = Term::select('id' ,'text_'.$lang.' as text')
-                                        ->where('type','1')
-                                        ->where('active','1')
-                                        ->where('app_type','Doctor')
-                                        ->get();
-                return $this->responseJson("200", "all Conditions In Doctor Category", $terms);
-            }else{
-                return $this->responseJsonFailed('404','language code is incorrect');
-            }
-        } catch (Throwable $e) {
-            return $this->responseJsonFailed();
-        }
-    }
+
 
 
 }
