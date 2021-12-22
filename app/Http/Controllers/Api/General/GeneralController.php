@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Throwable;
 use App\Models\DeviceToken;
-
+use App\Models\Specialty;
 
 class GeneralController extends Controller
 {
@@ -75,6 +75,8 @@ class GeneralController extends Controller
             return $this->responseJsonFailed();
         }
     }
+
+
 
 
 }

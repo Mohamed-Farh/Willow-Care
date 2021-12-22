@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\Doctor\AuthController;
+use App\Http\Controllers\Api\Doctor\GeneralController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -22,8 +23,10 @@ Route::post('forget-password',[AuthController::class, 'forgetPassword'])->name('
 
 Route::middleware(["auth:api-doctor"])->group(function () {
 
-    Route::post('change-password',[AuthController::class, 'changePassword'])->name('changePassword');
-    Route::post('phone-verify',[AuthController::class, 'phoneVerify'])->name('PhoneVerify');
+    Route::post('change-password',[AuthController::class, 'changePassword']);
+    Route::post('phone-verify',[AuthController::class, 'phoneVerify']);
+
+    Route::get('specialties',[GeneralController::class, 'getSpecialties']);
 
 
 });

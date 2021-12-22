@@ -18,6 +18,8 @@ class DatabaseSeeder extends Seeder
 
         $this->call([
             CategorySeeder::class,
+            // CountrySeeder::class,
+            ProTitleSeeder::class,
             DaysOfWeekSeeder::class,
             SpecialtySeeder::class,
             DoctorSeeder::class,
