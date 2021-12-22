@@ -23,6 +23,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('register',[AuthController::class, 'doctorRegister'])->name('doctorRegister');
 Route::post('forget-password',[AuthController::class, 'forgetPassword'])->name('forgetPassword');
+Route::get('terms-conditions',[GeneralController::class, 'getTermsAndConditions']);
 
 
 Route::middleware(["auth:api-doctor"])->group(function () {
@@ -31,7 +32,7 @@ Route::middleware(["auth:api-doctor"])->group(function () {
     Route::post('phone-verify',[AuthController::class, 'phoneVerify']);
 
     Route::get('specialties',[GeneralController::class, 'getSpecialties']);
-    Route::get('terms-conditions',[GeneralController::class, 'getTermsAndConditions']);
+
 
 
 

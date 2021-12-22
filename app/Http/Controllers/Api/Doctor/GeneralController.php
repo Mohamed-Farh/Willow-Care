@@ -46,7 +46,7 @@ class GeneralController extends Controller
                                         ->where('active','1')
                                         ->where('app_type','Doctor')
                                         ->get();
-                return $this->responseJson("200", "all Terms In Doctor Category", $terms);
+                return $this->responseJson("200", "all Terms and conditions In Doctor Category", $terms);
             }else{
                 return $this->responseJsonFailed('404','language code is incorrect');
             }
