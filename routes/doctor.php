@@ -15,11 +15,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::post('doctor-login',[AuthController::class, 'doctorLogin'])->name('doctorLogin');
-Route::post('doctor-register',[AuthController::class, 'doctorRegister'])->name('doctorRegister');
+
+Route::post('register',[AuthController::class, 'doctorRegister'])->name('doctorRegister');
+Route::post('forget-password',[AuthController::class, 'forgetPassword'])->name('forgetPassword');
+
 
 Route::middleware(["auth:api-doctor"])->group(function () {
 
-    Route::post('forget-password',[AuthController::class, 'forgetPassword'])->name('forgetPassword');
+    Route::post('change-password',[AuthController::class, 'changePassword'])->name('changePassword');
+    Route::post('phone-verify',[AuthController::class, 'phoneVerify'])->name('PhoneVerify');
+
 
 });

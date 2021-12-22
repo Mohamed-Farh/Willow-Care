@@ -25,7 +25,7 @@ class CreateDoctorsTable extends Migration
             $table->string('f_code')->nullable();
             $table->string('g_code')->nullable();
             $table->string('a_code')->nullable();
-            $table->string('professional_title')->nullable();
+            $table->tinyInteger('professional_title_id')->nullable();
             $table->year('graduation_year')->nullable();
             $table->boolean('gender')->default(0)->comment('0 => Male', '1 => Female');
             $table->longText('about')->nullable();

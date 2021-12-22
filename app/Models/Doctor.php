@@ -32,7 +32,10 @@ class Doctor extends Authenticatable
         'country_id',
     ];
 
-
+    public function setPasswordAttribute($value)
+    {
+        $this->attributes["password"] = bcrypt($value);
+    }
 
     public function country(): BelongsTo
     {

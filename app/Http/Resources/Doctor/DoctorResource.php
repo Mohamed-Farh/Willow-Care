@@ -4,7 +4,7 @@ namespace App\Http\Resources\Doctor;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class LoginResource extends JsonResource
+class DoctorResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -34,8 +34,6 @@ class LoginResource extends JsonResource
             "profile_image"=>isset($this->image) ? $this->image : '',
             "gender" => ($this->gender == 0) ? "male" : "female",
             "about" => isset($this->about) ? $this->about : '',
-            "user_token" => isset($this->api_token) ? $this->api_token : '',
-            "device_token" => isset($this->device_token) ? $this->device_token : '',
             "created_at" => $this->created_at,
             "updated_at" => $this->updated_at,
         ];

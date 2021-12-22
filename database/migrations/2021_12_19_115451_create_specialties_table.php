@@ -19,6 +19,7 @@ class CreateSpecialtiesTable extends Migration
 			$table->string('name_en', 255);
 			$table->string('name_ro', 255);
             $table->string('icon');
+            $table->string('type');
             $table->boolean('active')->default(1)->comment('0 => Not Active', '1 => Active');
             $table->timestamps();
         });

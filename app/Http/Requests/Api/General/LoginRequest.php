@@ -32,6 +32,7 @@ class LoginRequest extends FormRequest
             "phone" => "required|exists:doctors,phone",
             "password" => "required|min:8",
             "app_type" => "required",
+            "device_token" => "required",
         ];
     }
 

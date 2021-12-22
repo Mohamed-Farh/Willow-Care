@@ -19,7 +19,7 @@ class CreateCountriesTable extends Migration
 			$table->string('name_en', 255);
 			$table->string('name_ro', 255);
             $table->string('flag')->nullable();
-            $table->tinyInteger('code');
+            $table->string('code');
             $table->boolean('active')->default(1)->comment('0 => Not Active', '1 => Active');
         });
     }

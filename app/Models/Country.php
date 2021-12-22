@@ -13,13 +13,17 @@ class Country extends Model
 
     protected $guarded = [];
 
+    protected $casts = [
+    'id' => 'string',
+    ];
+
     public $timestamps = false;
 
     public function active()
     {
         return $this->status ? 'Active' : 'Not Active';
     }
-    
+
     public function doctors(): HasMany
     {
         return $this->hasMany(Doctor::class);

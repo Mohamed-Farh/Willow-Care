@@ -7,8 +7,9 @@ use Illuminate\Validation\ValidationException;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Response;
+use Auth;
 
-class RegisterRequest extends FormRequest
+class ChangePasswordRequest extends FormRequest
 {
     use ApiTraits;
     /**
@@ -28,16 +29,14 @@ class RegisterRequest extends FormRequest
      */
     public function rules()
     {
-         return [
-            "name" => "required",
-            "phone" => "required|unique:doctors,phone",
-            "email" => "required|email|unique:doctors,email",
-            "password" => "required|min:8",
-            "country_id" => "required|exists:countries,id",
-            "lang" => "nullable|in:ro,en,ar",
-            "image" => "required|file|mimes:png,jpg,svg",
-            "device_token" => "required",
-         ];
+        return [
+            "old_password" => ['required', function ($attribute, $value, $fail) {
+                    if (!\Hash::check($value, Auth::user()->password)) {
+                        return $fail(__('The old password is incorrect.'));
+                    }
+            }],
+            "new_password" => "required|min:8",
+        ];
     }
 
     public function failedValidation(Validator $validator){

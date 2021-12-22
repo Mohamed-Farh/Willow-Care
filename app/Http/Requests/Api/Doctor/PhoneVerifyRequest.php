@@ -7,8 +7,9 @@ use Illuminate\Validation\ValidationException;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Response;
+use Auth;
 
-class RegisterRequest extends FormRequest
+class PhoneVerifyRequest extends FormRequest
 {
     use ApiTraits;
     /**
@@ -28,16 +29,9 @@ class RegisterRequest extends FormRequest
      */
     public function rules()
     {
-         return [
-            "name" => "required",
-            "phone" => "required|unique:doctors,phone",
-            "email" => "required|email|unique:doctors,email",
-            "password" => "required|min:8",
-            "country_id" => "required|exists:countries,id",
-            "lang" => "nullable|in:ro,en,ar",
-            "image" => "required|file|mimes:png,jpg,svg",
-            "device_token" => "required",
-         ];
+        return [
+            "phone_verify" => "required|in:1,0",
+        ];
     }
 
     public function failedValidation(Validator $validator){
