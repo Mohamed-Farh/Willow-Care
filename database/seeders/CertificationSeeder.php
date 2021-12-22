@@ -20,7 +20,7 @@ class CertificationSeeder extends Seeder
 
         for ($i = 1; $i <50; $i++) {
             Certification::create([
-                'image' => 'images/doctor/certification/'.random_int(1, 5).'.png',
+                'image' => 'public/images/doctor/certification/'.random_int(1, 5).'.png',
                 'doctor_id' => random_int(1, 5),
                 'active' => rand(0, 1),
             ]);

@@ -16,7 +16,7 @@ use App\Http\Controllers\Api\General\GeneralController;
 */
 
 Route::post('login',[GeneralController::class, 'login']);
-Route::get('counties',[GeneralController::class, 'getCountries']);
+Route::get('countries',[GeneralController::class, 'getCountries']);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();

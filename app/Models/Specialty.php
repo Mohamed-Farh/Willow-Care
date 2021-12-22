@@ -12,6 +12,10 @@ class Specialty extends Model
 
     protected $guarded = [];
 
+    protected $casts = [
+    'id' => 'string',
+    ];
+
 
     public function active()
     {

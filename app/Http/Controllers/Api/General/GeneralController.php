@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Validator;
 use Throwable;
 use App\Models\DeviceToken;
 use App\Models\Specialty;
+use Illuminate\Validation\Rule;
 
 class GeneralController extends Controller
 {
@@ -28,10 +29,9 @@ class GeneralController extends Controller
 
     public function login(LoginRequest $request)
     {
-
-        // try {
+        try {
             if ($request->app_type == 1){  // it's mean doctor App
-                $auth = Auth::guard('doctor')->attempt(["phone" => $request->phone, "password" => $request->password]);
+                $auth = Auth::guard('doctor')->attempt(['phone' => $request->phone, 'password' => $request->password]);
                 $auth_user = Doctor::where("phone", $request->phone)->first();
                 $check_device_token = DeviceToken::where('token',$request->device_token)->first();
                 $apiToke  = $auth_user->createToken('auth_token')->accessToken;
@@ -55,15 +55,23 @@ class GeneralController extends Controller
                 $auth_user->device_token = $request->device_token;
                 return $this->responseJson("200", "Doctor Login Successfully", new LoginResource($auth_user));
             }
-        // } catch (Throwable $e) {
-        //     return $this->responseJsonFailed();
-        // }
+        } catch (Throwable $e) {
+            return $this->responseJsonFailed();
+        }
 
     }
 
 
-    public function getCountries(Request $request){
+    public function getCountries(Request $request)
+    {
         try {
+            $validator = Validator::make($request->all(), [
+                'lang' => ['required', Rule::in(['en', 'ro', 'ar'])],
+            ]);
+            if ($validator->fails()) {
+                return $this->responseJsonFailed('404','language is incorrect or required');
+            }
+            
             $lang =  $_GET['lang'];
             if( $lang == 'ar' || $lang == 'en' || $lang =='ro'){
                 $countries = Country::select('id' ,'name_'.$lang.' as name', 'flag', 'code')->where('active','1')->get();

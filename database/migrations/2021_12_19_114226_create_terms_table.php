@@ -14,7 +14,7 @@ class CreateTermsTable extends Migration
     public function up()
     {
         Schema::create('terms', function (Blueprint $table) {
-            $table->id();
+            $table->id()->autoIncrement();
             $table->longText('text_ar');
             $table->longText('text_en');
             $table->longText('text_ro');

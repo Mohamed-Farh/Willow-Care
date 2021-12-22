@@ -14,7 +14,7 @@ class CreateDoctorsTable extends Migration
     public function up()
     {
         Schema::create('doctors', function (Blueprint $table) {
-            $table->id();
+            $table->id()->autoIncrement();
             $table->string('name');
             $table->string('email')->unique();
             $table->string('phone')->unique();
@@ -29,7 +29,7 @@ class CreateDoctorsTable extends Migration
             $table->year('graduation_year')->nullable();
             $table->boolean('gender')->default(0)->comment('0 => Male', '1 => Female');
             $table->longText('about')->nullable();
-            $table->tinyInteger('lang')->default(1)->comment('1 => Romanian','2 => English', '3 => Arabic');
+            $table->string('lang')->default('en')->comment('ro => Romanian','en => English', 'ar => Arabic');
             $table->boolean('activation')->default(1)->comment('0 => Not Active', '1 => Active');
             $table->tinyInteger('country_id');
             $table->timestamps();

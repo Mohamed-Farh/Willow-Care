@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\Doctor\AuthController;
 use App\Http\Controllers\Api\Doctor\GeneralController;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,6 +16,9 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+// Route::get('/test', function () {
+//     return Auth::user()->id;
+// });
 
 
 Route::post('register',[AuthController::class, 'doctorRegister'])->name('doctorRegister');
@@ -27,6 +31,10 @@ Route::middleware(["auth:api-doctor"])->group(function () {
     Route::post('phone-verify',[AuthController::class, 'phoneVerify']);
 
     Route::get('specialties',[GeneralController::class, 'getSpecialties']);
+    Route::get('terms',[GeneralController::class, 'getTerms']);
+    Route::get('conditions',[GeneralController::class, 'getConditions']);
+
+
 
 
 });

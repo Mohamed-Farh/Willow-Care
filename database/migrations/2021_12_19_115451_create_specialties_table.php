@@ -14,7 +14,7 @@ class CreateSpecialtiesTable extends Migration
     public function up()
     {
         Schema::create('specialties', function (Blueprint $table) {
-            $table->id();
+            $table->id()->autoIncrement();
 			$table->string('name_ar', 255);
 			$table->string('name_en', 255);
 			$table->string('name_ro', 255);

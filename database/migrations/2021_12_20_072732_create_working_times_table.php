@@ -14,7 +14,7 @@ class CreateWorkingTimesTable extends Migration
     public function up()
     {
         Schema::create('working_times', function (Blueprint $table) {
-            $table->id();
+            $table->id()->autoIncrement();
             $table->time('from');
 			$table->time('to');
             $table->foreignId('week_day_id')->constrained()->cascadeOnDelete();

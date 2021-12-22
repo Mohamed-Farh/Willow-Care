@@ -14,7 +14,7 @@ class CreateCertificationsTable extends Migration
     public function up()
     {
         Schema::create('certifications', function (Blueprint $table) {
-            $table->id();
+            $table->id()->autoIncrement();
             $table->string('image');
             $table->foreignId('doctor_id')->constrained()->cascadeOnDelete();
             $table->boolean('active')->default(1)->comment('0 => Not Active', '1 => Active');
