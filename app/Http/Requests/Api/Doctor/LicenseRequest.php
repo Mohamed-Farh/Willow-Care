@@ -8,7 +8,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Response;
 
-class ClinicRequest extends FormRequest
+class LicenseRequest extends FormRequest
 {
     use ApiTraits;
     /**
@@ -29,18 +29,9 @@ class ClinicRequest extends FormRequest
     public function rules()
     {
         return [
-            "name" => "required",
-            "phone" => "required",
-            "another_phone" => "nullable",
-            "lat" => "required|numeric",
-            "long" => "required|numeric",
-            "location" => "required",
-            "concultation_price" => "required",
-            "renewal_price" => "required",
-            "duration" => "required",
-            "payment_method" => "nullable|in:0,1,2",
-            "clinic_image" => "required|file|mimes:png,jpg,svg,gif",
-
+            "license_image" => 'array|required|min:1',
+            "license_image*" => 'file',
+            "specialty_id" => "array|required|exists:specialties,id",
         ];
     }
 

@@ -71,7 +71,7 @@ class GeneralController extends Controller
             if ($validator->fails()) {
                 return $this->responseJsonFailed('404','language is incorrect or required');
             }
-            
+
             $lang =  $_GET['lang'];
             if( $lang == 'ar' || $lang == 'en' || $lang =='ro'){
                 $countries = Country::select('id' ,'name_'.$lang.' as name', 'flag', 'code')->where('active','1')->get();

@@ -40,7 +40,6 @@ class ClinicController extends Controller
                 "image" => 'public/'.$img,
                 "doctor_id" => Auth::guard('api-doctor')->id(),
             ]);
-
             return $this->responseJson("200", "Addning New Clinic Successfully", new ClinicResource($clinic));
         } catch (Throwable $e) {
             $this->responseJsonFailed();

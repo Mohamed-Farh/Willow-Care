@@ -23,7 +23,7 @@ class SpecialtyController extends Controller
 
     use ApiTraits, HelperTrait, HasApiTokens;
 
-    //Can Be Used In Add And Update 
+    //Can Be Used In Add And Update
     public function addSpecialties(ClinicRequest $request)
     {
         try {

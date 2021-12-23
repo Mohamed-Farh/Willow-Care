@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
+use App\Models\License;
 
 class Doctor extends Authenticatable
 {
@@ -49,7 +50,7 @@ class Doctor extends Authenticatable
 
     public function licenses(): HasMany
     {
-        return $this->hasMany(Licenses::class);
+        return $this->hasMany(License::class);
     }
 
     public function certifications(): HasMany

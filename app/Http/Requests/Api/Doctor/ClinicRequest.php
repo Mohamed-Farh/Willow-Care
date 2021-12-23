@@ -38,9 +38,8 @@ class ClinicRequest extends FormRequest
             "concultation_price" => "required",
             "renewal_price" => "required",
             "duration" => "required",
-            "payment_method" => "nullable|in:0,1,2",
+            "payment_method" => "required|in:1,2,3",
             "clinic_image" => "required|file|mimes:png,jpg,svg,gif",
-
         ];
     }
 

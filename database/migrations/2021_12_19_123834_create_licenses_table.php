@@ -16,7 +16,7 @@ class CreateLicensesTable extends Migration
         Schema::create('licenses', function (Blueprint $table) {
             $table->id()->autoIncrement();
             $table->string('image');
-            $table->foreignId('doctor_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('doctor_id');
             $table->boolean('active')->default(1)->comment('0 => Not Active', '1 => Active');
             $table->timestamps();
         });

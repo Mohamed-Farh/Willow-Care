@@ -5,13 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use App\Models\Doctor;
 
-class Licenses extends Model
+class License extends Model
 {
     use HasFactory;
+    protected $table = 'licenses';
+    public $timestamps = true;
 
-    protected $guarded = [];
-
+    protected $fillable = array('image');
 
 
     public function active()

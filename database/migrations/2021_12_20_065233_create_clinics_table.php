@@ -17,18 +17,18 @@ class CreateClinicsTable extends Migration
             $table->id()->autoIncrement();
             $table->string('name');
             $table->string('phone');
-            $table->string('another_phone');
+            $table->string('another_phone')->nullable();
             $table->string('lat', 255);
             $table->string('long', 255);
             $table->text('location')->nullable();
             $table->float('price');
             $table->float('renewal_price')->nullable();
             $table->time('duration');
-            $table->boolean('payment_method')->comment('0 => Online', '1 => Cash','3=>both');
+            $table->tinyInteger('payment_method')->comment('1 => Online', '2 => Cash','3=>both');
             $table->string('image');
-            $table->foreignId('doctor_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('doctor_id');
             $table->boolean('active')->default(1)->comment('0 => Not Active', '1 => Active');
-            // $table->string('setting');
+            $table->string('setting');
             $table->timestamps();
         });
     }

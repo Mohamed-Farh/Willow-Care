@@ -32,17 +32,17 @@ Route::get('terms-conditions',[GeneralController::class, 'getTermsAndConditions'
 
 
 Route::middleware(["auth:api-doctor"])->group(function () {
-    //Auth
+    ########################## Auth #############################
     Route::post('change-password',[AuthController::class, 'changePassword']);
     Route::post('phone-verify',[AuthController::class, 'phoneVerify']);
     Route::get('specialties',[GeneralController::class, 'getSpecialties']);
 
 
     //Specialty
-    Route::post('add-specialties',[SpecialtyController::class, 'addSpecialties']);
+//     Route::post('add-specialties',[SpecialtyController::class, 'addSpecialties']);
 
-    //Licenses
-    Route::post('add-licenses',[LicenseController::class, 'addLicenses']);
+    ######################## Licenses AND Specialty ###############################
+    Route::post('add-licenses',[LicenseController::class, 'addLicensesAndSpecialist']);
 
      //Licenses
      Route::post('add-certification',[CertificationController::class, 'addCertifications']);
