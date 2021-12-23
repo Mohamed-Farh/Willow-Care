@@ -47,9 +47,9 @@ class Doctor extends Authenticatable
         return $this->belongsToMany(Specialty::class, 'doctor_specialty');
     }
 
-    public function lisences(): HasMany
+    public function licenses(): HasMany
     {
-        return $this->hasMany(Lisence::class);
+        return $this->hasMany(Licenses::class);
     }
 
     public function certifications(): HasMany

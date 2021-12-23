@@ -17,14 +17,14 @@ class CreateClinicsTable extends Migration
             $table->id()->autoIncrement();
             $table->string('name');
             $table->string('phone');
-            $table->string('second_phone');
-            $table->string('latitude', 255);
-            $table->string('longitude', 255);
+            $table->string('another_phone');
+            $table->string('lat', 255);
+            $table->string('long', 255);
             $table->text('location')->nullable();
             $table->float('price');
             $table->float('renewal_price')->nullable();
             $table->time('duration');
-            $table->boolean('payment_method')->comment('0 => Online', '1 => Cash');
+            $table->boolean('payment_method')->comment('0 => Online', '1 => Cash','3=>both');
             $table->string('image');
             $table->foreignId('doctor_id')->constrained()->cascadeOnDelete();
             $table->boolean('active')->default(1)->comment('0 => Not Active', '1 => Active');

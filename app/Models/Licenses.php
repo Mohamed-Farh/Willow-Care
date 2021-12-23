@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Lisence extends Model
+class Licenses extends Model
 {
     use HasFactory;
 
@@ -18,7 +18,7 @@ class Lisence extends Model
     {
         return $this->status ? 'Active' : 'Not Active';
     }
-    
+
     public function doctor(): BelongsTo
     {
         return $this->belongsTo(Doctor::class);
