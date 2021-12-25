@@ -72,11 +72,6 @@
                             @enderror
                         </div>
                         <div class="form-group d-flex flex-wrap justify-content-between align-items-center px-8 opacity-60">
-                            <div class="checkbox-inline">
-                                <label class="checkbox checkbox-outline checkbox-white text-white m-0">
-                                    <input type="checkbox" name="remember" />
-                                    <span></span>Remember me</label>
-                            </div>
 
                         </div>
                         <div class="form-group text-center mt-10">
