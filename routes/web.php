@@ -1,6 +1,9 @@
 <?php
 
+
 use Illuminate\Support\Facades\Route;
+use \App\Http\Controllers\dashboard\HomeDashboardController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +16,29 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('soon');
+
+
+
+Route::group(['namespace' => 'admin'],function (){
+    Route::group(
+        [
+            'prefix' => \LaravelLocalization::setLocale(),
+            'middleware' => [ 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath' ,'auth']
+        ], function(){
+            Route::group(['prefix'=>'admin'],function (){
+                Route::get('/', [HomeDashboardController::class,'index'])->name('home');
+            });
+
+    });
 });
+
+Route::group(['prefix' => 'admin'], function(){
+    Auth::routes(['register' => false]);
+});
+
+
+
+
+
+
+
