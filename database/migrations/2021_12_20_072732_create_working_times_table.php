@@ -14,12 +14,11 @@ class CreateWorkingTimesTable extends Migration
     public function up()
     {
         Schema::create('working_times', function (Blueprint $table) {
-            $table->id()->autoIncrement();
+            $table->bigIncrements('id');
+            $table->string('day');
             $table->time('from');
 			$table->time('to');
-            $table->foreignId('week_day_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('clinic_id')->constrained()->cascadeOnDelete();
-            $table->boolean('type')->default(0)->comment('0 => For One Day', '1 => For All Days');
+            $table->foreignId('clinic_id');
             $table->timestamps();
         });
     }

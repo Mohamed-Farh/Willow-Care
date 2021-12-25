@@ -11,19 +11,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
-|
-*/
-// Route::get('/test', function () {
-//     return Auth::user()->id;
-// });
 
 
 Route::post('register',[AuthController::class, 'doctorRegister'])->name('doctorRegister');
@@ -35,24 +22,19 @@ Route::middleware(["auth:api-doctor"])->group(function () {
     ########################## Auth #############################
     Route::post('change-password',[AuthController::class, 'changePassword']);
     Route::post('phone-verify',[AuthController::class, 'phoneVerify']);
+
+    ############################# General ####################################
     Route::get('specialties',[GeneralController::class, 'getSpecialties']);
-
-
     //Specialty
-//     Route::post('add-specialties',[SpecialtyController::class, 'addSpecialties']);
+    //Route::post('add-specialties',[SpecialtyController::class, 'addSpecialties']);
 
     ######################## Licenses AND Specialty ###############################
     Route::post('add-licenses',[LicenseController::class, 'addLicensesAndSpecialist']);
 
-     //Licenses
-     Route::post('add-certification',[CertificationController::class, 'addCertifications']);
-
-    //Clinic
+    ############################## CLINIC #####################################
+    //add clinic
     Route::post('add-clinic',[ClinicController::class, 'addClinic']);
-
-    //Shift
-    Route::post('add_clinic_worktime',[ShiftController::class, 'addShifts']);
-    Route::post('add_clinic_shift',[ShiftController::class, 'addShifts']);
-
+    // add Work Time & shifts
+    Route::post('add_clinic_worktime',[ClinicController::class, 'addClinicWorkTime']);
 
 });

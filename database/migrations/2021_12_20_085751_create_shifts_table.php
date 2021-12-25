@@ -14,11 +14,10 @@ class CreateShiftsTable extends Migration
     public function up()
     {
         Schema::create('shifts', function (Blueprint $table) {
-            $table->id()->autoIncrement();
+            $table->bigIncrements('id');
             $table->time('from');
 			$table->time('to');
-            $table->foreignId('week_day_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('clinic_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('work_time_id');
             $table->timestamps();
         });
     }

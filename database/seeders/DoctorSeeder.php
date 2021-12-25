@@ -24,7 +24,7 @@ class DoctorSeeder extends Seeder
             'email' => 'willow@willow.com',
             'phone' => '123456789',
             'image' => 'public/images/doctor/profile/1.jpg',
-            'password' => '$2y$10$Qy/k8zANphJ9LHznuYyXmOy9/..HALXRk9tX4Pxhr0EB6wWIym.ta',
+            'password' => 'password',
             'phone_verification' => 1,
             'professional_title_id' => 1,
             'is_approved' => 1,

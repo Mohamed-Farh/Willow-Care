@@ -14,7 +14,7 @@ class CreateDeviceTokensTable extends Migration
     public function up()
     {
         Schema::create('device_tokens', function (Blueprint $table) {
-            $table->id()->autoIncrement();
+            $table->bigIncrements('id');
             $table->text('token');
             $table->string('type')->comment('Doctor', 'Patient');
             $table->text('type_token');

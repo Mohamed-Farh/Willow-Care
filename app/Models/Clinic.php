@@ -11,8 +11,24 @@ class Clinic extends Model
 {
     use HasFactory;
 
-    protected $guarded = [];
-
+    protected $table = 'clinics';
+    protected $fillable = [
+        'name',
+        'phone',
+        'another_phone',
+        'lat',
+        'long',
+        'location',
+        'price',
+        'renewal_price',
+        'duration',
+        'payment_method',
+        'image',
+        'doctor_id',
+        'active',
+        'setting',
+    ];
+    public $timestamps = true;
 
 
     public function active()
@@ -30,10 +46,7 @@ class Clinic extends Model
         return $this->hasMany(WorkingTime::class);
     }
 
-    public function shifts(): HasMany
-    {
-        return $this->hasMany(Shift::class);
-    }
+    
 
 
 

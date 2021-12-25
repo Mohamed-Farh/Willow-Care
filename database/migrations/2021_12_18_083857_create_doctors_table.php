@@ -14,7 +14,7 @@ class CreateDoctorsTable extends Migration
     public function up()
     {
         Schema::create('doctors', function (Blueprint $table) {
-            $table->id()->autoIncrement();
+            $table->bigIncrements('id');
             $table->string('name');
             $table->string('email')->unique();
             $table->string('phone')->unique();
@@ -25,7 +25,7 @@ class CreateDoctorsTable extends Migration
             $table->string('f_code')->nullable();
             $table->string('g_code')->nullable();
             $table->string('a_code')->nullable();
-            $table->tinyInteger('professional_title_id')->nullable();
+            $table->foreignId('professional_title_id')->nullable();
             $table->year('graduation_year')->nullable();
             $table->boolean('gender')->default(0)->comment('0 => Male', '1 => Female');
             $table->longText('about')->nullable();

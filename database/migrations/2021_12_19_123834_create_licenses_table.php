@@ -14,7 +14,7 @@ class CreateLicensesTable extends Migration
     public function up()
     {
         Schema::create('licenses', function (Blueprint $table) {
-            $table->id()->autoIncrement();
+            $table->bigIncrements('id');
             $table->string('image');
             $table->foreignId('doctor_id');
             $table->boolean('active')->default(1)->comment('0 => Not Active', '1 => Active');

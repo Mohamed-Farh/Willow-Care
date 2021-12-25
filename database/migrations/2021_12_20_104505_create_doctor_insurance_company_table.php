@@ -14,8 +14,8 @@ class CreateDoctorInsuranceCompanyTable extends Migration
     public function up()
     {
         Schema::create('doctor_insurance_company', function (Blueprint $table) {
-            $table->foreignId('doctor_id')->nullable()->constrained()->cascadeOnDelete();
-            $table->foreignId('insurance_company_id')->nullable()->constrained()->cascadeOnDelete();
+            $table->foreignId('doctor_id');
+            $table->foreignId('insurance_company_id');
         });
     }
 

@@ -14,7 +14,7 @@ class CreateClinicsTable extends Migration
     public function up()
     {
         Schema::create('clinics', function (Blueprint $table) {
-            $table->id()->autoIncrement();
+            $table->bigIncrements('id');
             $table->string('name');
             $table->string('phone');
             $table->string('another_phone')->nullable();
@@ -28,7 +28,7 @@ class CreateClinicsTable extends Migration
             $table->string('image');
             $table->foreignId('doctor_id');
             $table->boolean('active')->default(1)->comment('0 => Not Active', '1 => Active');
-            $table->string('setting');
+            $table->string('setting')->nullable();
             $table->timestamps();
         });
     }
