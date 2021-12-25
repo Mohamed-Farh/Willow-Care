@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
         // \App\Models\User::factory(10)->create();
 
         $this->call([
+            SuperAdminSeeder::class,
             CategorySeeder::class,
             CountrySeeder::class,
             ProTitleSeeder::class,
@@ -25,6 +26,7 @@ class DatabaseSeeder extends Seeder
             DoctorSeeder::class,
             TermSeeder::class,
             CertificationSeeder::class,
+
         ]);
     }
 }
