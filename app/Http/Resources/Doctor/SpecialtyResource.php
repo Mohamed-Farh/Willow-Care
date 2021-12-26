@@ -15,7 +15,7 @@ class ClinicResource extends JsonResource
     public function toArray($request)
     {
         return [
-            "id" => strval($this->id),
+            "id" => $this->id,
             "name" => $this->name,
             "phone" => strval($this->phone),
             "another_phone" => $this->another_phone,

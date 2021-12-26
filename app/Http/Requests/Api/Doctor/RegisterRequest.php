@@ -35,7 +35,6 @@ class RegisterRequest extends FormRequest
             "password" => "required|min:8",
             "country_id" => "required|exists:countries,id",
             "lang" => "nullable|in:ro,en,ar",
-            "image" => "required|file|mimes:png,jpg,svg",
             "device_token" => "required",
          ];
     }

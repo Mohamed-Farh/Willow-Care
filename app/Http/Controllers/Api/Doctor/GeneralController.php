@@ -28,9 +28,9 @@ class GeneralController extends Controller
                                         ->where('type','Doctor')
                                         ->where('active','1')
                                         ->get();
-                return $this->responseJson("200", "all Specialties In Doctor Category", $Specialties);
+                return $this->responseJson(200, "all Specialties In Doctor Category", $Specialties);
             }else{
-                return $this->responseJsonFailed('404','language code is incorrect');
+                return $this->responseJsonFailed(404,'language code is incorrect');
             }
         } catch (Throwable $e) {
             return $this->responseJsonFailed();
@@ -40,15 +40,21 @@ class GeneralController extends Controller
     public function getTermsAndConditions(Request $request)
     {
         try {
-            $lang =  Auth::user()->lang;
+            $validator = Validator::make($request->all(), [
+                'lang' => ['required', Rule::in(['en', 'ro', 'ar'])],
+            ]);
+            if ($validator->fails()) {
+                return $this->responseJsonFailed(404,'language is incorrect or required');
+            }
+            $lang =  $_GET['lang'];
             if( $lang == 'ar' || $lang == 'en' || $lang =='ro'){
                 $terms = Term::select('id' ,'text_'.$lang.' as text')
                                         ->where('active','1')
                                         ->where('app_type','Doctor')
                                         ->get();
-                return $this->responseJson("200", "all Terms and conditions In Doctor Category", $terms);
+                return $this->responseJson(200, "all Terms and conditions In Doctor Category", $terms);
             }else{
-                return $this->responseJsonFailed('404','language code is incorrect');
+                return $this->responseJsonFailed(404,'language code is incorrect');
             }
         } catch (Throwable $e) {
             return $this->responseJsonFailed();

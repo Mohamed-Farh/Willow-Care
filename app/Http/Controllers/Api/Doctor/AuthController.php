@@ -27,9 +27,9 @@ class AuthController extends Controller
 
     public function doctorRegister(RegisterRequest $request){
         try {
-            $img = $this->uploadImages($request->image, "images/doctor/profile");
+            // $img = $this->uploadImages($request->image, "images/doctor/profile");
             $doctor = Doctor::create($request->all());
-            $doctor->update(["image" => $img]);
+            // $doctor->update(["image" => $img]);
             $doctor = Doctor::where('id', $doctor->id)->first();
             $apiToke  = $doctor->createToken('auth_token')->accessToken;
             $device_token = DeviceToken::create([
@@ -39,7 +39,7 @@ class AuthController extends Controller
             ]);
             $doctor->api_token = $apiToke;
             $doctor->device_token = $request->device_token;
-            return $this->responseJson("200", "Registration Successfully", new LoginResource($doctor));
+            return $this->responseJson(200 , "Registration Successfully", new LoginResource($doctor));
         } catch (Throwable $e) {
             $this->responseJsonFailed();
         }
@@ -72,9 +72,20 @@ class AuthController extends Controller
             $doctor->api_token = $request->bearerToken();
             $device_token = DeviceToken::where('type_token', $request->bearerToken())->first();
             $doctor->device_token = $device_token->token;
-            return $this->responseJson("200", "Phone has been verified", new LoginResource($doctor));
+            return $this->responseJson(200 , "Phone has been verified", new LoginResource($doctor));
         } catch (Throwable $e) {
             $this->responseJsonFailed();
+        }
+    }
+
+    public function changeProfileImage(Request $request){
+        if($request->image){
+            $img = $this->uploadImages($request->image, "public/images/doctor/profile");
+            $doctor = Auth::user();
+            $doctor->update(["image" => $img]);
+            return $this->responseJsonWithoutData();
+        }else{
+            $this->responseJsonFailed(011, 'image field is required');
         }
     }
 

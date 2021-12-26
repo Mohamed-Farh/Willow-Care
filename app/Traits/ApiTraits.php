@@ -8,7 +8,7 @@ trait ApiTraits
     {
         return response()->json([
             "success" => true,
-            "status" => (string) $status,
+            "status" => $status,
             "massage" => $massage,
             "data" => $data
         ], $status);
@@ -18,7 +18,7 @@ trait ApiTraits
     {
         return response()->json([
             "success" => true,
-            "status" => (string) $status,
+            "status" => $status,
             "massage" => $massage,
         ], $status);
     }
@@ -28,12 +28,12 @@ trait ApiTraits
     {
         return response()->json([
             "success" => false,
-            "status" => (string) $status,
+            "status" => $status,
             "massage" => $massage,
         ]);
     }
 
     public function returnValidationError($validator){
-        return $this->responseJsonFailed('011', $validator->errors());
+        return $this->responseJsonFailed(011, $validator->errors());
     }
 }

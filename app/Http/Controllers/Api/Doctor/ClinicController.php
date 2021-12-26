@@ -11,6 +11,7 @@ use App\Models\Doctor;
 use Laravel\Passport\HasApiTokens;
 use App\Traits\ApiTraits;
 use App\Traits\HelperTrait;
+use Illuminate\Http\Request;
 use Throwable;
 use Illuminate\Support\Facades\Auth;
 
@@ -25,7 +26,7 @@ class ClinicController extends Controller
     public function addClinic(ClinicRequest $request)
     {
         try {
-            $img = $this->uploadImages($request->clinic_image, "images/doctor/clinic");
+            $img = $this->uploadImages($request->clinic_image, "public/images/doctor/clinic");
             $clinic = Clinic::create([
                 "name" => $request->name,
                 "phone" => $request->phone,
@@ -40,17 +41,21 @@ class ClinicController extends Controller
                 "image" => 'public/'.$img,
                 "doctor_id" => Auth::user()->id,
             ]);
-            return $this->responseJson("200", "Addning New Clinic Successfully", new ClinicResource($clinic));
+            return $this->responseJson(200, "Addning New Clinic Successfully", new ClinicResource($clinic));
         } catch (Throwable $e) {
             $this->responseJsonFailed();
         }
     }
 
 
+    // ClinicWorkTimeRequest
     public function addClinicWorkTime(ClinicWorkTimeRequest $request){
+        // return $request->all();
+        // return $request->all_days[0]['day'];
+        // return $request->all_days[0]['setions_times'][0]['from'];
         $clinic = Clinic::where(['id'=> $request->clinic_id ,'doctor_id' => Auth::user()->id])->first();
         if(!$clinic){
-            $this->responseJsonFailed("404", "this doctor can't control on this clinic");
+            $this->responseJsonFailed(404, "this doctor can't control on this clinic");
         }
         $doctor_clinics = Clinic::where('doctor_id' , Auth::user()->id)->where('id', '!=' ,$request->clinic_id)->get();
         // return $doctor_clinics ;
@@ -60,23 +65,21 @@ class ClinicController extends Controller
                 $workout->shifts()->delete();
             }   
             $clinic->workingTimes()->delete();
-            foreach( $request->days as $day){
+            foreach( $request->all_days as $single_day){
                 $sigle_work_out = $clinic->workingTimes()->create([
-                    'day' => $day,
-                    'from' => $request->from,
-                    'to' => $request->to
+                    'day' => $single_day['day'],
+                    'from' => $single_day['from'],
+                    'to' => $single_day['to']
                 ]);
-                // return $request->setions_times_to[0];
-                $len = count($request->setions_times_from);
+                $len = count($single_day['setions_times']);
                 for($i= 0; $i < $len; $i++){
                     $sigle_work_out->shifts()->create([
-                        'from'=> $request->setions_times_from[$i],
-                        'to' => $request->setions_times_to[$i],
+                        'from'=> $single_day['setions_times'][$i]['from'],
+                        'to' => $single_day['setions_times'][$i]['to'],
                     ]);
                 }
-
             }
-            $clinic->setting = $request->static_worktime;
+            $clinic->setting = $request->same_day;
             $clinic->save();
             return $this->responseJsonWithoutData();
         }else{

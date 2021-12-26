@@ -22,6 +22,8 @@ Route::middleware(["auth:api-doctor"])->group(function () {
     ########################## Auth #############################
     Route::post('change-password',[AuthController::class, 'changePassword']);
     Route::post('phone-verify',[AuthController::class, 'phoneVerify']);
+    Route::post('profile-image',[AuthController::class, 'changeProfileImage']);
+
 
     ############################# General ####################################
     Route::get('specialties',[GeneralController::class, 'getSpecialties']);

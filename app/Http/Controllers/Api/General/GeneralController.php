@@ -45,15 +45,15 @@ class GeneralController extends Controller
                     $device_token = DeviceToken::where('token' , $request->device_token)->update(['type_token'=>$apiToke]);
                 };
             }else{
-                return $this->responseJsonFailed('404', 'the app type is incorrect');
+                return $this->responseJsonFailed(404, 'the app type is incorrect');
             }
 
             if (!Auth::guard('doctor')->attempt(["phone" => $request->phone, "password" => $request->password])) {
-                return $this->responseJsonFailed('404', 'the phone number or password is incorrect');
+                return $this->responseJsonFailed(404, 'the phone number or password is incorrect');
             }else{
                 $auth_user->api_token = $apiToke;
                 $auth_user->device_token = $request->device_token;
-                return $this->responseJson("200", "Doctor Login Successfully", new LoginResource($auth_user));
+                return $this->responseJson(200, "Doctor Login Successfully", new LoginResource($auth_user));
             }
         } catch (Throwable $e) {
             return $this->responseJsonFailed();
@@ -69,15 +69,15 @@ class GeneralController extends Controller
                 'lang' => ['required', Rule::in(['en', 'ro', 'ar'])],
             ]);
             if ($validator->fails()) {
-                return $this->responseJsonFailed('404','language is incorrect or required');
+                return $this->responseJsonFailed(404,'language is incorrect or required');
             }
 
             $lang =  $_GET['lang'];
             if( $lang == 'ar' || $lang == 'en' || $lang =='ro'){
                 $countries = Country::select('id' ,'name_'.$lang.' as name', 'flag', 'code')->where('active','1')->get();
-                return $this->responseJson("200", "all countries data", $countries);
+                return $this->responseJson(200, "all countries data", $countries);
             }else{
-                return $this->responseJsonFailed('404','language code is incorrect');
+                return $this->responseJsonFailed(404,'language code is incorrect');
             }
         } catch (Throwable $e) {
             return $this->responseJsonFailed();
