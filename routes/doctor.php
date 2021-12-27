@@ -47,6 +47,8 @@ Route::middleware(["auth:api-doctor"])->group(function () {
     ############################## CLINIC #####################################
     //add clinic
     Route::post('add-clinic',[ClinicController::class, 'addClinic']);
+    Route::post('clinic-add',[ClinicController::class, 'addClinic']);
+
     // add Work Time & shifts
     Route::post('add_clinic_worktime',[ClinicController::class, 'addClinicWorkTime']);
 
