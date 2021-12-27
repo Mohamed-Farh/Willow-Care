@@ -19,9 +19,32 @@ class ClinicController extends Controller
 
     use ApiTraits, HelperTrait, HasApiTokens;
 
-    public function addClinic(ClinicRequest $request)
-    {
-        return $request->all();
+    // public function addClinic(ClinicRequest $request)
+    // {
+    //     return $request->all();
+    //     try {
+    //         $img = $this->uploadImages($request->clinic_image, "images/doctor/clinic");
+    //         $clinic = Clinic::create([
+    //             "name" => $request->name,
+    //             "phone" => $request->phone,
+    //             "another_phone" => $request->another_phone,
+    //             "lat" => $request->lat,
+    //             "long" => $request->long,
+    //             "location" => $request->location,
+    //             "price" => $request->concultation_price,
+    //             "renewal_price" => $request->renewal_price,
+    //             "duration" => $request->duration,
+    //             "payment_method" => $request->payment_method,
+    //             "image" => 'public/'.$img,
+    //             "doctor_id" => Auth::user()->id,
+    //         ]);
+    //         return $this->responseJson(200, "Addning New Clinic Successfully", new ClinicResource($clinic));
+    //     } catch (Throwable $e) {
+    //         $this->responseJsonFailed();
+    //     }
+    // }
+
+    public function createClinic(ClinicRequest $request){
         try {
             $img = $this->uploadImages($request->clinic_image, "images/doctor/clinic");
             $clinic = Clinic::create([
