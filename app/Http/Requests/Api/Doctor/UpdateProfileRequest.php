@@ -6,6 +6,7 @@ use App\Traits\ApiTraits;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\Response;
 
 class UpdateProfileRequest extends FormRequest
@@ -39,7 +40,12 @@ class UpdateProfileRequest extends FormRequest
         ];
     }
 
-    public function failedValidation(Validator $validator){
-        throw new ValidationException($validator, $this->returnValidationError($validator));
+    protected function failedValidation(Validator $validator)
+    {
+        $errors = $this->validator->errors();
+        $er = implode(' |+| ', $errors->all());
+        throw new HttpResponseException(
+            $this->responseJsonFailed(422 ,$er)
+        );
     }
 }

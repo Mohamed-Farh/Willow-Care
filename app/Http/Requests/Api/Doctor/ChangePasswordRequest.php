@@ -8,6 +8,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Response;
 use Auth;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class ChangePasswordRequest extends FormRequest
 {
@@ -39,7 +40,16 @@ class ChangePasswordRequest extends FormRequest
         ];
     }
 
-    public function failedValidation(Validator $validator){
-        throw new ValidationException($validator, $this->returnValidationError($validator));
+    // public function failedValidation(Validator $validator){
+    //     throw new ValidationException($validator, $this->returnValidationError($validator));
+    // }
+
+    protected function failedValidation(Validator $validator)
+    {
+        $errors = $this->validator->errors();
+        $er = implode(' |+| ', $errors->all());
+        throw new HttpResponseException(
+            $this->responseJsonFailed(422 ,$er)
+        );
     }
 }

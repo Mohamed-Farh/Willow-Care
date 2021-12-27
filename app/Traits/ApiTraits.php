@@ -30,7 +30,7 @@ trait ApiTraits
             "success" => false,
             "status" => $status,
             "massage" => $massage,
-        ]);
+        ], $status);
     }
 
     public function returnValidationError($validator){
