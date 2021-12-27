@@ -26,7 +26,7 @@ class ClinicController extends Controller
     public function addClinic(ClinicRequest $request)
     {
         try {
-            $img = $this->uploadImages($request->clinic_image, "public/images/doctor/clinic");
+            $img = $this->uploadImages($request->clinic_image, "images/doctor/clinic");
             $clinic = Clinic::create([
                 "name" => $request->name,
                 "phone" => $request->phone,
