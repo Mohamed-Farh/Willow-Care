@@ -7,16 +7,12 @@ use App\Http\Requests\Api\Doctor\ClinicRequest;
 use App\Http\Requests\Api\Doctor\ClinicWorkTimeRequest;
 use App\Http\Resources\Doctor\ClinicResource;
 use App\Models\Clinic;
-use App\Models\Doctor;
 use Laravel\Passport\HasApiTokens;
 use App\Traits\ApiTraits;
 use App\Traits\HelperTrait;
 use Illuminate\Http\Request;
 use Throwable;
 use Illuminate\Support\Facades\Auth;
-
-use function PHPUnit\Framework\countOf;
-use function PHPUnit\Framework\isEmpty;
 
 class ClinicController extends Controller
 {
@@ -25,6 +21,7 @@ class ClinicController extends Controller
 
     public function addClinic(ClinicRequest $request)
     {
+        return $request->all();
         try {
             $img = $this->uploadImages($request->clinic_image, "images/doctor/clinic");
             $clinic = Clinic::create([
