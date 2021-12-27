@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\Doctor\CertificationController;
 use App\Http\Controllers\Api\Doctor\ClinicController;
 use App\Http\Controllers\Api\Doctor\GeneralController;
 use App\Http\Controllers\Api\Doctor\LicenseController;
+use App\Http\Controllers\Api\Doctor\ProfileController;
 use App\Http\Controllers\Api\Doctor\ShiftController;
 use App\Http\Controllers\Api\Doctor\SpecialtyController;
 use Illuminate\Http\Request;
@@ -25,6 +26,11 @@ Route::middleware(["auth:api-doctor"])->group(function () {
     Route::post('profile-image',[AuthController::class, 'changeProfileImage']);
 
 
+    ############################# Profile ####################################
+    Route::get('get-my-specialties',[ProfileController::class, 'getMySpecialties']);
+    Route::get('get-professional-titles',[ProfileController::class, 'getProfessionalTitles']);
+    Route::post('update-profile',[ProfileController::class, 'updateDoctorProfile']);
+
     ############################# General ####################################
     Route::get('specialties',[GeneralController::class, 'getSpecialties']);
     //Specialty
@@ -32,6 +38,11 @@ Route::middleware(["auth:api-doctor"])->group(function () {
 
     ######################## Licenses AND Specialty ###############################
     Route::post('add-licenses',[LicenseController::class, 'addLicensesAndSpecialist']);
+
+    ############################# Certification #############################################
+    Route::get('get-my-certifications',[CertificationController::class, 'getMyCertifications']);
+    Route::post('add-certifications',[CertificationController::class, 'addCertifications']);
+    Route::post('delete-certifications',[CertificationController::class, 'deleteCertifications']);
 
     ############################## CLINIC #####################################
     //add clinic

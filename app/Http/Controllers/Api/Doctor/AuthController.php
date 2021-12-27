@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Throwable;
 use App\Models\DeviceToken;
+use Illuminate\Support\Facades\File;
 
 class AuthController extends Controller
 {
@@ -78,14 +79,34 @@ class AuthController extends Controller
         }
     }
 
-    public function changeProfileImage(Request $request){
-        if($request->image){
-            $img = $this->uploadImages($request->image, "public/images/doctor/profile");
-            $doctor = Auth::user();
-            $doctor->update(["image" => $img]);
-            return $this->responseJsonWithoutData();
-        }else{
-            $this->responseJsonFailed(011, 'image field is required');
+    public function changeProfileImage(Request $request)
+    {
+        try {
+            $validator = Validator::make($request->all(), [
+                'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
+            ]);
+            if ($validator->fails()) {
+                return $this->responseJsonFailed(404,'image is incorrect or required');
+            }
+
+            if($request->image){
+                $img = $this->uploadImages($request->image, 'images/doctor/profile');
+                $doctor = Auth::user();
+
+                if($doctor->image != null && File::exists($doctor->image)){
+                    $old_file = $doctor->image; //get old photo
+                    unlink($old_file);  //To Check If I'm On Locallhost
+                }elseif($doctor->image != null && File::exists('../'.$doctor->image)){
+                    $old_file = $doctor->image; //get old photo
+                    unlink('../'.$old_file);  //To Check If I'm On Server
+                }
+                $doctor->update(["image" => 'public/'.$img]);
+                return $this->responseJsonWithoutData();
+            }else{
+                $this->responseJsonFailed(011, 'image field is required');
+            }
+        } catch (Throwable $e) {
+            $this->responseJsonFailed();
         }
     }
 
