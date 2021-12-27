@@ -15,6 +15,7 @@ class CreateHomeConcultationWorkingTimesTable extends Migration
     {
         Schema::create('home_concultation_working_times', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('day');
             $table->time('from');
 			$table->time('to');
             $table->foreignId('home_concultation_id');
