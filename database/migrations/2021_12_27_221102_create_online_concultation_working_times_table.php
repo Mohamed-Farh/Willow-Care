@@ -14,7 +14,6 @@ class CreateOnlineConcultationWorkingTimesTable extends Migration
     public function up()
     {
         Schema::create('online_concultation_working_times', function (Blueprint $table) {
-            $table->id();
             $table->bigIncrements('id');
             $table->string('day');
             $table->time('from');

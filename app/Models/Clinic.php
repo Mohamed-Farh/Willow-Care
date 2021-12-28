@@ -46,7 +46,7 @@ class Clinic extends Model
         return $this->hasMany(WorkingTime::class);
     }
 
-    
+
 
 
 

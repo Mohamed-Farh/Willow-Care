@@ -59,7 +59,7 @@ class ClinicController extends Controller
             $old_workouts = $clinic->workingTimes()->get();
             foreach($old_workouts as $workout){
                 $workout->shifts()->delete();
-            }   
+            }
             $clinic->workingTimes()->delete();
             foreach( $request->all_days as $single_day){
                 $sigle_work_out = $clinic->workingTimes()->create([

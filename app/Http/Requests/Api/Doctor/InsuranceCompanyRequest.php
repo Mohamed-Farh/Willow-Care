@@ -3,13 +3,11 @@
 namespace App\Http\Requests\Api\Doctor;
 
 use App\Traits\ApiTraits;
-use Illuminate\Validation\ValidationException;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
-use Illuminate\Http\Response;
 
-class UpdateProfileRequest extends FormRequest
+class InsuranceCompanyRequest extends FormRequest
 {
     use ApiTraits;
     /**
@@ -30,13 +28,6 @@ class UpdateProfileRequest extends FormRequest
     public function rules()
     {
         return [
-            "name" => "nullable",
-            "gender" => "nullable|in:0,1",
-            "professional_title_id" => "nullable|exists:professional_titles,id",
-            "graduation_year" => "nullable",
-            "about" => "nullable|min:8",
-            "license" => "nullable",
-            "speialty_id" => "nullable|exists:specialties,id",
             "insurance_company_id" => "nullable|exists:insurance_companies,id",
         ];
     }

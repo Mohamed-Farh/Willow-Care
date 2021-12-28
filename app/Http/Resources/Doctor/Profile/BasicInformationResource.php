@@ -2,9 +2,11 @@
 
 namespace App\Http\Resources\Doctor\Profile;
 
+use App\Http\Resources\Doctor\LicenseResource;
+use App\Models\License;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class ProfileResource extends JsonResource
+class BasicInformationResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -30,12 +32,13 @@ class ProfileResource extends JsonResource
             "profile_view" => '1',
             "patients_count" => '1',
             "exp_years" => '5',
-            "professional_title" =>isset($this->professional_title) ? $this->professional_title : '',
+            "professional_title_id" =>isset($this->professional_title_id) ? $this->professional_title_id : '',
             "profile_image"=>isset($this->image) ? $this->image : '',
             "gender" => ($this->gender == 0) ? "male" : "female",
             "about" => isset($this->about) ? $this->about : '',
             "user_token" => isset($this->api_token) ? $this->api_token : '',
             "device_token" => isset($this->device_token) ? $this->device_token : '',
+            'licenses' => LicenseResource::collection(License::where('doctor_id', $this->id)->get()),
             "created_at" => $this->created_at,
             "updated_at" => $this->updated_at,
         ];

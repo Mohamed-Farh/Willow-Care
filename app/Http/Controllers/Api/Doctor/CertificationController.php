@@ -61,7 +61,7 @@ class CertificationController extends Controller
                 'certification_id' => 'required|exists:certifications,id',
             ]);
             if ($validator->fails()) {
-                return $this->responseJsonFailed(404, 'certification_id is incorrect or required');
+                return $this->responseJsonFailed(422, 'certification_id is incorrect or required');
             }
 
             if( $request->certification_id){
@@ -71,7 +71,7 @@ class CertificationController extends Controller
                                                 ->whereActive(1)
                                                 ->first();
 
-                    if($certificate != null && File::exists($certificate->image)){
+                    if($certificate->image != null && File::exists($certificate->image)){
                         $old_file = $certificate->image; //get old photo
                         unlink($old_file);  //To Check If I'm On Locallhost
                     }elseif($certificate->image != null && File::exists('../'.$certificate->image)){
@@ -82,7 +82,7 @@ class CertificationController extends Controller
                 }
                 return $this->responseJsonWithoutData();
             }else{
-                return $this->responseJsonFailed(404, 'certification id is required');
+                return $this->responseJsonFailed(422, 'certification id is required');
             }
         } catch (Throwable $e) {
             $this->responseJsonFailed();
