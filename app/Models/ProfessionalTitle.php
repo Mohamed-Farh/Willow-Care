@@ -11,9 +11,9 @@ class ProfessionalTitle extends Model
 
     protected $guarded = [];
 
-    protected $casts = [
-        'id' => 'string',
-    ];
+    // protected $casts = [
+    //     'id' => 'string',
+    // ];
     
     public function active()
     {
