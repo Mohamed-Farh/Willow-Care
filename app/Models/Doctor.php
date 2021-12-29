@@ -73,4 +73,17 @@ class Doctor extends Authenticatable
     {
         return $this->belongsToMany(InsuranceCompany::class, 'doctor_insurance_company');
     }
+
+    public function homeConcultations(): HasMany
+    {
+        return $this->hasMany(HomeConcultation::class);
+    }
+
+    public function onlineConcultations(): HasMany
+    {
+        return $this->hasMany(OnlineConcultation::class);
+    }
+
+
+
 }

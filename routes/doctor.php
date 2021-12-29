@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\Doctor\GeneralController;
 use App\Http\Controllers\Api\Doctor\HomeConcultationController;
 use App\Http\Controllers\Api\Doctor\InsuranceCompanyController;
 use App\Http\Controllers\Api\Doctor\LicenseController;
+use App\Http\Controllers\Api\Doctor\OnlineConcultationController;
 use App\Http\Controllers\Api\Doctor\ProfileController;
 use App\Http\Controllers\dashboard\HomeDashboardController;
 use Illuminate\Http\Request;
@@ -59,6 +60,7 @@ Route::middleware(["auth:api-doctor"])->group(function () {
 
     ############################## CLINIC #####################################
     //add clinic
+    Route::get('get-clinic',[ClinicController::class, 'getClinic']);
     Route::post('add-clinic',[ClinicController::class, 'addClinic']);
 
 
@@ -67,8 +69,24 @@ Route::middleware(["auth:api-doctor"])->group(function () {
 
 
     ############################## Home Concultation #####################################
-    //add clinic
+    Route::get('get-home-concultation',[HomeConcultationController::class, 'getHomeConcultation']);
     Route::post('add-home-concultation',[HomeConcultationController::class, 'addHomeConcultation']);
+
+
+    ############################## Online Concultation #####################################
+    Route::get('get-online-concultation',[OnlineConcultationController::class, 'getOnlineConcultation']);
+    Route::post('add-online-concultation',[OnlineConcultationController::class, 'addOnlineConcultation']);
+
+
+
+
+
+
+    Route::get('get-online-free-times',[OnlineConcultationController::class, 'getOnlineFreeTimes']);
+
+
+
+
 
 
 });

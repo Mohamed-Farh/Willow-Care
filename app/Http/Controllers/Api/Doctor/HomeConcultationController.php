@@ -22,9 +22,19 @@ class HomeConcultationController extends Controller
 
     use ApiTraits, HelperTrait, HasApiTokens;
 
+    public function getHomeConcultation(Request $request)
+    {
+        try {
+            $HomeConcultation = HomeConcultation::where('doctor_id', Auth::user()->id)->get();
+            return $this->responseJson(200, "Doctor Home Concultation", HomeConculationResource::collection($HomeConcultation));
+        } catch (Throwable $e) {
+            $this->responseJsonFailed();
+        }
+    }
+
     public function addHomeConcultation(HomeConculationRequest $request)
     {
-        // try {
+        try {
             $home = HomeConcultation::create([
                 "doctor_id" => Auth::user()->id,
                 "price" => $request->price,
@@ -32,9 +42,9 @@ class HomeConcultationController extends Controller
                 "payment_method" => $request->payment_method,
             ]);
             return $this->responseJson(200, "Addning New Home Concultation Successfully", new HomeConculationResource($home));
-        // } catch (Throwable $e) {
-        //     $this->responseJsonFailed();
-        // }
+        } catch (Throwable $e) {
+            $this->responseJsonFailed();
+        }
     }
 
 

@@ -19,6 +19,18 @@ class ClinicController extends Controller
 
     use ApiTraits, HelperTrait, HasApiTokens;
 
+
+
+    public function getClinic(Request $request)
+    {
+        try {
+            $clinics = Clinic::where('doctor_id', Auth::user()->id)->get();
+            return $this->responseJson(200, "Doctor Clinics", ClinicResource::collection($clinics));
+        } catch (Throwable $e) {
+            $this->responseJsonFailed();
+        }
+    }
+
     public function addClinic(ClinicRequest $request)
     {
         try {
