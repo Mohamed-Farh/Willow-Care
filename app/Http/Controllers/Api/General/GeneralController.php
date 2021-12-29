@@ -65,14 +65,15 @@ class GeneralController extends Controller
     public function getCountries(Request $request)
     {
         try {
-            $validator = Validator::make($request->all(), [
-                'lang' => ['required', Rule::in(['en', 'ro', 'ar'])],
-            ]);
-            if ($validator->fails()) {
-                return $this->responseJsonFailed(404,'language is incorrect or required');
-            }
+            // $validator = Validator::make($request->all(), [
+            //     'lang' => ['required', Rule::in(['en', 'ro', 'ar'])],
+            // ]);
+            // if ($validator->fails()) {
+            //     return $this->responseJsonFailed(404,'language is incorrect or required');
+            // }
 
-            $lang =  $_GET['lang'];
+            // $lang =  $_GET['lang'];
+            $lang = $request->header('lang');
             if( $lang == 'ar' || $lang == 'en' || $lang =='ro'){
                 $countries = Country::select('id' ,'name_'.$lang.' as name', 'flag', 'code')->where('active','1')->get();
                 return $this->responseJson(200, "all countries data", $countries);
