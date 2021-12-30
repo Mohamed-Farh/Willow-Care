@@ -8,4 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class HomeConcultationWorkingTime extends Model
 {
     use HasFactory;
+
+    protected $table = 'home_concultation_working_times';
+    protected $fillable = [
+        'day',
+        'from',
+        'to',
+        'home_concultation_id',
+    ];
+    public $timestamps = true;
 }

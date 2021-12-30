@@ -68,21 +68,25 @@ Route::middleware(["auth:api-doctor"])->group(function () {
     Route::post('add_clinic_worktime',[ClinicController::class, 'addClinicWorkTime']);
 
 
-    ############################## Home Concultation #####################################
+    ############################## Home Concultation ##################################################
     Route::get('get-home-concultation',[HomeConcultationController::class, 'getHomeConcultation']);
     Route::post('add-home-concultation',[HomeConcultationController::class, 'addHomeConcultation']);
 
+            ########## Home ConcultationWorking Time ###########
+            Route::get('get-home-free-times',[HomeConcultationController::class, 'getHomeFreeTimes']);
+            Route::post('add-home-working-time',[HomeConcultationController::class, 'addHomeWorkingTime']);
 
-    ############################## Online Concultation #####################################
+
+
+
+
+    ############################## Online Concultation ###################################################
     Route::get('get-online-concultation',[OnlineConcultationController::class, 'getOnlineConcultation']);
     Route::post('add-online-concultation',[OnlineConcultationController::class, 'addOnlineConcultation']);
 
+            ########## Online ConcultationWorking Time ###########
+            Route::get('get-online-free-times',[OnlineConcultationController::class, 'getOnlineFreeTimes']);
 
-
-
-
-
-    Route::get('get-online-free-times',[OnlineConcultationController::class, 'getOnlineFreeTimes']);
 
 
 
