@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Dashboard\HomeDashboardController;
 use App\Http\Controllers\Dashboard\CategoryController;
+use App\Http\Controllers\Dashboard\CountryController;
 use Illuminate\Support\Facades\Auth;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
@@ -45,7 +46,12 @@ Route::group(['prefix' => 'admin'], function(){
                 Route::post('delete-cat-img',[CategoryController::class,'deleteattachment'])->name('delCatImg');
                 Route::post('categories/destroyAll', [CategoryController::class,'massDestroy'])->name('categories.massDestroy');
                 Route::get('changeStatusCat', [CategoryController::class,'changeStatus'])->name('changeCatStatus');
-                /*  Category   */
+                /*  Country   */
+                Route::resource('/countries', CountryController::class);
+                Route::post('delete-country-img',[CountryController::class,'deleteattachment'])->name('delCountryImg');
+                Route::post('countries/destroyAll', [CountryController::class,'massDestroy'])->name('countries.massDestroy');
+                Route::get('changeStatusCountry', [CountryController::class,'changeStatus'])->name('changeCountryStatus');
+                /*  Country   */
             });
 
     });
