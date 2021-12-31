@@ -100,11 +100,11 @@
                                 </a>
                             </li>
                             <li class="menu-item" aria-haspopup="true">
-                                <a href="layout/subheader/actions.html" class="menu-link">
+                                <a href="{{route('countries.index')}}" class="menu-link">
                                     <i class="menu-bullet menu-bullet-dot">
                                         <span></span>
                                     </i>
-                                    <span class="menu-text">Speciality</span>
+                                    <span class="menu-text">Country</span>
                                 </a>
                             </li>
                         </ul>
