@@ -3,6 +3,13 @@
 
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\Dashboard\HomeDashboardController;
+use App\Http\Controllers\Dashboard\CategoryController;
+use Illuminate\Support\Facades\Auth;
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
+
+
+
 
 
 
@@ -18,7 +25,13 @@ use Illuminate\Support\Facades\Route;
 */
 
 
+Route::get('/',function (){
+    return view('soon');
+});
 
+Route::group(['prefix' => 'admin'], function(){
+    \Auth::routes(['register' => false]);
+});
     Route::group(
         [
             'prefix' => \LaravelLocalization::setLocale(),
@@ -26,25 +39,18 @@ use Illuminate\Support\Facades\Route;
         ], function(){
             Route::group(['prefix'=>'admin'],function (){
                 /*  Home   */
-                Route::get('/', [\App\Http\Controllers\dashboard\HomeDashboardController::class,'index'])->name('home');
+                Route::get('/', [HomeDashboardController::class,'index'])->name('home');
                 /*  Category   */
-                Route::resource('/categories', \App\Http\Controllers\Dashboard\CategoryController::class);
-                Route::post('delete-cat-img',[\App\Http\Controllers\Dashboard\CategoryController::class,'deleteattachment'])->name('delCatImg');
-                Route::post('categories/destroyAll', [\App\Http\Controllers\Dashboard\CategoryController::class,'massDestroy'])->name('categories.massDestroy');
-                Route::get('changeStatusCat', [\App\Http\Controllers\Dashboard\CategoryController::class,'changeStatus'])->name('changeCatStatus');
+                Route::resource('/categories', CategoryController::class);
+                Route::post('delete-cat-img',[CategoryController::class,'deleteattachment'])->name('delCatImg');
+                Route::post('categories/destroyAll', [CategoryController::class,'massDestroy'])->name('categories.massDestroy');
+                Route::get('changeStatusCat', [CategoryController::class,'changeStatus'])->name('changeCatStatus');
                 /*  Category   */
             });
 
     });
 
 
-Route::group(['prefix' => 'admin'], function(){
-    \Auth::routes(['register' => false]);
-});
-
-Route::get('/',function (){
-    return view('soon');
-});
 
 
 

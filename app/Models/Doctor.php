@@ -25,7 +25,8 @@ class Doctor extends Authenticatable
         'f_code',
         'g_code',
         'a_code',
-        'graduate_year',
+        'professional_title_id',
+        'graduation_year',
         'gender',
         'about',
         'lang',
@@ -72,4 +73,17 @@ class Doctor extends Authenticatable
     {
         return $this->belongsToMany(InsuranceCompany::class, 'doctor_insurance_company');
     }
+
+    public function homeConcultations(): HasMany
+    {
+        return $this->hasMany(HomeConcultation::class);
+    }
+
+    public function onlineConcultations(): HasMany
+    {
+        return $this->hasMany(OnlineConcultation::class);
+    }
+
+
+
 }

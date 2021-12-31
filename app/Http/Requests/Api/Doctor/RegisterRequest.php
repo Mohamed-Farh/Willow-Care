@@ -6,6 +6,7 @@ use App\Traits\ApiTraits;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\Response;
 
 class RegisterRequest extends FormRequest
@@ -35,12 +36,16 @@ class RegisterRequest extends FormRequest
             "password" => "required|min:8",
             "country_id" => "required|exists:countries,id",
             "lang" => "nullable|in:ro,en,ar",
-            "image" => "required|file|mimes:png,jpg,svg",
             "device_token" => "required",
          ];
     }
 
-    public function failedValidation(Validator $validator){
-        throw new ValidationException($validator, $this->returnValidationError($validator));
+    protected function failedValidation(Validator $validator)
+    {
+        $errors = $this->validator->errors();
+        $er = implode(' |+| ', $errors->all());
+        throw new HttpResponseException(
+            $this->responseJsonFailed(422 ,$er)
+        );
     }
 }

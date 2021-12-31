@@ -46,7 +46,13 @@ class Clinic extends Model
         return $this->hasMany(WorkingTime::class);
     }
 
-    
+    public function dayOfWorkingTime($query, $day)
+    {
+        return $query->whereHas('workingTimes', function ($query, $day) {
+
+            $query->where('day', $day);
+        });
+    }
 
 
 

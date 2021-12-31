@@ -8,6 +8,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Response;
 use Auth;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class PhoneVerifyRequest extends FormRequest
 {
@@ -34,7 +35,12 @@ class PhoneVerifyRequest extends FormRequest
         ];
     }
 
-    public function failedValidation(Validator $validator){
-        throw new ValidationException($validator, $this->returnValidationError($validator));
+    protected function failedValidation(Validator $validator)
+    {
+        $errors = $this->validator->errors();
+        $er = implode(' |+| ', $errors->all());
+        throw new HttpResponseException(
+            $this->responseJsonFailed(422 ,$er)
+        );
     }
 }

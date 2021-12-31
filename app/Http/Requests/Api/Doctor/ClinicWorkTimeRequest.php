@@ -6,6 +6,7 @@ use App\Traits\ApiTraits;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\Response;
 
 class ClinicWorkTimeRequest extends FormRequest
@@ -29,17 +30,23 @@ class ClinicWorkTimeRequest extends FormRequest
     public function rules()
     {
         return [
-            "clinic_id" => "required|exists:clinics,id" ,
-            "static_worktime" => "required|in:0,1",
-            "days" => "array|required|min:1|in:0,1,2,3,4,5,6",
-            "from" => "required|date_format:H:i",
-            "to" => "required|date_format:H:i|after:from",
-            "setions_times_from" => "array|required",
-            "setions_times_to" => "array|required",
+            "same_day" => "required|in:0,1",
+            "clinic_id" => "required|exists:clinics,id",
+            "all_days" => "array|required|min:1",
+            "all_days.*.day" => "required|min:1|in:0,1,2,3,4,5,6",
+            "all_days.*.from" => "required|date_format:H:i",
+            "all_days.*.to" => "required|date_format:H:i|after:all_days.*.from",
+            "all_days.*.setions_times.*.from" => "required|date_format:H:i",
+            "all_days.*.setions_times.*.to" =>"required|date_format:H:i|after:all_days.*.setions_times.*.from",
         ];
     }
 
-    public function failedValidation(Validator $validator){
-        throw new ValidationException($validator, $this->returnValidationError($validator));
+    protected function failedValidation(Validator $validator)
+    {
+        $errors = $this->validator->errors();
+        $er = implode(' |+| ', $errors->all());
+        throw new HttpResponseException(
+            $this->responseJsonFailed(422 ,$er)
+        );
     }
 }
