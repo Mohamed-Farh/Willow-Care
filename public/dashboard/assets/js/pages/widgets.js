@@ -590,7 +590,6 @@ var KTWidgets = function () {
         if (!element) {
             return;
         }
-
         var options = {
             series: [{
                 name: 'Net Profit',
@@ -609,13 +608,7 @@ var KTWidgets = function () {
                     enabled: true
                 }
             },
-            plotOptions: {},
-            legend: {
-                show: false
-            },
-            dataLabels: {
-                enabled: false
-            },
+
             fill: {
                 type: 'solid',
                 opacity: 1
@@ -712,7 +705,6 @@ var KTWidgets = function () {
                 strokeWidth: 3
             }
         };
-
         var chart = new ApexCharts(element, options);
         chart.render();
     }
