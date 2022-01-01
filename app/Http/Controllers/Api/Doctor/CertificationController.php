@@ -45,7 +45,7 @@ class CertificationController extends Controller
                 }
                 return $this->responseJsonWithoutData();
             }else{
-                return $this->responseJsonFailed(404, 'Certification Image is required');
+                return $this->responseValidationJsonFailed('Certification Image is required');
             }
         } catch (Throwable $e) {
             $this->responseJsonFailed();
@@ -61,7 +61,7 @@ class CertificationController extends Controller
                 'certification_id' => 'required|exists:certifications,id',
             ]);
             if ($validator->fails()) {
-                return $this->responseJsonFailed(422, 'certification_id is incorrect or required');
+                return $this->responseValidationJsonFailed('certification_id is incorrect or required');
             }
 
             if( $request->certification_id){
@@ -82,7 +82,7 @@ class CertificationController extends Controller
                 }
                 return $this->responseJsonWithoutData();
             }else{
-                return $this->responseJsonFailed(422, 'certification id is required');
+                return $this->responseValidationJsonFailed('certification id is required');
             }
         } catch (Throwable $e) {
             $this->responseJsonFailed();

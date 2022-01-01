@@ -49,7 +49,7 @@ class ClinicRequest extends FormRequest
         $errors = $this->validator->errors();
         $er = implode(' |+| ', $errors->all());
         throw new HttpResponseException(
-            $this->responseJsonFailed(422 ,$er)
+            $this->responseValidationJsonFailed($er)
         );
     }
 }
