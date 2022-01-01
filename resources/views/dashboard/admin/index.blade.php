@@ -24,8 +24,9 @@
         <div class="row ">
 
             <div class="col-12 d-flex justify-content-end">
+                @if(\Illuminate\Support\Facades\Auth::user()->role == 0)
                 <!--begin::Button-->
-                <a href="{{route('countries.create')}}" class="btn btn-primary font-weight-bolder">
+                <a href="{{route('admin.create')}}" class="btn btn-primary font-weight-bolder">
                         <span class="svg-icon svg-icon-md">
                             <!--begin::Svg Icon | path:assets/media/svg/icons/Design/Flatten.svg-->
                             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
@@ -37,6 +38,7 @@
                             </svg>
                             <!--end::Svg Icon-->
                         </span>New Record</a>
+                    @endif
             </div>
 
         </div>
@@ -48,32 +50,38 @@
                     <tr class="text-light" >
                         <th  class="text-light">No</th>
                         <th  class="text-light">Name</th>
-                        <th  class="text-light">Code</th>
-                        <th  class="text-light">Flag</th>
+                        <th  class="text-light">Email</th>
+                        <th  class="text-light">Phone</th>
+                        <th  class="text-light">Image</th>
+                        <th  class="text-light">Role</th>
                         <th  class="text-light">Status</th>
                         <th  class="text-light">Action</th>
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach($countries as $k=>$item)
-                        <tr data-entry-id="{{ $item->id }}">
-                            <td>{{$item->id}}</td>
+                    @foreach($admins as $k=>$item)
+                        <tr  data-entry-id="{{ $item->id }}">
+                            <td class="@if($item->role==0)notSelect @else select @endif">{{$item->id}}</td>
                             <td >{{$item->name}}</td>
-                            <td >{{$item->code}}</td>
-                            <td class="text-center"><img class="rounded" width="60" height="60" src="{{asset($item->flag)}}"></td>
+                            <td >{{$item->email}}</td>
+                            <td >{{$item->phone}}</td>
+                            <td class="text-center"><img class="rounded" width="60" height="60" src="{{asset($item->image)}}"></td>
+                            <td >{{$item->role == 0 ? 'Super Admin':'Admin'}}</td>
                             <td class="text-center">
+                                @if(\Illuminate\Support\Facades\Auth::user()->role == 0)
                                 <input data-id="{{$item->id}}"
                                        class="toggle-class" type="checkbox" data-onstyle="success"
                                        data-offstyle="danger" data-toggle="toggle" data-on="On"
                                        data-width="40" data-height="30"
                                        data-off="Off" {{ $item->active ? 'checked' : '' }}>
-
+                                @endif
                             </td>
                             <td class="text-center">
                                 <div style="display: flex" class="text-center justify-content-between">
-                                    <a href="{{route("countries.edit", $item->id)}}"
-                                       class="edit btn btn-secondary btn-sm"><i class="fas fa-edit"></i></a>
-                                    <form method="POST" action=" {{route("countries.destroy", $item->id)}} ">
+{{--                                    <a href="{{route("admin.edit", $item->id)}}"--}}
+{{--                                       class="edit btn btn-secondary btn-sm"><i class="fas fa-edit"></i></a>--}}
+                                    @if($item->role!==0 && \Illuminate\Support\Facades\Auth::user()->role !== 1)
+                                    <form method="POST" action="{{route("admin.destroy", $item->id)}}">
                                         @csrf
                                         <input name="_method" type="hidden" value="DELETE">
                                         <button id="confirm" class="show_confirm destroy btn btn-danger btn-sm"
@@ -81,6 +89,7 @@
                                             <i class="fas fa-trash"></i>
                                         </button>
                                     </form>
+                                    @endif
                                 </div>
                             </td>
                         </tr>
@@ -121,19 +130,28 @@
                 language: {
                     url: languages['{{ app()->getLocale() }}']
                 },
-                columnDefs: [{
+
+                columnDefs: [
+
+                    {
                     orderable: false,
                     className: 'select-checkbox',
                     targets: 0
-                }, {
+                }
+
+                , {
                     orderable: false,
                     searchable: false,
                     targets: -1
-                }],
+                }
+
+                ]
+                ,
                 select: {
                     style: 'multi+shift',
-                    selector: 'td:first-child'
+                    selector: 'td.select'
                 },
+
                 order: [],
                 scrollX: false,
                 dom: 'lBfrtip<"actions">',
@@ -186,16 +204,19 @@
                             columns: ':visible'
                         }
                     },
-                    'selectAll','selectNone',
+
+                    @if(\Illuminate\Support\Facades\Auth::user()->role == '0')
+
                     {
                         className: 'btn btn-danger',
                         text: 'Delete All',
-                        url: "{{ route('countries.massDestroy') }}",
+                        url: "{{ route('admins.massDestroy') }}",
                         action: function (e, dt, node, config) {
 
                             var ids = $.map(dt.rows({ selected: true }).nodes(), function (entry) {
                                 return $(entry).data('entry-id')
                             });
+
 
                             if (ids.length === 0) {
                                 Swal.fire('No Data Selected')
@@ -231,7 +252,7 @@
                         }
 
                     }
-
+                    @endif
 
                 ],
 
@@ -246,13 +267,13 @@
         $(function() {
             $('.toggle-class').change(function() {
                 var active = $(this).prop('checked') == true ? 1 : 0;
-                var country_id = $(this).data('id');
+                var admin_id = $(this).data('id');
 
                 $.ajax({
                     type: "GET",
                     dataType: "json",
-                    url: '{{route('changeCountryStatus')}}',
-                    data: {'active': active, 'country_id': country_id},
+                    url: '{{route('changeAdminStatus')}}',
+                    data: {'active': active, 'admin_id': admin_id},
                     success: function(data){
                         Swal.fire({
                             title: 'Status Change Successfully',

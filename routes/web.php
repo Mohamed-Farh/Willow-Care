@@ -2,11 +2,12 @@
 
 
 use Illuminate\Support\Facades\Route;
-
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Dashboard\HomeDashboardController;
 use App\Http\Controllers\Dashboard\CategoryController;
 use App\Http\Controllers\Dashboard\CountryController;
-use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Dashboard\AdminController;
+
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 
@@ -29,14 +30,15 @@ use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 Route::get('/',function (){
     return view('soon');
 });
-
 Route::group(['prefix' => 'admin'], function(){
-    \Auth::routes(['register' => false]);
+    Auth::routes(['register' => false]);
 });
+
+
     Route::group(
         [
             'prefix' => \LaravelLocalization::setLocale(),
-            'middleware' => [ 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath' ,'auth']
+            'middleware' => [ 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath','Admin']
         ], function(){
             Route::group(['prefix'=>'admin'],function (){
                 /*  Home   */
@@ -51,11 +53,16 @@ Route::group(['prefix' => 'admin'], function(){
                 Route::post('delete-country-img',[CountryController::class,'deleteattachment'])->name('delCountryImg');
                 Route::post('countries/destroyAll', [CountryController::class,'massDestroy'])->name('countries.massDestroy');
                 Route::get('changeStatusCountry', [CountryController::class,'changeStatus'])->name('changeCountryStatus');
-                /*  Country   */
+                /*  Admin   */
+                Route::resource('/admin', AdminController::class);
+                Route::get('changeStatusAdmin', [AdminController::class,'changeStatus'])->name('changeAdminStatus');
+                Route::post('admin/destroyAll', [AdminController::class,'massDestroy'])->name('admins.massDestroy');
+                Route::post('delete-admin-img',[AdminController::class,'deleteattachment'])->name('delAdminImg');
+                Route::get('change-password/{id}',[AdminController::class,'showChangePassword'])->name('changePassword');
+                Route::post('change-password',[AdminController::class,'changePassword'])->name('doChangePassword');
             });
 
     });
-
 
 
 
