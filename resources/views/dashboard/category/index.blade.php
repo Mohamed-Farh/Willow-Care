@@ -1,4 +1,23 @@
 @extends('dashboard.common.app')
+@section('style')
+    <style>
+        table.dataTable tbody td.select-checkbox:before, table.dataTable tbody th.select-checkbox:before {
+            content: " ";
+            margin-top: 22px;
+            margin-left: 0;
+            border: 1px solid darkblue;
+            border-radius: 3px;
+        }
+        table.dataTable tr.selected td.select-checkbox:after, table.dataTable tr.selected th.select-checkbox:after {
+            content: "✓";
+            font-size: 20px;
+            margin-top: 6px;
+            margin-left: 0px;
+            text-align: center;
+            text-shadow: 1px 1px #b0bed9, -1px -1px #b0bed9, 1px -1px #b0bed9, -1px 1px #b0bed9;
+        }
+    </style>
+@endsection
 @section('content')
     <div class="container mt-3">
         @include('sweetalert::alert')

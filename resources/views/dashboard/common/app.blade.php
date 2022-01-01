@@ -55,7 +55,7 @@
 
     <!--end::Layout Themes-->
     <link rel="shortcut icon" href="{{asset('dashboard/assets/media/logos/favicon.ico')}}"/>
-
+@yield('style')
 </head>
 
 <!--begin::Body-->
@@ -169,10 +169,10 @@
                 <i class="symbol-badge bg-success"></i>
             </div>
             <div class="d-flex flex-column">
-                <a href="" class="font-weight-bold font-size-h5 text-dark-75 text-hover-primary">{{auth()->user()->name}}</a>
+                <a href="{{route('admin.show',auth()->user()->id)}}" class="font-weight-bold font-size-h5 text-dark-75 text-hover-primary">{{auth()->user()->name}}</a>
                 <div class="text-muted mt-1">{{auth()->user()->role == 0 ? 'Super Admin' : 'Admin' }}</div>
                 <div class="navi mt-2">
-                    <a href="" class="navi-item">
+                    <a href="{{route('admin.show',auth()->user()->id)}}" class="navi-item">
                     <span class="navi-link p-0 pb-2">
                         <span class="navi-icon mr-1">
                             <span class="svg-icon svg-icon-lg svg-icon-primary">
