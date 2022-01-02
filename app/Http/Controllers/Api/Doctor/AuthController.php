@@ -104,7 +104,6 @@ class AuthController extends Controller
                 return $this->responseJsonWithoutData();
             }else{
                 return $this->responseValidationJsonFailed('image is required');
-
             }
         } catch (Throwable $e) {
             $this->responseJsonFailed();

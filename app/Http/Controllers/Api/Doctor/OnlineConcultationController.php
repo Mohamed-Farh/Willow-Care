@@ -7,6 +7,7 @@ use App\Http\Requests\Api\Doctor\ClinicRequest;
 use App\Http\Requests\Api\Doctor\ClinicWorkTimeRequest;
 use App\Http\Requests\Api\Doctor\HomeConculationRequest;
 use App\Http\Requests\Api\Doctor\OnlineConculationRequest;
+use App\Http\Requests\Api\Doctor\UpdateOnlineConculationRequest;
 use App\Http\Resources\Doctor\ClinicResource;
 use App\Http\Resources\Doctor\HomeConculationResource;
 use App\Http\Resources\Doctor\OnlineConculationResource;
@@ -23,6 +24,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Throwable;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class OnlineConcultationController extends Controller
 {
@@ -53,6 +55,52 @@ class OnlineConcultationController extends Controller
             $this->responseJsonFailed();
         }
     }
+
+    public function updateOnlineConcultation(UpdateOnlineConculationRequest $request)
+    {
+        try {
+            $online = OnlineConcultation::where('id', $request->online_concultation_id)->first();
+
+            if($online->doctor_id != Auth::user()->id){
+                return $this->responseValidationJsonFailed('OnlineConcultation not belongs to this doctor');
+            }else{
+                $online->update($request->all());
+
+                return $this->responseJson(200, "Updating OnlineConcultation Successfully", new OnlineConculationResource($online));
+            }
+        } catch (Throwable $e) {
+            $this->responseJsonFailed();
+        }
+    }
+
+    public function deleteOnlineConcultation(Request $request)
+    {
+        try {
+            $validator = Validator::make($request->all(), [
+                "online_concultation_id" => "required|exists:online_concultations,id",
+            ]);
+            if ($validator->fails()) {
+                return $this->responseValidationJsonFailed('OnlineConcultation is incorrect or required');
+            }
+
+            $online = OnlineConcultation::where('id', $request->online_concultation_id)->first();
+            if($online->doctor_id != Auth::user()->id){
+                return $this->responseValidationJsonFailed('OnlineConcultation not belongs to this doctor');
+            }else{
+                $online->workingTimes()->delete();
+                $online->delete();
+
+                return $this->responseJsonWithoutData();
+            }
+        } catch (Throwable $e) {
+            $this->responseJsonFailed();
+        }
+    }
+
+
+    ###############################################################################################################
+    #################################### Online Concultation Working Times ##########################################
+    ###############################################################################################################
 
     public function getOnlineFreeTimes(Request $request)
     {

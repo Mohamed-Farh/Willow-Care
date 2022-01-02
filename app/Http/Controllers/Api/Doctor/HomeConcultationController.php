@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 
 use App\Http\Requests\Api\Doctor\HomeConculationRequest;
 use App\Http\Requests\Api\Doctor\HomeConculationWorkingTimesRequest;
+use App\Http\Requests\Api\Doctor\UpdateHomeConculationRequest;
 use App\Http\Resources\Doctor\HomeConculationResource;
 use App\Models\Doctor;
 use App\Models\HomeConcultation;
@@ -18,6 +19,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Throwable;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class HomeConcultationController extends Controller
 {
@@ -44,6 +46,47 @@ class HomeConcultationController extends Controller
                 "payment_method" => $request->payment_method,
             ]);
             return $this->responseJson(200, "Addning New Home Concultation Successfully", new HomeConculationResource($home));
+        } catch (Throwable $e) {
+            $this->responseJsonFailed();
+        }
+    }
+
+    public function updateHomeConcultation(UpdateHomeConculationRequest $request)
+    {
+        try {
+            $home = HomeConcultation::where('id', $request->home_concultation_id)->first();
+
+            if($home->doctor_id != Auth::user()->id){
+                return $this->responseValidationJsonFailed('HomeConcultation not belongs to this doctor');
+            }else{
+                $home->update($request->all());
+
+                return $this->responseJson(200, "Updating HomeConcultation Successfully", new HomeConculationResource($home));
+            }
+        } catch (Throwable $e) {
+            $this->responseJsonFailed();
+        }
+    }
+
+    public function deleteHomeConcultation(Request $request)
+    {
+        try {
+            $validator = Validator::make($request->all(), [
+                "home_concultation_id" => "required|exists:home_concultations,id",
+            ]);
+            if ($validator->fails()) {
+                return $this->responseValidationJsonFailed('HomeConcultation is incorrect or required');
+            }
+
+            $home = HomeConcultation::where('id', $request->home_concultation_id)->first();
+            if($home->doctor_id != Auth::user()->id){
+                return $this->responseValidationJsonFailed('HomeConcultation not belongs to this doctor');
+            }else{
+                $home->workingTimes()->delete();
+                $home->delete();
+
+                return $this->responseJsonWithoutData();
+            }
         } catch (Throwable $e) {
             $this->responseJsonFailed();
         }
