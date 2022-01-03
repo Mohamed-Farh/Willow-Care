@@ -126,6 +126,48 @@ class ClinicController extends Controller
         }
     }
 
+    public function getSingleClinicWorkTime(Request $request){
+        try{
+            $validator = Validator::make($request->all(), [
+                'clinic_id' => 'required|exists:clinics,id',
+            ]);
+            if ($validator->fails()) {
+                return $this->responseValidationJsonFailed('clinic_id is incorrect or required');
+            }
+
+            $clinic = Clinic::where(['id'=> $request->clinic_id ,'doctor_id' => Auth::user()->id])->first();
+            if(!$clinic){
+                $this->responseJsonFailed(422, "this doctor can't control on this clinic");
+            }
+
+            $worktime_days = [];
+            for($x=0 ; $x<7 ; $x++){
+                $workingTime = WorkingTime::where(['clinic_id' => $request->clinic_id , 'day' => $x])->get(['from','to']);
+                $from = WorkingTime::where(['clinic_id' => $request->clinic_id , 'day' => $x])->min('from');
+                $to = WorkingTime::where(['clinic_id' => $request->clinic_id , 'day' => $x])->max('to');
+                if ($workingTime->count() == 0 ) continue;
+                $work = (object)[
+                    "day" => $x ,
+                    "from" => $from,
+                    "to" => $to,
+                    "count" =>  $workingTime->count(),
+                    "shifts" => $workingTime,
+                ];
+                $worktime_days[] = $work;
+            }
+
+            $data = (object) [
+                "clinic_name" => $clinic->name,
+                "worktime_days" => $worktime_days
+            ];
+            // return $this->responseJson(200, "Clinic WorkingTimes", ClinicWorkingTimeResource::collection($workingTime));
+            return $this->responseJson(200, "Clinic WorkingTimes", $data);
+
+        }catch (Throwable $e) {
+            $this->responseJsonFailed();
+        }
+    }
+
     ###############################################################################################################
     ######################################### Clinic  Working Times ###############################################
     ###############################################################################################################
@@ -171,89 +213,66 @@ class ClinicController extends Controller
 
 
 
-    public function addClinicWorkTime(ClinicWorkTimeRequest $request)
-    {
-        try{
-            $clinic = Clinic::where(['id'=> $request->clinic_id ,'doctor_id' => Auth::user()->id])->first();
-            if(!$clinic){
-                $this->responseJsonFailed(404, "this doctor can't control on this clinic");
-            }
-            $doctor_clinics = Clinic::where('doctor_id' , Auth::user()->id)->where('id', '!=', $request->clinic_id)->get();
+    // public function addClinicWorkTime(ClinicWorkTimeRequest $request)
+    // {
+    //     try{
+    //         $clinic = Clinic::where(['id'=> $request->clinic_id ,'doctor_id' => Auth::user()->id])->first();
+    //         if(!$clinic){
+    //             $this->responseJsonFailed(404, "this doctor can't control on this clinic");
+    //         }
+    //         $doctor_clinics = Clinic::where('doctor_id' , Auth::user()->id)->where('id', '!=', $request->clinic_id)->get();
 
-            foreach( $request->all_days as $single_day){
-                $is_in_database = WorkingTime::where('day', $single_day['day'])->first();
+    //         foreach( $request->all_days as $single_day){
+    //             $is_in_database = WorkingTime::where('day', $single_day['day'])->first();
 
-                if($is_in_database != ''){
+    //             if($is_in_database != ''){
 
-                    $check_big = WorkingTime::where('day', $single_day['day'])
-                                            ->where('from', '<=', $single_day['from'])
-                                            ->where('to', '>', $single_day['from'])
-                                            ->first();
+    //                 $check_big = WorkingTime::where('day', $single_day['day'])
+    //                                         ->where('from', '<=', $single_day['from'])
+    //                                         ->where('to', '>', $single_day['from'])
+    //                                         ->first();
 
-                    $check_small = WorkingTime::where('day', $single_day['day'])
-                                            ->where('from', '>', $single_day['from'])
-                                            ->where('from', '<=', $single_day['to'])
-                                            ->first();
-                    if($check_big != ''){
-                        $check_big->update([
-                            'day' => $single_day['day'],
-                            'from' => $single_day['from'],
-                            'to' => $single_day['to']
-                        ]);
-                    }elseif($check_small != ''){
-                        $check_small->update([
-                            'day' => $single_day['day'],
-                            'from' => $single_day['from'],
-                            'to' => $single_day['to']
-                        ]);
-                    }else{
-                        $sigle_work_out = $clinic->workingTimes()->create([
-                            'day' => $single_day['day'],
-                            'from' => $single_day['from'],
-                            'to' => $single_day['to']
-                        ]);
-                    }
+    //                 $check_small = WorkingTime::where('day', $single_day['day'])
+    //                                         ->where('from', '>', $single_day['from'])
+    //                                         ->where('from', '<=', $single_day['to'])
+    //                                         ->first();
+    //                 if($check_big != ''){
+    //                     $check_big->update([
+    //                         'day' => $single_day['day'],
+    //                         'from' => $single_day['from'],
+    //                         'to' => $single_day['to']
+    //                     ]);
+    //                 }elseif($check_small != ''){
+    //                     $check_small->update([
+    //                         'day' => $single_day['day'],
+    //                         'from' => $single_day['from'],
+    //                         'to' => $single_day['to']
+    //                     ]);
+    //                 }else{
+    //                     $sigle_work_out = $clinic->workingTimes()->create([
+    //                         'day' => $single_day['day'],
+    //                         'from' => $single_day['from'],
+    //                         'to' => $single_day['to']
+    //                     ]);
+    //                 }
 
-                }else{
-                    $sigle_work_out = $clinic->workingTimes()->create([
-                        'day' => $single_day['day'],
-                        'from' => $single_day['from'],
-                        'to' => $single_day['to']
-                    ]);
-                }
-            }
-            // $clinic->setting = $request->same_day;
-            // $clinic->save();
-            return $this->responseJsonWithoutData();
+    //             }else{
+    //                 $sigle_work_out = $clinic->workingTimes()->create([
+    //                     'day' => $single_day['day'],
+    //                     'from' => $single_day['from'],
+    //                     'to' => $single_day['to']
+    //                 ]);
+    //             }
+    //         }
+    //         // $clinic->setting = $request->same_day;
+    //         // $clinic->save();
+    //         return $this->responseJsonWithoutData();
 
-        }catch (Throwable $e) {
-            $this->responseJsonFailed();
-        }
-    }
+    //     }catch (Throwable $e) {
+    //         $this->responseJsonFailed();
+    //     }
+    // }
 
-    public function getClinicWorkTime(Request $request)
-    {
-        try{
-            $validator = Validator::make($request->all(), [
-                'clinic_id' => 'required|exists:clinics,id',
-            ]);
-            if ($validator->fails()) {
-                return $this->responseValidationJsonFailed('clinic_id is incorrect or required');
-            }
-
-            $clinic = Clinic::where(['id'=> $request->clinic_id ,'doctor_id' => Auth::user()->id])->first();
-            if(!$clinic){
-                $this->responseJsonFailed(422, "this doctor can't control on this clinic");
-            }
-
-            $workingTime = WorkingTime::where('clinic_id', $request->clinic_id)->get();
-
-            return $this->responseJson(200, "Clinic WorkingTimes", ClinicWorkingTimeResource::collection($workingTime));
-
-        }catch (Throwable $e) {
-            $this->responseJsonFailed();
-        }
-    }
 
 
 }

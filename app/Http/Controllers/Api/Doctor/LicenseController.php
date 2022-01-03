@@ -30,7 +30,7 @@ class LicenseController extends Controller
                 $img = $this->uploadImages($image, "images/doctor/license");
                 $doctor->licenses()->create(["image" => 'public/'.$image]);
             }
-            // $doctor->specialties()->syncWithoutDetaching($request->specialty_id);
+            $doctor->specialties()->syncWithoutDetaching($request->specialty_id);
             return $this->responseJsonWithoutData();
         } catch (Throwable $e) {
             $this->responseJsonFailed();

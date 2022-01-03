@@ -9,7 +9,7 @@ use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\Response;
 
-class LicenseRequest extends FormRequest
+class CheckTimeRequest extends FormRequest
 {
     use ApiTraits;
     /**
@@ -30,9 +30,9 @@ class LicenseRequest extends FormRequest
     public function rules()
     {
         return [
-            "license_image" => 'array|required|min:1',
-            "license_image*" => 'file',
-            "specialty_id" => "array|required|exists:specialties,id",
+            "day" => "required|in:0,1,2,3,4,5,6",
+            "from" => "required|date_format:H:i",
+            "to" =>"required|date_format:H:i|after:shifts.*.from",
         ];
     }
 

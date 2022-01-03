@@ -102,97 +102,97 @@ class OnlineConcultationController extends Controller
     #################################### Online Concultation Working Times ##########################################
     ###############################################################################################################
 
-    public function getOnlineFreeTimes(Request $request)
-    {
-        $day = $request->header('day');
-        try {
-            $freeTimes = [];
-            $doctor = Doctor::whereId(Auth::user()->id)->first();
-            $clinics = $doctor->clinics;
+    // public function getOnlineFreeTimes(Request $request)
+    // {
+    //     $day = $request->header('day');
+    //     try {
+    //         $freeTimes = [];
+    //         $doctor = Doctor::whereId(Auth::user()->id)->first();
+    //         $clinics = $doctor->clinics;
 
-            foreach( $clinics as $clinic)
-            {
-                $workingTimes =  $clinic->workingTimes()->where('day', $day)->get();
+    //         foreach( $clinics as $clinic)
+    //         {
+    //             $workingTimes =  $clinic->workingTimes()->where('day', $day)->get();
 
-                foreach( $workingTimes as $workingTime)
-                {
-                    $shifts = $workingTime->shifts;
-                    if($workingTime->from != $shifts[0]->from){
-                        $startTime  = Carbon::parse($workingTime->from);
-                        $finishTime = Carbon::parse($shifts[0]->from);
-                        $totalDuration = $finishTime->diffInMinutes($startTime);
+    //             foreach( $workingTimes as $workingTime)
+    //             {
+    //                 $shifts = $workingTime->shifts;
+    //                 if($workingTime->from != $shifts[0]->from){
+    //                     $startTime  = Carbon::parse($workingTime->from);
+    //                     $finishTime = Carbon::parse($shifts[0]->from);
+    //                     $totalDuration = $finishTime->diffInMinutes($startTime);
 
-                        $space = intval($totalDuration / 30) ;
-                        for ($j=0 ; $j< $space; $j++){
-                            $t = ((object)['from' => $startTime->format('G:i'), 'to' => $startTime->addMinutes(30)->format('G:i')]);
-                            $freeTimes[] = $t;
-                        }
-                    }
+    //                     $space = intval($totalDuration / 30) ;
+    //                     for ($j=0 ; $j< $space; $j++){
+    //                         $t = ((object)['from' => $startTime->format('G:i'), 'to' => $startTime->addMinutes(30)->format('G:i')]);
+    //                         $freeTimes[] = $t;
+    //                     }
+    //                 }
 
-                    for($i=0; $i<$shifts->count(); $i++)
-                    {
-                        $startTime  = Carbon::parse($shifts[$i]->to);
-                        try{
-                            $finishTime = Carbon::parse($shifts[$i+1]->from);
-                        } catch (Throwable $e) {
-                            $finishTime = Carbon::parse($workingTime->to);
-                        }
+    //                 for($i=0; $i<$shifts->count(); $i++)
+    //                 {
+    //                     $startTime  = Carbon::parse($shifts[$i]->to);
+    //                     try{
+    //                         $finishTime = Carbon::parse($shifts[$i+1]->from);
+    //                     } catch (Throwable $e) {
+    //                         $finishTime = Carbon::parse($workingTime->to);
+    //                     }
 
-                        $totalDuration = $finishTime->diffInMinutes($startTime);
+    //                     $totalDuration = $finishTime->diffInMinutes($startTime);
 
-                        $space = intval($totalDuration / 30) ;
-                        for ($j=0 ; $j< $space; $j++){
-                            $t = ((object)['from' => $startTime->format('G:i'), 'to' => $startTime->addMinutes(30)->format('G:i')]);
-                            $freeTimes[] = $t;
-                        }
-                    }
-                }
-            }
+    //                     $space = intval($totalDuration / 30) ;
+    //                     for ($j=0 ; $j< $space; $j++){
+    //                         $t = ((object)['from' => $startTime->format('G:i'), 'to' => $startTime->addMinutes(30)->format('G:i')]);
+    //                         $freeTimes[] = $t;
+    //                     }
+    //                 }
+    //             }
+    //         }
 
-            foreach( $freeTimes as $key => $freeTime )
-            {
+    //         foreach( $freeTimes as $key => $freeTime )
+    //         {
 
-                $check_from = OnlineConcultationWorkingTime::where('day', $day)
-                                            ->where('from', '<=', $freeTime->from)
-                                            ->where('to', '>=', $freeTime->from)
-                                            ->get();
-                if($check_from->count() > 0){
-                    unset($freeTimes[$key]);
-                }else{
-                    $check_to = OnlineConcultationWorkingTime::where('day', $day)
-                    ->where('from', '<=', $freeTime->to)
-                    ->where('to', '>=', $freeTime->to)
-                    ->get();
-                    if($check_to->count() > 0){
-                        unset($freeTimes[$key]);
-                    }
-                }
-            }
+    //             $check_from = OnlineConcultationWorkingTime::where('day', $day)
+    //                                         ->where('from', '<=', $freeTime->from)
+    //                                         ->where('to', '>=', $freeTime->from)
+    //                                         ->get();
+    //             if($check_from->count() > 0){
+    //                 unset($freeTimes[$key]);
+    //             }else{
+    //                 $check_to = OnlineConcultationWorkingTime::where('day', $day)
+    //                 ->where('from', '<=', $freeTime->to)
+    //                 ->where('to', '>=', $freeTime->to)
+    //                 ->get();
+    //                 if($check_to->count() > 0){
+    //                     unset($freeTimes[$key]);
+    //                 }
+    //             }
+    //         }
 
-            foreach( $freeTimes as $key => $freeTime )
-            {
-                $check_from = HomeConcultationWorkingTime::where('day', $day)
-                                            ->where('from', '<=', $freeTime->from)
-                                            ->where('to', '>=', $freeTime->from)
-                                            ->get();
-                if($check_from->count() > 0){
-                    unset($freeTimes[$key]);
-                }else{
-                    $check_to = HomeConcultationWorkingTime::where('day', $day)
-                    ->where('from', '<=', $freeTime->to)
-                    ->where('to', '>=', $freeTime->to)
-                    ->get();
-                    if($check_to->count() > 0){
-                        unset($freeTimes[$key]);
-                    }
-                }
-            }
-            //return $freeTimes;
-            return $this->responseJson(200, "Online Avalible Time", $freeTimes);
-        } catch (Throwable $e) {
-            $this->responseJsonFailed();
-        }
-    }
+    //         foreach( $freeTimes as $key => $freeTime )
+    //         {
+    //             $check_from = HomeConcultationWorkingTime::where('day', $day)
+    //                                         ->where('from', '<=', $freeTime->from)
+    //                                         ->where('to', '>=', $freeTime->from)
+    //                                         ->get();
+    //             if($check_from->count() > 0){
+    //                 unset($freeTimes[$key]);
+    //             }else{
+    //                 $check_to = HomeConcultationWorkingTime::where('day', $day)
+    //                 ->where('from', '<=', $freeTime->to)
+    //                 ->where('to', '>=', $freeTime->to)
+    //                 ->get();
+    //                 if($check_to->count() > 0){
+    //                     unset($freeTimes[$key]);
+    //                 }
+    //             }
+    //         }
+    //         //return $freeTimes;
+    //         return $this->responseJson(200, "Online Avalible Time", $freeTimes);
+    //     } catch (Throwable $e) {
+    //         $this->responseJsonFailed();
+    //     }
+    // }
 
 
 }

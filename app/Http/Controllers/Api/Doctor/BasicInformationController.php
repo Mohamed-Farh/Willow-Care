@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Api\Doctor;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Doctor\UpdateProfileRequest;
+use App\Http\Resources\Doctor\LoginResource;
 use App\Http\Resources\Doctor\Profile\BasicInformationResource;
 use App\Http\Resources\Doctor\Profile\ProfessionalTitleResource;
 use App\Http\Resources\Doctor\Profile\ProfileSpecialtyResource;
+use App\Models\DeviceToken;
 use App\Models\Doctor;
 use App\Models\ProfessionalTitle;
 use App\Models\Specialty;
@@ -71,4 +73,11 @@ class BasicInformationController extends Controller
         }
     }
 
+    public function doctorInfo(Request $request){
+        $doctor = Doctor::whereId(Auth::guard('api-doctor')->id())->first();
+        $doctor->api_token = $request->bearerToken();
+        $device_token = DeviceToken::where('type_token', $request->bearerToken())->first();
+        $doctor->device_token = $device_token->token;
+        return $this->responseJson(200 , "Doctor Info", new LoginResource($doctor));
+    }
 }
