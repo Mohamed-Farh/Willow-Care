@@ -23,27 +23,30 @@
                         </div>
                         <!--end::Header-->
                         <!--begin::Form-->
-                        <form class="form">
+                        <form action="{{route('doChangePassword',\Illuminate\Support\Facades\Auth::user()->id)}}" method="POST" class="form">
+                            @csrf
                             <div class="card-body">
-
                                 <div class="form-group row">
                                     <label class="col-xl-3 col-lg-3 col-form-label text-alert">Current Password</label>
                                     <div class="col-lg-9 col-xl-6">
-                                        <input type="password" class="form-control form-control-lg form-control-solid mb-2"  placeholder="Current password" />
+                                        <input name="password" type="password" class="form-control form-control-lg form-control-solid mb-2"  placeholder="Current password" />
 
                                     </div>
+                                    @error('password')<span class="text-danger">{{ $message }}</span>@enderror
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-xl-3 col-lg-3 col-form-label text-alert">New Password</label>
                                     <div class="col-lg-9 col-xl-6">
-                                        <input type="password" class="form-control form-control-lg form-control-solid"  placeholder="New password" />
+                                        <input name="new_password" type="password" class="form-control form-control-lg form-control-solid"  placeholder="New password" />
                                     </div>
+                                    @error('new_password')<span class="text-danger">{{ $message }}</span>@enderror
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-xl-3 col-lg-3 col-form-label text-alert">Verify Password</label>
                                     <div class="col-lg-9 col-xl-6">
-                                        <input type="password" class="form-control form-control-lg form-control-solid"  placeholder="Verify password" />
+                                        <input name="new_password_confirmation" type="password" class="form-control form-control-lg form-control-solid"  placeholder="Verify password" />
                                     </div>
+                                    @error('new_password_confirmation')<span class="text-danger">{{ $message }}</span>@enderror
                                 </div>
                                 <div class="card-footer">
                                     <button type="submit" class="btn btn-success mr-2">Save Changes</button>

@@ -4,7 +4,7 @@ namespace App\Http\Requests\Dashboard;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CountryRequest extends FormRequest
+class ProfessionalTitleRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -30,9 +30,8 @@ class CountryRequest extends FormRequest
                     'name_ar' => 'required|max:255|string|regex:/^[\s\p{Arabic}]+$/u',
                     'name_en' => 'required|max:255|string|regex:/^[A-Za-z]*$/i',
                     'name_ro' => ['required', 'max:255','string'],
-                    'code' => 'required|required|regex:/^\+\d{1,3}$/',
-                    'active' => 'nullable',
-                    'flag' => ['nullable', 'file', 'mimes:jpeg,png,jpg,gif,svg|max:2048'],
+                    'active'=>'nullable',
+
                 ];
             }
             case 'PUT':
@@ -41,15 +40,12 @@ class CountryRequest extends FormRequest
                 return [
                     'name_ar' => 'required|max:255|string|regex:/^[\s\p{Arabic}]+$/u',
                     'name_en' => 'required|max:255|string|regex:/^[A-Za-z]*$/i',
+                    'active'=>'nullable',
                     'name_ro' => ['required', 'max:255','string'],
-                    'code' => 'required|regex:/^\+\d{1,3}$/',
-                    'flag' => ['nullable', 'file', 'mimes:jpeg,png,jpg,gif,svg|max:2048'],
-                    'active' => 'nullable',
 
                 ];
             }
-            default:
-                break;
+            default: break;
         }
     }
 }

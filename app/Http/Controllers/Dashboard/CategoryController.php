@@ -155,4 +155,5 @@ class CategoryController extends Controller
         $category->save();
         return response()->json(['success'=>'Status change successfully.']);
     }
+
 }

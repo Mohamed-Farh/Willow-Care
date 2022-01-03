@@ -58,7 +58,7 @@
                     @foreach($countries as $k=>$item)
                         <tr data-entry-id="{{ $item->id }}">
                             <td>{{$item->id}}</td>
-                            <td >{{$item->name}}</td>
+                            <td >{{$item->country}}</td>
                             <td >{{$item->code}}</td>
                             <td class="text-center"><img class="rounded" width="60" height="60" src="{{asset($item->flag)}}"></td>
                             <td class="text-center">

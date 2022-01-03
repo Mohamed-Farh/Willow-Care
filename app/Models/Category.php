@@ -16,7 +16,7 @@ class Category extends Model
     'id' => 'string',
     ];
     protected $appends =[
-        'name'
+        'category'
     ];
 
 
@@ -24,7 +24,7 @@ class Category extends Model
     {
         return $this->status ? 'Active' : 'Not Active';
     }
-    public function getNameAttribute()
+    public function getCategoryAttribute()
     {
         return Lang::locale() == 'ar' ? $this->name_ar : (Lang::locale() == 'en' ? $this->name_en : $this->name_ro);
     }
