@@ -68,6 +68,7 @@ Route::middleware(["auth:api-doctor"])->group(function () {
 
     // add Work Time & shifts
     Route::post('add_clinic_worktime',[ClinicController::class, 'addClinicWorkTime']);
+    Route::get('get_clinic_worktime',[ClinicController::class, 'getClinicWorkTime']);
 
 
     ############################## Home Concultation ##################################################
