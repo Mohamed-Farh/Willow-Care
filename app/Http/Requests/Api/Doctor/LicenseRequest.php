@@ -32,7 +32,7 @@ class LicenseRequest extends FormRequest
         return [
             "license_image" => 'array|required|min:1',
             "license_image*" => 'file',
-            "specialty_id" => "array|required|exists:specialties,id",
+            // "specialty_id" => "array|required|exists:specialties,id",
         ];
     }
 
