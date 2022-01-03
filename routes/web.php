@@ -1,12 +1,17 @@
 <?php
 
 
+use App\Http\Controllers\Dashboard\ProfessionalTitleController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Dashboard\HomeDashboardController;
 use App\Http\Controllers\Dashboard\CategoryController;
 use App\Http\Controllers\Dashboard\CountryController;
 use App\Http\Controllers\Dashboard\AdminController;
+use App\Http\Controllers\Dashboard\SpecialityController;
+use App\Http\Controllers\Dashboard\DoctorController;
+use App\Http\Controllers\Dashboard\InsuranceCompanyController;
+
 
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
@@ -59,7 +64,22 @@ Route::group(['prefix' => 'admin'], function(){
                 Route::post('admin/destroyAll', [AdminController::class,'massDestroy'])->name('admins.massDestroy');
                 Route::post('delete-admin-img',[AdminController::class,'deleteattachment'])->name('delAdminImg');
                 Route::get('change-password/{id}',[AdminController::class,'showChangePassword'])->name('changePassword');
-                Route::post('change-password',[AdminController::class,'changePassword'])->name('doChangePassword');
+                Route::post('change-password/{id}',[AdminController::class,'changePassword'])->name('doChangePassword');
+                /*  Professional Title   */
+                Route::resource('/prof-title', ProfessionalTitleController::class);
+                Route::get('changeStatusTitle', [ProfessionalTitleController::class,'changeStatus'])->name('changeTitleStatus');
+                Route::post('prof-title/destroyAll', [ProfessionalTitleController::class,'massDestroy'])->name('titles.massDestroy');
+                /* Speciality   */
+                Route::resource('/speciality', SpecialityController::class);
+                Route::get('changeStatusSpec', [SpecialityController::class,'changeStatus'])->name('changeSpecStatus');
+                /* Doctor   */
+                Route::resource('/doctor', DoctorController::class);
+                Route::get('changeStatusDoctor', [DoctorController::class,'changeStatus'])->name('changeDoctorStatus');
+                /* Insurance Company   */
+                Route::resource('/insurance-company', InsuranceCompanyController::class);
+                Route::get('changeStatusCompany', [InsuranceCompanyController::class,'changeStatus'])->name('changeCompanyStatus');
+                Route::post('delete-company-img',[InsuranceCompanyController::class,'deleteattachment'])->name('delCompanyImg');
+                Route::post('insurance-company/destroyAll', [InsuranceCompanyController::class,'massDestroy'])->name('company.massDestroy');
             });
 
     });

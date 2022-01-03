@@ -21,11 +21,11 @@
 @section('content')
     <div class="container mt-3">
         @include('sweetalert::alert')
-       <div class="row ">
+        <div class="row ">
 
-         <div class="col-12 d-flex justify-content-end">
-             <!--begin::Button-->
-             <a href="{{route('categories.create')}}" class="btn btn-primary font-weight-bolder">
+            <div class="col-12 d-flex justify-content-end">
+                <!--begin::Button-->
+                <a href="{{route('doctor.create')}}" class="btn btn-primary font-weight-bolder">
                         <span class="svg-icon svg-icon-md">
                             <!--begin::Svg Icon | path:assets/media/svg/icons/Design/Flatten.svg-->
                             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
@@ -37,65 +37,71 @@
                             </svg>
                             <!--end::Svg Icon-->
                         </span>New Record</a>
-                 </div>
+            </div>
 
-             </div>
+        </div>
 
-       <div class="row mt-5">
-           <div class="col-12">
-               <table  class="table table-bordered table-hover table-striped table-light yajra-datatable">
-                   <thead class="table-dark ">
-                   <tr class="text-light" >
-                       <th  class="text-light">No</th>
-                       <th  class="text-light">Name</th>
-                       <th  class="text-light">Image</th>
-                       <th  class="text-light">Status</th>
-                       <th  class="text-light">Action</th>
-                   </tr>
-                   </thead>
-                   <tbody>
-                   @foreach($categories as $k=>$cat)
-                       <tr data-entry-id="{{ $cat->id }}">
-                           <td>{{$cat->id}}</td>
-                           <td >{{$cat->category}}</td>
-                           <td class="text-center"><img class="rounded" width="60" height="60" src="{{asset($cat->image)}}"></td>
-                           <td class="text-center">
-                               <input data-id="{{$cat->id}}"
-                                      class="toggle-class" type="checkbox" data-onstyle="success"
-                                      data-offstyle="danger" data-toggle="toggle" data-on="On"
-                                      data-width="40" data-height="30"
-                                      data-off="Off" {{ $cat->active ? 'checked' : '' }}>
+        <div class="row mt-5">
+            <div class="col-12">
+                <table  class="table table-bordered table-hover table-striped table-light yajra-datatable">
+                    <thead class="table-dark ">
+                    <tr class="text-light" >
+                        <th  class="text-light">No</th>
+                        <th  class="text-light">Image</th>
+                        <th  class="text-light">Name</th>
+                        <th  class="text-light">Email</th>
+                        <th  class="text-light">Phone</th>
+                        <th  class="text-light">Gender</th>
+                        <th  class="text-light">Approved</th>
+                        <th  class="text-light">Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach($doctors as $k=>$item)
+                        <tr data-entry-id="{{ $item->id }}">
+                            <td>{{$item->id}}</td>
+                            <td class="text-center"><img class="rounded" width="60" height="60" src="{{asset($item->image)}}"></td>
+                            <td >{{$item->name}}</td>
+                            <td >{{$item->email}}</td>
+                            <td >{{$item->phone}}</td>
+                            <td >{{$item->gender==0 ?'Male':'Female'}}</td>
+                            <td class="text-center">
+                                <input data-id="{{$item->id}}"
+                                       class="toggle-class" type="checkbox" data-onstyle="success"
+                                       data-offstyle="danger" data-toggle="toggle" data-on="On"
+                                       data-width="40" data-height="30"
+                                       data-off="Off" {{ $item->is_approved ? 'checked' : '' }}>
 
-                           </td>
-                           <td class="text-center">
-                               <div style="display: flex" class="text-center justify-content-between">
-                                   <a href="{{route("categories.edit", $cat->id)}}"
-                                   class="edit btn btn-secondary btn-sm"><i class="fas fa-edit"></i></a>
-                                   <form method="POST" action=" {{route("categories.destroy", $cat->id)}} ">
-                                       @csrf
-                                   <input name="_method" type="hidden" value="DELETE">
-                                   <button id="confirm" class="show_confirm destroy btn btn-danger btn-sm"
-                                           style="border: none" type="submit">
-                                       <i class="fas fa-trash"></i>
-                                   </button>
-                                   </form>
-                               </div>
-                           </td>
-                       </tr>
-                   @endforeach
-                   </tbody>
-               </table>
-           </div>
-       </div>
+                            </td>
+                            <td class="text-center">
+                                <div style="display: flex" class="text-center justify-content-between">
+                                    <a href="{{route("doctor.edit", $item->id)}}"
+                                       class="edit btn btn-secondary btn-sm"><i class="fas fa-edit"></i></a>
+                                    <form method="POST" action=" {{route("doctor.destroy", $item->id)}} ">
+                                        @csrf
+                                        <input name="_method" type="hidden" value="DELETE">
+                                        <button id="confirm" class="show_confirm destroy btn btn-danger btn-sm"
+                                                style="border: none" type="submit">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 
 
 @endsection
 @section('scripts')
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
-{{--    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.js"></script>--}}
+    {{--    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.js"></script>--}}
     <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
-{{--    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>--}}
+    {{--    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>--}}
     <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/2.1.1/js/dataTables.buttons.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/2.1.0/js/buttons.html5.min.js"></script>
@@ -105,7 +111,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js" type="text/javascript"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js" type="text/javascript"></script>
     <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
-{{--    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.0/js/toastr.js"></script>--}}
+    {{--    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.0/js/toastr.js"></script>--}}
 
     <script type="text/javascript">
 
@@ -244,16 +250,16 @@
         $(function() {
             $('.toggle-class').change(function() {
                 var active = $(this).prop('checked') == true ? 1 : 0;
-                var cat_id = $(this).data('id');
+                var doctor_id = $(this).data('id');
 
                 $.ajax({
                     type: "GET",
                     dataType: "json",
-                    url: '{{route('changeCatStatus')}}',
-                    data: {'active': active, 'cat_id': cat_id},
+                    url: '{{route('changeDoctorStatus')}}',
+                    data: {'active': active, 'doctor_id': doctor_id},
                     success: function(data){
                         Swal.fire({
-                            title: 'Status Change Successfully',
+                            title: 'Doctor Activation  change successfully',
                             showClass: {
                                 popup: 'animate__animated animate__fadeInDown'
                             },

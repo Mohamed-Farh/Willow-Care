@@ -51,13 +51,13 @@ class Handler extends ExceptionHandler
             return response()
                 ->json($json, 401);
         }
-        // $guard = array_get($exception->guards(),0);
-        // switch ($guard) {
-        //     default:
-        //         $login = 'login';
-        //         break;
-        // }
-        // return redirect()->guest(route($login));
+//         $guard = array_get($exception->guards(),0);
+//         switch ($guard) {
+//             default:
+//                 $login = 'login';
+//                 break;
+//         }
+//         return redirect()->route('login');
     }
 }
 

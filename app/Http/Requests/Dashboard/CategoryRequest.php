@@ -27,9 +27,9 @@ class CategoryRequest extends FormRequest
             case 'POST':
             {
                 return [
-                    'name_en' => ['required', 'max:255'],
-                    'name_ar' => ['required', 'max:255'],
-                    'name_ro' => ['required', 'max:255'],
+                    'name_ar' => 'required|max:255|string|regex:/^[\s\p{Arabic}]+$/u',
+                    'name_en' => 'required|max:255|string|regex:/^[A-Za-z]*$/i',
+                    'name_ro' => ['required', 'max:255','string'],
                     'active'=>'nullable',
                     'image'=> ['nullable','file','mimes:jpeg,png,jpg,gif,svg|max:2048'],
                 ];
@@ -38,9 +38,9 @@ class CategoryRequest extends FormRequest
             case 'PATCH':
             {
                 return [
-                    'name_en' => ['required', 'max:255'],
-                    'name_ar' => ['required', 'max:255'],
-                    'name_ro' => ['required', 'max:255'],
+                    'name_ar' => 'required|max:255|string|regex:/^[\s\p{Arabic}]+$/u',
+                    'name_en' => 'required|max:255|string|regex:/^[A-Za-z]*$/i',
+                    'name_ro' => ['required', 'max:255','string'],
                     'image'=> ['nullable','file','mimes:jpeg,png,jpg,gif,svg|max:2048'],
                     'active'=>'nullable',
 

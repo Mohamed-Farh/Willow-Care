@@ -18,7 +18,7 @@ class Country extends Model
     // 'id' => 'string',
     // ];
     protected $appends =[
-        'name'
+        'country'
     ];
 
     public $timestamps = false;
@@ -32,7 +32,7 @@ class Country extends Model
     {
         return $this->hasMany(Doctor::class);
     }
-    public function getNameAttribute()
+    public function getCountryAttribute()
     {
         return Lang::locale() == 'ar' ? $this->name_ar : (Lang::locale() == 'en' ? $this->name_en : $this->name_ro);
     }
