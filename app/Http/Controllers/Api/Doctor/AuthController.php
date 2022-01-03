@@ -86,7 +86,7 @@ class AuthController extends Controller
                 'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
             ]);
             if ($validator->fails()) {
-                return $this->responseJsonFailed(404,'image is incorrect or required');
+                return $this->responseValidationJsonFailed('image is incorrect or required');
             }
 
             if($request->image){
@@ -103,7 +103,7 @@ class AuthController extends Controller
                 $doctor->update(["image" => 'public/'.$img]);
                 return $this->responseJsonWithoutData();
             }else{
-                $this->responseJsonFailed(011, 'image field is required');
+                return $this->responseValidationJsonFailed('image is required');
             }
         } catch (Throwable $e) {
             $this->responseJsonFailed();

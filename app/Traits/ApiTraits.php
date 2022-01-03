@@ -33,6 +33,15 @@ trait ApiTraits
         ], $status);
     }
 
+    public function responseValidationJsonFailed($massage = "Fail")
+    {
+        return response()->json([
+            "success" => false,
+            "status" => 200,
+            "massage" => $massage,
+        ], 200);
+    }
+
     public function returnValidationError($validator){
         return $this->responseJsonFailed(011, $validator->errors());
     }

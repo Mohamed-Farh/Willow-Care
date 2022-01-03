@@ -18,7 +18,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Throwable;
 use App\Models\DeviceToken;
-use App\Models\Specialty;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Lang;
 use Illuminate\Validation\Rule;
 
 class GeneralController extends Controller
@@ -61,31 +62,19 @@ class GeneralController extends Controller
 
     }
 
-
     public function getCountries(Request $request)
     {
         try {
-            // $validator = Validator::make($request->all(), [
-            //     'lang' => ['required', Rule::in(['en', 'ro', 'ar'])],
-            // ]);
-            // if ($validator->fails()) {
-            //     return $this->responseJsonFailed(404,'language is incorrect or required');
-            // }
-
-            // $lang =  $_GET['lang'];
             $lang = $request->header('lang');
             if( $lang == 'ar' || $lang == 'en' || $lang =='ro'){
-                $countries = Country::select('id' ,'name_'.$lang.' as name', 'flag', 'code')->where('active','1')->get();
+                $countries = Country::withoutAppends()->select('id' ,'name_'.$lang.' as name', 'flag', 'code')->where('active','1')->get();
                 return $this->responseJson(200, "all countries data", $countries);
             }else{
-                return $this->responseJsonFailed(404,'language code is incorrect');
+                return $this->responseValidationJsonFailed('language code is incorrect');
             }
         } catch (Throwable $e) {
             return $this->responseJsonFailed();
         }
     }
-
-
-
 
 }

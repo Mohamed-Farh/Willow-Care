@@ -3,11 +3,13 @@
 namespace App\Http\Requests\Api\Doctor;
 
 use App\Traits\ApiTraits;
+use Illuminate\Validation\ValidationException;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Http\Response;
 
-class OnlineConculationRequest extends FormRequest
+class SingleWorkTimeRequest extends FormRequest
 {
     use ApiTraits;
     /**
@@ -28,8 +30,11 @@ class OnlineConculationRequest extends FormRequest
     public function rules()
     {
         return [
-            "price" => "required",
-            "renewal_price" => "nullable",
+            "booking_type" => "required|in:0,1,2", ## 0 => clinic , 1=> home , 2=> online
+            "type_id" => "required",
+            "day_id" => "required|in:0,1,2,3,4,5,6",
+            "shifts.*.from" => "required|date_format:H:i",
+            "shifts.*.to" =>"required|date_format:H:i|after:shifts.*.from",
         ];
     }
 

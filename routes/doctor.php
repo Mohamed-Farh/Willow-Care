@@ -11,6 +11,7 @@ use App\Http\Controllers\Api\Doctor\LicenseController;
 use App\Http\Controllers\Api\Doctor\OnlineConcultationController;
 use App\Http\Controllers\Api\Doctor\ProfileController;
 use App\Http\Controllers\dashboard\HomeDashboardController;
+use App\Http\Controllers\Api\Doctor\WorkTimeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -33,6 +34,8 @@ Route::middleware(["auth:api-doctor"])->group(function () {
     Route::get('get-my-specialties',[BasicInformationController::class, 'getMySpecialties']);
     Route::get('get-professional-titles',[BasicInformationController::class, 'getProfessionalTitles']);
     Route::post('update-profile',[BasicInformationController::class, 'updateDoctorProfile']);
+    Route::get('get-doctor-info',[BasicInformationController::class, 'doctorInfo']);
+
 
 
     ############################# Insurance Company ####################################
@@ -59,38 +62,41 @@ Route::middleware(["auth:api-doctor"])->group(function () {
 
 
     ############################## CLINIC #####################################
-    //add clinic
-    Route::get('get-clinic',[ClinicController::class, 'getClinic']);
+    Route::get('get-clinics',[ClinicController::class, 'getClinic']);
     Route::post('add-clinic',[ClinicController::class, 'addClinic']);
+    Route::post('update-clinic',[ClinicController::class, 'updateClinic']);
+    Route::post('delete-clinic',[ClinicController::class, 'deleteClinic']);
+    Route::get('get-single-clinic-work-time',[ClinicController::class, 'getSingleClinicWorkTime']);
 
-
-    // add Work Time & shifts
-    Route::post('add_clinic_worktime',[ClinicController::class, 'addClinicWorkTime']);
 
 
     ############################## Home Concultation ##################################################
     Route::get('get-home-concultation',[HomeConcultationController::class, 'getHomeConcultation']);
     Route::post('add-home-concultation',[HomeConcultationController::class, 'addHomeConcultation']);
-
-            ########## Home ConcultationWorking Time ###########
-            Route::get('get-home-free-times',[HomeConcultationController::class, 'getHomeFreeTimes']);
-            Route::post('add-home-working-time',[HomeConcultationController::class, 'addHomeWorkingTime']);
-
-
-
-
+    Route::post('update-home-concultation',[HomeConcultationController::class, 'updateHomeConcultation']);
+    Route::post('delete-home-concultation',[HomeConcultationController::class, 'deleteHomeConcultation']);
 
     ############################## Online Concultation ###################################################
     Route::get('get-online-concultation',[OnlineConcultationController::class, 'getOnlineConcultation']);
     Route::post('add-online-concultation',[OnlineConcultationController::class, 'addOnlineConcultation']);
-
-            ########## Online ConcultationWorking Time ###########
-            Route::get('get-online-free-times',[OnlineConcultationController::class, 'getOnlineFreeTimes']);
-
+    Route::post('update-online-concultation',[OnlineConcultationController::class, 'updateOnlineConcultation']);
+    Route::post('delete-online-concultation',[OnlineConcultationController::class, 'deleteOnlineConcultation']);
 
 
+    ############################## Work Time ###################################################
+    Route::post('single-work-time',[WorkTimeController::class, 'single']);
+    Route::post('multi-work-time',[WorkTimeController::class, 'multiIndex']);
+    Route::post('single-day-time-check',[WorkTimeController::class, 'checkTime']);
 
 
+    ########## Online ConcultationWorking Time ###########
+    // Route::get('get-online-free-times',[OnlineConcultationController::class, 'getOnlineFreeTimes']);
+    ########## Home ConcultationWorking Time ###########
+    // Route::get('get-home-free-times',[HomeConcultationController::class, 'getHomeFreeTimes']);
+    // Route::post('add-home-working-time',[HomeConcultationController::class, 'addHomeWorkingTime']);
+    // add Work Time & shifts
+    // Route::post('add_clinic_worktime',[ClinicController::class, 'addClinicWorkTime']);
+    // Route::get('get_clinic_worktime',[ClinicController::class, 'getClinicWorkTime']);
 
 
 });

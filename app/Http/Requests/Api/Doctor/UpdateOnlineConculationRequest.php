@@ -7,7 +7,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class OnlineConculationRequest extends FormRequest
+class UpdateOnlineConculationRequest extends FormRequest
 {
     use ApiTraits;
     /**
@@ -28,8 +28,10 @@ class OnlineConculationRequest extends FormRequest
     public function rules()
     {
         return [
-            "price" => "required",
+            "online_concultation_id" => "required",
+            "price" => "nullable",
             "renewal_price" => "nullable",
+            "payment_method" => "nullable|in:1,2",
         ];
     }
 

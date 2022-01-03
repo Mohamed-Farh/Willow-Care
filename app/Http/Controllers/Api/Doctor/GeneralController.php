@@ -30,7 +30,7 @@ class GeneralController extends Controller
                                         ->get();
                 return $this->responseJson(200, "all Specialties In Doctor Category", $Specialties);
             }else{
-                return $this->responseJsonFailed(404,'language code is incorrect');
+                return $this->responseValidationJsonFailed('language code is incorrect');
             }
         } catch (Throwable $e) {
             return $this->responseJsonFailed();
@@ -44,7 +44,7 @@ class GeneralController extends Controller
                 'lang' => ['required', Rule::in(['en', 'ro', 'ar'])],
             ]);
             if ($validator->fails()) {
-                return $this->responseJsonFailed(404,'language is incorrect or required');
+                return $this->responseValidationJsonFailed('language is incorrect or required');
             }
             $lang =  $_GET['lang'];
             if( $lang == 'ar' || $lang == 'en' || $lang =='ro'){
@@ -54,7 +54,7 @@ class GeneralController extends Controller
                                         ->get();
                 return $this->responseJson(200, "all Terms and conditions In Doctor Category", $terms);
             }else{
-                return $this->responseJsonFailed(404,'language code is incorrect');
+                return $this->responseValidationJsonFailed('language code is incorrect');
             }
         } catch (Throwable $e) {
             return $this->responseJsonFailed();

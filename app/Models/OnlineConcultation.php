@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class OnlineConcultation extends Model
 {
@@ -26,4 +27,11 @@ class OnlineConcultation extends Model
     {
         return $this->belongsTo(Doctor::class);
     }
+
+    public function workingTimes(): HasMany
+    {
+        return $this->hasMany(OnlineConcultationWorkingTime::class);
+    }
+
+
 }
