@@ -32,6 +32,7 @@ Route::middleware(["auth:api-doctor"])->group(function () {
 
     ############################# Profile ####################################
     Route::get('get-my-specialties',[BasicInformationController::class, 'getMySpecialties']);
+    Route::get('get-doctor-specialties',[BasicInformationController::class, 'getDoctorSpecialties']);
     Route::get('get-professional-titles',[BasicInformationController::class, 'getProfessionalTitles']);
     Route::post('update-profile',[BasicInformationController::class, 'updateDoctorProfile']);
     Route::get('get-doctor-info',[BasicInformationController::class, 'doctorInfo']);

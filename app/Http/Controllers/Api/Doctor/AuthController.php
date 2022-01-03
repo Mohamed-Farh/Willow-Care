@@ -100,7 +100,7 @@ class AuthController extends Controller
                     $old_file = $doctor->image; //get old photo
                     unlink('../'.$old_file);  //To Check If I'm On Server
                 }
-                $doctor->update(["image" => 'public/'.$img]);
+                $doctor->update(["image" => $img]);
                 return $this->responseJsonWithoutData();
             }else{
                 return $this->responseValidationJsonFailed('image is required');

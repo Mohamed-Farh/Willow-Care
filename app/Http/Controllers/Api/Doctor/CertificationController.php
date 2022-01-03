@@ -41,7 +41,7 @@ class CertificationController extends Controller
             if( $request->certification_image){
                 foreach ($request->certification_image as $image) {
                     $img = $this->uploadImages($image, "images/doctor/certification");
-                    $doctor->certifications()->create(["image" => 'public/'.$img]);
+                    $doctor->certifications()->create(["image" => $img]);
                 }
                 return $this->responseJsonWithoutData();
             }else{

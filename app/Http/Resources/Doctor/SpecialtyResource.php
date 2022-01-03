@@ -14,8 +14,20 @@ class SpecialtyResource extends JsonResource
      */
     public function toArray($request)
     {
+
+        if(request()->user()->lang){
+            $name = "name_". request()->user()->lang;
+        }else{
+            $name = "name_en";
+        }
+
         return [
-           //
+            "id" => $this->id,
+            "name" => $this->$name,
+            "image" => $this->icon,
+            "created_at" => strval($this->created_at),
+            "updated_at" => strval($this->updated_at),
         ];
+
     }
 }

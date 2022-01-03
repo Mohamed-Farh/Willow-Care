@@ -8,6 +8,7 @@ use App\Http\Resources\Doctor\LoginResource;
 use App\Http\Resources\Doctor\Profile\BasicInformationResource;
 use App\Http\Resources\Doctor\Profile\ProfessionalTitleResource;
 use App\Http\Resources\Doctor\Profile\ProfileSpecialtyResource;
+use App\Http\Resources\Doctor\SpecialtyResource;
 use App\Models\DeviceToken;
 use App\Models\Doctor;
 use App\Models\ProfessionalTitle;
@@ -18,6 +19,7 @@ use App\Traits\ApiTraits;
 use App\Traits\HelperTrait;
 use Throwable;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class BasicInformationController extends Controller
 {
@@ -30,6 +32,19 @@ class BasicInformationController extends Controller
         try {
             $specialties = Specialty::whereActive(1)->get();
             return $this->responseJson(200 , "data", ProfileSpecialtyResource::collection($specialties));
+        } catch (Throwable $e) {
+            $this->responseJsonFailed();
+        }
+    }
+
+    public function getDoctorSpecialties(Request $request)
+    {
+        try {
+
+            $doctor = Doctor::whereId(Auth::guard('api-doctor')->id())->first();
+            $specialties = $doctor->specialties;
+
+            return $this->responseJson(200 , "data", SpecialtyResource::collection($specialties));
         } catch (Throwable $e) {
             $this->responseJsonFailed();
         }
@@ -63,7 +78,7 @@ class BasicInformationController extends Controller
             //Insert Licensce For Doctor
             foreach ($request->license as $image) {
                 $img = $this->uploadImages($image, "images/doctor/license");
-                $doctor->licenses()->create(["image" => 'public/'.$img]);
+                $doctor->licenses()->create(["image" => $img]);
             }
 
             return $this->responseJson(200 , "data", new BasicInformationResource($doctor));

@@ -51,7 +51,7 @@ class ClinicController extends Controller
                 "renewal_price" => $request->renewal_price,
                 "duration" => $request->duration,
                 "payment_method" => $request->payment_method,
-                "image" => 'public/'.$img,
+                "image" => $img,
                 "doctor_id" => Auth::user()->id,
             ]);
             return $this->responseJson(200, "Addning New Clinic Successfully", new ClinicResource($clinic));
@@ -78,7 +78,7 @@ class ClinicController extends Controller
                         $old_file = $clinic->image; //get old photo
                         unlink('../'.$old_file);  //To Check If I'm On Server
                     }
-                    $clinic->update(["image" => 'public/'.$img]);
+                    $clinic->update(["image" => $img]);
                 }
                 return $this->responseJson(200, "Updating Clinic Successfully", new ClinicResource($clinic));
             }

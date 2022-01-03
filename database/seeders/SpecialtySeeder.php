@@ -23,7 +23,7 @@ class SpecialtySeeder extends Seeder
                 'name_ar' => $faker->sentence(2, true),
                 'name_en' => $faker->sentence(2, true),
                 'name_ro' => $faker->sentence(2, true),
-                'icon' => 'public/images/doctor/specialty/'.random_int(1, 5).'.png',
+                'icon' => 'images/doctor/specialty/'.random_int(1, 5).'.png',
                 'type' => 'Doctor',
                 'active' => rand(0, 1),
             ]);
@@ -35,7 +35,7 @@ class SpecialtySeeder extends Seeder
                 'name_ar' => $faker->sentence(2, true),
                 'name_en' => $faker->sentence(2, true),
                 'name_ro' => $faker->sentence(2, true),
-                'icon' => 'public/images/doctor/specialty/'.random_int(1, 5).'.png',
+                'icon' => 'images/doctor/specialty/'.random_int(1, 5).'.png',
                 'type' => 'Patient',
                 'active' => rand(0, 1),
             ]);
