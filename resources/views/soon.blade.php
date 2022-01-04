@@ -44,7 +44,8 @@
 <BODY>
 	<header>
 		<div class="Tech">
-			<h2>COMING SOON</h2>
+            <h2>WILLOW CARE</h2>
+			<h2>LOADING...</h2>
 
 			<p id="Release"></p>
 
@@ -53,7 +54,7 @@
 
 	<script>
 		// Set the date of launching
-		var RemainingTime = new Date("Jan 01, 2022 00:00:00");
+		var RemainingTime = new Date("Feb 01, 2022 00:00:00");
 
 		var RemainingTime = RemainingTime.getTime();
 

@@ -21,7 +21,7 @@ class DatabaseSeeder extends Seeder
             CategorySeeder::class,
             CountrySeeder::class,
             ProTitleSeeder::class,
-            DaysOfWeekSeeder::class,
+            // DaysOfWeekSeeder::class,
             SpecialtySeeder::class,
             DoctorSeeder::class,
             TermSeeder::class,
