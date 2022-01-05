@@ -34,7 +34,7 @@ class ProfileInsuranceCompaniesResource extends JsonResource
 
         return [
             "id" => $this->id,
-            "name" => isset($this->name) ? $this->name : '',
+            "name" => isset($this->$name) ? $this->$name : '',
             "image" => isset($this->image) ? 'public/'.$this->image : '',
             "selected" => $selected,
             "created_at" => strval($this->created_at),
