@@ -33,7 +33,7 @@ class BasicInformationController extends Controller
             $specialties = Specialty::whereActive(1)->get();
             return $this->responseJson(200 , "data", ProfileSpecialtyResource::collection($specialties));
         } catch (Throwable $e) {
-            $this->responseJsonFailed();
+            return $this->responseJsonFailed();
         }
     }
 
@@ -46,7 +46,7 @@ class BasicInformationController extends Controller
 
             return $this->responseJson(200 , "data", SpecialtyResource::collection($specialties));
         } catch (Throwable $e) {
-            $this->responseJsonFailed();
+            return $this->responseJsonFailed();
         }
     }
 
@@ -58,7 +58,7 @@ class BasicInformationController extends Controller
             $titles = ProfessionalTitle::whereActive(1)->get();
             return $this->responseJson(200 , "data", ProfessionalTitleResource::collection($titles));
         } catch (Throwable $e) {
-            $this->responseJsonFailed();
+            return $this->responseJsonFailed();
         }
     }
 
@@ -84,7 +84,7 @@ class BasicInformationController extends Controller
             return $this->responseJson(200 , "data", new BasicInformationResource($doctor));
 
         } catch (Throwable $e) {
-            $this->responseJsonFailed();
+            return $this->responseJsonFailed();
         }
     }
 

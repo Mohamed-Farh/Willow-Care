@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\Doctor;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Doctor\CertificationResource;
 use App\Models\Certification;
 use App\Models\Doctor;
 use Laravel\Passport\HasApiTokens;
@@ -25,10 +26,10 @@ class CertificationController extends Controller
         try {
             $certificates = Certification::whereDoctorId(Auth::guard('api-doctor')->id())->whereActive(1)->get();
 
-            return $this->responseJson(200 , "data", $certificates);
+            return $this->responseJson(200 , "data", CertificationResource::collection($certificates));
 
         } catch (Throwable $e) {
-            $this->responseJsonFailed();
+            return $this->responseJsonFailed();
         }
     }
 
@@ -48,7 +49,7 @@ class CertificationController extends Controller
                 return $this->responseValidationJsonFailed('Certification Image is required');
             }
         } catch (Throwable $e) {
-            $this->responseJsonFailed();
+            return $this->responseJsonFailed();
         }
     }
 
@@ -85,7 +86,7 @@ class CertificationController extends Controller
                 return $this->responseValidationJsonFailed('certification id is required');
             }
         } catch (Throwable $e) {
-            $this->responseJsonFailed();
+            return $this->responseJsonFailed();
         }
     }
 

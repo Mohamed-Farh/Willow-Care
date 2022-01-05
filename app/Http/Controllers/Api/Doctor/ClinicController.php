@@ -126,7 +126,8 @@ class ClinicController extends Controller
         }
     }
 
-    public function getSingleClinicWorkTime(Request $request){
+    public function getSingleClinicWorkTime(Request $request)
+    {
         try{
             $validator = Validator::make($request->all(), [
                 'clinic_id' => 'required|exists:clinics,id',
@@ -135,9 +136,10 @@ class ClinicController extends Controller
                 return $this->responseValidationJsonFailed('clinic_id is incorrect or required');
             }
 
-            $clinic = Clinic::where(['id'=> $request->clinic_id ,'doctor_id' => Auth::user()->id])->first();
-            if(!$clinic){
-                $this->responseJsonFailed(422, "this doctor can't control on this clinic");
+            $clinic = Clinic::where('id', $request->clinic_id)->where('doctor_id', Auth::user()->id)->first();
+
+            if(empty($clinic)){
+                return $this->responseJsonFailed(422, "this doctor can't control on this clinic");
             }
 
             $worktime_days = [];

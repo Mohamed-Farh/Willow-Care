@@ -32,7 +32,7 @@ class HomeConcultationController extends Controller
             $HomeConcultation = HomeConcultation::where('doctor_id', Auth::user()->id)->get();
             return $this->responseJson(200, "Doctor Home Concultation", HomeConculationResource::collection($HomeConcultation));
         } catch (Throwable $e) {
-            $this->responseJsonFailed();
+            return $this->responseJsonFailed();
         }
     }
 
@@ -47,7 +47,7 @@ class HomeConcultationController extends Controller
             ]);
             return $this->responseJson(200, "Addning New Home Concultation Successfully", new HomeConculationResource($home));
         } catch (Throwable $e) {
-            $this->responseJsonFailed();
+            return $this->responseJsonFailed();
         }
     }
 
@@ -64,7 +64,7 @@ class HomeConcultationController extends Controller
                 return $this->responseJson(200, "Updating HomeConcultation Successfully", new HomeConculationResource($home));
             }
         } catch (Throwable $e) {
-            $this->responseJsonFailed();
+            return $this->responseJsonFailed();
         }
     }
 
@@ -88,7 +88,7 @@ class HomeConcultationController extends Controller
                 return $this->responseJsonWithoutData();
             }
         } catch (Throwable $e) {
-            $this->responseJsonFailed();
+            return $this->responseJsonFailed();
         }
     }
 
@@ -106,7 +106,7 @@ class HomeConcultationController extends Controller
             if(!$home){
                 $this->responseJsonFailed(422, "this doctor can't control on this home concultation");
             }
-            
+
             $worktime_days = [];
             for($x=0 ; $x<7 ; $x++){
                 $workingTime = HomeConcultationWorkingTime::where(['home_concultation_id' => $request->home_id , 'day' => $x])->get(['id','from','to']);
@@ -130,7 +130,7 @@ class HomeConcultationController extends Controller
             return $this->responseJson(200, "home concultation WorkingTimes", $worktime_days);
 
         }catch (Throwable $e) {
-            $this->responseJsonFailed();
+            return $this->responseJsonFailed();
         }
     }
 
@@ -226,7 +226,7 @@ class HomeConcultationController extends Controller
 
     //         return $this->responseJson(200, "Home Avalible Time", $freeTimes);
     //     } catch (Throwable $e) {
-    //         $this->responseJsonFailed();
+    //         return $this->responseJsonFailed();
     //     }
     // }
 
@@ -341,7 +341,7 @@ class HomeConcultationController extends Controller
     //         }
 
     //     } catch (Throwable $e) {
-    //         $this->responseJsonFailed();
+    //         return $this->responseJsonFailed();
     //     }
     // }
 

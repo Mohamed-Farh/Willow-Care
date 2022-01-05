@@ -42,7 +42,7 @@ class AuthController extends Controller
             $doctor->device_token = $request->device_token;
             return $this->responseJson(200 , "Registration Successfully", new LoginResource($doctor));
         } catch (Throwable $e) {
-            $this->responseJsonFailed();
+            return $this->responseJsonFailed();
         }
     }
 
@@ -52,7 +52,7 @@ class AuthController extends Controller
             $doctor->update(["password" => $request->password]);
             return $this->responseJsonWithoutData();
         } catch (Throwable $e) {
-            $this->responseJsonFailed();
+            return $this->responseJsonFailed();
         }
     }
 
@@ -61,7 +61,7 @@ class AuthController extends Controller
             Auth::user()->update(["password" => $request->new_password]);
             return $this->responseJsonWithoutData();
         } catch (Throwable $e) {
-            $this->responseJsonFailed();
+            return $this->responseJsonFailed();
         }
     }
 
@@ -75,7 +75,7 @@ class AuthController extends Controller
             $doctor->device_token = $device_token->token;
             return $this->responseJson(200 , "Phone has been verified", new LoginResource($doctor));
         } catch (Throwable $e) {
-            $this->responseJsonFailed();
+            return $this->responseJsonFailed();
         }
     }
 
@@ -106,7 +106,7 @@ class AuthController extends Controller
                 return $this->responseValidationJsonFailed('image is required');
             }
         } catch (Throwable $e) {
-            $this->responseJsonFailed();
+            return $this->responseJsonFailed();
         }
     }
 

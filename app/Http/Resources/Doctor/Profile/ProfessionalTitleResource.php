@@ -26,7 +26,7 @@ class ProfessionalTitleResource extends JsonResource
 
         return [
             "id" => $this->id,
-            "name" => $this->$name,
+            "name" => isset($this->name) ? $this->name : '',
         ];
     }
 }

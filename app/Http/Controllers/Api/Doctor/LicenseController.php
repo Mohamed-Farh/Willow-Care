@@ -33,7 +33,7 @@ class LicenseController extends Controller
             $doctor->specialties()->syncWithoutDetaching($request->specialty_id);
             return $this->responseJsonWithoutData();
         } catch (Throwable $e) {
-            $this->responseJsonFailed();
+            return $this->responseJsonFailed();
         }
     }
 
@@ -45,7 +45,7 @@ class LicenseController extends Controller
             $licenses = $doctor->licenses;
             return $this->responseJson(200 , "All Doctor Licenses", LicenseResource::collection($licenses));
         } catch (Throwable $e) {
-            $this->responseJsonFailed();
+            return $this->responseJsonFailed();
         }
     }
 
@@ -71,7 +71,7 @@ class LicenseController extends Controller
                 return $this->responseJsonWithoutData();
             }
         } catch (Throwable $e) {
-            $this->responseJsonFailed();
+            return $this->responseJsonFailed();
         }
     }
 

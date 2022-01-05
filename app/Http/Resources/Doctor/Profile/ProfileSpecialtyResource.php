@@ -30,12 +30,12 @@ class ProfileSpecialtyResource extends JsonResource
         else
         {  $selected = "0"; }
 
-        
+
 
         return [
             "id" => $this->id,
-            "name" => $this->$name,
-            "image" => $this->icon,
+            "name" => isset($this->name) ? $this->name : '',
+            "image" => isset($this->icon) ? 'public/'.$this->icon : '',
             "selected" => $selected,
             "created_at" => strval($this->created_at),
             "updated_at" => strval($this->updated_at),

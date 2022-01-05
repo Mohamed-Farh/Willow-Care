@@ -4,7 +4,7 @@ namespace App\Http\Resources\Doctor;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class SpecialtyResource extends JsonResource
+class CertificationResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -15,16 +15,10 @@ class SpecialtyResource extends JsonResource
     public function toArray($request)
     {
 
-        if(request()->user()->lang){
-            $name = "name_". request()->user()->lang;
-        }else{
-            $name = "name_en";
-        }
-
         return [
             "id" => $this->id,
-            "name" => isset($this->name) ? $this->name : '',
-            "image" => isset($this->icon) ? 'public/'.$this->icon : '',
+            "image" => isset($this->image) ? 'public/'.$this->image : '',
+            "doctor_id" => strval($this->doctor_id),
             "created_at" => strval($this->created_at),
             "updated_at" => strval($this->updated_at),
         ];

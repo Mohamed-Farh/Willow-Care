@@ -35,7 +35,7 @@ class InsuranceCompanyController extends Controller
             $companies = InsuranceCompany::whereActive(1)->get();
             return $this->responseJson(200 , "All Insurance Companies", ProfileInsuranceCompaniesResource::collection($companies));
         } catch (Throwable $e) {
-            $this->responseJsonFailed();
+            return $this->responseJsonFailed();
         }
     }
 
@@ -47,7 +47,7 @@ class InsuranceCompanyController extends Controller
             $companies = $doctor->insuranceCompanies;
             return $this->responseJson(200 , "All Doctor Insurance Companies", ProfileInsuranceCompaniesResource::collection($companies));
         } catch (Throwable $e) {
-            $this->responseJsonFailed();
+            return $this->responseJsonFailed();
         }
     }
 
@@ -63,7 +63,7 @@ class InsuranceCompanyController extends Controller
             return $this->responseJson(200 , "Insurance Companies Added OR Updated Successfully", ProfileInsuranceCompaniesResource::collection($companies));
 
         } catch (Throwable $e) {
-            $this->responseJsonFailed();
+            return $this->responseJsonFailed();
         }
     }
 
@@ -75,7 +75,7 @@ class InsuranceCompanyController extends Controller
             $doctor->insuranceCompanies()->detach($request->insurance_company_id);
             return $this->responseJsonWithoutData();
         } catch (Throwable $e) {
-            $this->responseJsonFailed();
+            return $this->responseJsonFailed();
         }
     }
 

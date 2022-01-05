@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\Doctor;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Doctor\SpecialtyResource;
 use App\Models\Category;
 use Laravel\Passport\HasApiTokens;
 use Illuminate\Http\Request;
@@ -22,22 +23,22 @@ class GeneralController extends Controller
 
     public function getSpecialties(Request $request)
     {
-        // try {
+        try {
             $lang =  Auth::user()->lang;
-            // if( $lang == 'ar' || $lang == 'en' || $lang =='ro'){
+            if( $lang == 'ar' || $lang == 'en' || $lang =='ro'){
                 $category = Category::where('id',1)->first();
                 $ids = $category->specialties->pluck('id');
                 $Specialties = Specialty::withoutAppends()->select('id' ,'name_'.$lang.' as name' , 'icon')
                                         ->whereIn('id', $ids)
                                         ->where('active','1')
                                         ->get();
-                return $this->responseJson(200, "all Specialties In Doctor Category", $Specialties);
-            // }else{
+                return $this->responseJson(200, "all Specialties In Doctor Category", SpecialtyResource::collection($Specialties));
+            }else{
                 return $this->responseValidationJsonFailed('language code is incorrect');
-            // }
-        // } catch (Throwable $e) {
-        //     return $this->responseJsonFailed();
-        // }
+            }
+        } catch (Throwable $e) {
+            return $this->responseJsonFailed();
+        }
     }
 
     public function getTermsAndConditions(Request $request)

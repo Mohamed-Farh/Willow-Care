@@ -21,7 +21,7 @@ class WorkTimeController extends Controller
         if($request->booking_type == 0){
             $clinic = Clinic::where(['id'=> $request->type_id ,'doctor_id' => Auth::user()->id])->first();
             if(!$clinic){
-                $this->responseJsonFailed(404, "this doctor can't control on this clinic");
+                return $this->responseJsonFailed(404, "this doctor can't control on this clinic");
             }
             $clinic->workingTimes()->where('day',$request->day_id )->delete();
             foreach($request->shifts  as $shift){
@@ -36,7 +36,7 @@ class WorkTimeController extends Controller
         }elseif($request->booking_type == 1){
             $home = HomeConcultation::where(['id'=> $request->type_id ,'doctor_id' => Auth::user()->id])->first();
             if(!$home){
-                $this->responseJsonFailed(404, "this doctor can't control on this Home Concultaion");
+                return $this->responseJsonFailed(404, "this doctor can't control on this Home Concultaion");
             }
             $home->workingTimes()->where('day',$request->day_id )->delete();
             foreach($request->shifts  as $shift){
@@ -50,7 +50,7 @@ class WorkTimeController extends Controller
         }elseif($request->booking_type == 2){
             $online = OnlineConcultation::where(['id'=> $request->type_id ,'doctor_id' => Auth::user()->id])->first();
             if(!$online){
-                $this->responseJsonFailed(404, "this doctor can't control on this Home Concultaion");
+                return $this->responseJsonFailed(404, "this doctor can't control on this Home Concultaion");
             }
             $online->workingTimes()->where('day',$request->day_id )->delete();
             foreach($request->shifts  as $shift){
@@ -70,7 +70,7 @@ class WorkTimeController extends Controller
         if($request->booking_type == 0){
             $clinic = Clinic::where(['id'=> $request->type_id ,'doctor_id' => Auth::user()->id])->first();
             if(!$clinic){
-                $this->responseJsonFailed(404, "this doctor can't control on this clinic");
+                return $this->responseJsonFailed(404, "this doctor can't control on this clinic");
             }
             $clinic->workingTimes()->delete();
             foreach( $request->days_ids as $day){
@@ -81,12 +81,12 @@ class WorkTimeController extends Controller
                         'to' => $shift['to']
                     ]);
                 }
-            }    
+            }
             return $this->responseJsonWithoutData();
         }elseif($request->booking_type == 1){
             $home = HomeConcultation::where(['id'=> $request->type_id ,'doctor_id' => Auth::user()->id])->first();
             if(!$home){
-                $this->responseJsonFailed(404, "this doctor can't control on this clinic");
+                return $this->responseJsonFailed(404, "this doctor can't control on this clinic");
             }
             $home->workingTimes()->delete();
             foreach( $request->days_ids as $day){
@@ -97,12 +97,12 @@ class WorkTimeController extends Controller
                         'to' => $shift['to']
                     ]);
                 }
-            }    
+            }
             return $this->responseJsonWithoutData();
         }elseif($request->booking_type == 2){
             $online = OnlineConcultation::where(['id'=> $request->type_id ,'doctor_id' => Auth::user()->id])->first();
             if(!$online){
-                $this->responseJsonFailed(404, "this doctor can't control on this clinic");
+                return $this->responseJsonFailed(404, "this doctor can't control on this clinic");
             }
             $online->workingTimes()->delete();
             foreach( $request->days_ids as $day){
@@ -113,7 +113,7 @@ class WorkTimeController extends Controller
                         'to' => $shift['to']
                     ]);
                 }
-            }    
+            }
             return $this->responseJsonWithoutData();
         }else{
             return $this->responseJsonFailed('200' ,'The selected booking type is invalid.');

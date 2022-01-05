@@ -31,7 +31,7 @@ class DoctorResource extends JsonResource
             "patients_count" => '1',
             "exp_years" => '5',
             "professional_title" =>isset($this->professional_title) ? $this->professional_title : '',
-            "profile_image"=>isset($this->image) ? $this->image : '',
+            "profile_image"=>isset($this->image) ? 'public/'.$this->image : '',
             "gender" => ($this->gender == 0) ? "male" : "female",
             "about" => isset($this->about) ? $this->about : '',
             "created_at" => $this->created_at,

@@ -38,7 +38,7 @@ class OnlineConcultationController extends Controller
             $OlineConcultation = OnlineConcultation::where('doctor_id', Auth::user()->id)->get();
             return $this->responseJson(200, "Doctor Online Concultation", OnlineConculationResource::collection($OlineConcultation));
         } catch (Throwable $e) {
-            $this->responseJsonFailed();
+            return $this->responseJsonFailed();
         }
     }
 
@@ -52,7 +52,7 @@ class OnlineConcultationController extends Controller
             ]);
             return $this->responseJson(200, "Addning New Online Concultation Successfully", new OnlineConculationResource($online));
         } catch (Throwable $e) {
-            $this->responseJsonFailed();
+            return $this->responseJsonFailed();
         }
     }
 
@@ -68,7 +68,7 @@ class OnlineConcultationController extends Controller
                 return $this->responseJson(200, "Updating OnlineConcultation Successfully", new OnlineConculationResource($online));
             }
         } catch (Throwable $e) {
-            $this->responseJsonFailed();
+            return $this->responseJsonFailed();
         }
     }
 
@@ -92,7 +92,7 @@ class OnlineConcultationController extends Controller
                 return $this->responseJsonWithoutData();
             }
         } catch (Throwable $e) {
-            $this->responseJsonFailed();
+            return $this->responseJsonFailed();
         }
     }
 
@@ -107,9 +107,9 @@ class OnlineConcultationController extends Controller
 
             $online = OnlineConcultation::where(['id'=> $request->online_id ,'doctor_id' => Auth::user()->id])->first();
             if(!$online){
-                $this->responseJsonFailed(422, "this doctor can't control on this online concultation");
+                return $this->responseJsonFailed(422, "this doctor can't control on this online concultation");
             }
-            
+
             $worktime_days = [];
             for($x=0 ; $x<7 ; $x++){
                 $workingTime = OnlineConcultationWorkingTime::where(['online_concultation_id' => $request->online_id , 'day' => $x])->get(['id','from','to']);
@@ -133,7 +133,7 @@ class OnlineConcultationController extends Controller
             return $this->responseJson(200, "Online concultation WorkingTimes", $worktime_days);
 
         }catch (Throwable $e) {
-            $this->responseJsonFailed();
+            return $this->responseJsonFailed();
         }
     }
 
@@ -230,7 +230,7 @@ class OnlineConcultationController extends Controller
     //         //return $freeTimes;
     //         return $this->responseJson(200, "Online Avalible Time", $freeTimes);
     //     } catch (Throwable $e) {
-    //         $this->responseJsonFailed();
+    //         return $this->responseJsonFailed();
     //     }
     // }
 

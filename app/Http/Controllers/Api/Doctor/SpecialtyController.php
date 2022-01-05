@@ -31,7 +31,7 @@ class SpecialtyController extends Controller
             $doctor->specialties()->syncWithoutDetaching($request->specialty_id);
             return $this->responseJsonWithoutData();
         } catch (Throwable $e) {
-            $this->responseJsonFailed();
+            return $this->responseJsonFailed();
         }
     }
 
