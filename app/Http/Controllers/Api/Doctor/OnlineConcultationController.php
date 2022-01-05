@@ -130,7 +130,7 @@ class OnlineConcultationController extends Controller
                 "online_id" => $online->id,
                 "worktime_days" => $worktime_days
             ];
-            return $this->responseJson(200, "Online concultation WorkingTimes", $data);
+            return $this->responseJson(200, "Online concultation WorkingTimes", $worktime_days);
 
         }catch (Throwable $e) {
             $this->responseJsonFailed();

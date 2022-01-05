@@ -161,7 +161,7 @@ class ClinicController extends Controller
                 "worktime_days" => $worktime_days
             ];
             // return $this->responseJson(200, "Clinic WorkingTimes", ClinicWorkingTimeResource::collection($workingTime));
-            return $this->responseJson(200, "Clinic WorkingTimes", $data);
+            return $this->responseJson(200, "Clinic WorkingTimes", $worktime_days);
 
         }catch (Throwable $e) {
             $this->responseJsonFailed();
