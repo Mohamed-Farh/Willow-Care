@@ -22,7 +22,7 @@ class TermSeeder extends Seeder
                 'text_ar' => $faker->paragraph(),
                 'text_en' => $faker->paragraph(),
                 'text_ro' => $faker->paragraph(),
-                'app_type' => 'Doctor',
+                'category_id' => 1,
                 'active' => rand(0, 1),
             ]);
         }
@@ -32,7 +32,7 @@ class TermSeeder extends Seeder
                 'text_ar' => $faker->paragraph(),
                 'text_en' => $faker->paragraph(),
                 'text_ro' => $faker->paragraph(),
-                'app_type' => 'Patient',
+                'category_id' => 2,
                 'active' => rand(0, 1),
             ]);
         }

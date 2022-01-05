@@ -18,7 +18,7 @@ class CreateTermsTable extends Migration
             $table->longText('text_ar');
             $table->longText('text_en');
             $table->longText('text_ro');
-            $table->string('app_type')->comment('Doctor', 'Patient');
+            $table->foreignId('category_id')->nullable();
             $table->boolean('active')->default(1)->comment('0 => Not Active', '1 => Active');
             $table->timestamps();
         });

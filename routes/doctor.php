@@ -76,18 +76,23 @@ Route::middleware(["auth:api-doctor"])->group(function () {
     Route::post('add-home-concultation',[HomeConcultationController::class, 'addHomeConcultation']);
     Route::post('update-home-concultation',[HomeConcultationController::class, 'updateHomeConcultation']);
     Route::post('delete-home-concultation',[HomeConcultationController::class, 'deleteHomeConcultation']);
+    Route::get('get-home-work-time',[HomeConcultationController::class, 'getHomeWorkTime']);
+
 
     ############################## Online Concultation ###################################################
     Route::get('get-online-concultation',[OnlineConcultationController::class, 'getOnlineConcultation']);
     Route::post('add-online-concultation',[OnlineConcultationController::class, 'addOnlineConcultation']);
     Route::post('update-online-concultation',[OnlineConcultationController::class, 'updateOnlineConcultation']);
     Route::post('delete-online-concultation',[OnlineConcultationController::class, 'deleteOnlineConcultation']);
+    Route::get('get-online-work-time',[OnlineConcultationController::class, 'getOnlineWorkTime']);
 
 
     ############################## Work Time ###################################################
     Route::post('single-work-time',[WorkTimeController::class, 'single']);
     Route::post('multi-work-time',[WorkTimeController::class, 'multiIndex']);
     Route::post('single-day-time-check',[WorkTimeController::class, 'checkTime']);
+    Route::post('multi-days-time-check',[WorkTimeController::class, 'checkTimes']);
+
 
 
     ########## Online ConcultationWorking Time ###########

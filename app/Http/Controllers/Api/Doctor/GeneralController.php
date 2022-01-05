@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\Doctor;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use Laravel\Passport\HasApiTokens;
 use Illuminate\Http\Request;
 use App\Traits\ApiTraits;
@@ -21,20 +22,22 @@ class GeneralController extends Controller
 
     public function getSpecialties(Request $request)
     {
-        try {
+        // try {
             $lang =  Auth::user()->lang;
-            if( $lang == 'ar' || $lang == 'en' || $lang =='ro'){
-                $Specialties = Specialty::select('id' ,'name_'.$lang.' as name' , 'icon')
-                                        ->where('type','Doctor')
+            // if( $lang == 'ar' || $lang == 'en' || $lang =='ro'){
+                $category = Category::where('id',1)->first();
+                $ids = $category->specialties->pluck('id');
+                $Specialties = Specialty::withoutAppends()->select('id' ,'name_'.$lang.' as name' , 'icon')
+                                        ->whereIn('id', $ids)
                                         ->where('active','1')
                                         ->get();
                 return $this->responseJson(200, "all Specialties In Doctor Category", $Specialties);
-            }else{
+            // }else{
                 return $this->responseValidationJsonFailed('language code is incorrect');
-            }
-        } catch (Throwable $e) {
-            return $this->responseJsonFailed();
-        }
+            // }
+        // } catch (Throwable $e) {
+        //     return $this->responseJsonFailed();
+        // }
     }
 
     public function getTermsAndConditions(Request $request)
@@ -50,7 +53,7 @@ class GeneralController extends Controller
             if( $lang == 'ar' || $lang == 'en' || $lang =='ro'){
                 $terms = Term::select('id' ,'text_'.$lang.' as text')
                                         ->where('active','1')
-                                        ->where('app_type','Doctor')
+                                        ->where('category_id','1')
                                         ->get();
                 return $this->responseJson(200, "all Terms and conditions In Doctor Category", $terms);
             }else{

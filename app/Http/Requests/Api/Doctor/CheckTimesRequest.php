@@ -3,11 +3,13 @@
 namespace App\Http\Requests\Api\Doctor;
 
 use App\Traits\ApiTraits;
+use Illuminate\Validation\ValidationException;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Http\Response;
 
-class UpdateOnlineConculationRequest extends FormRequest
+class CheckTimesRequest extends FormRequest
 {
     use ApiTraits;
     /**
@@ -28,9 +30,9 @@ class UpdateOnlineConculationRequest extends FormRequest
     public function rules()
     {
         return [
-            "online_concultation_id" => "required",
-            "price" => "nullable",
-            "renewal_price" => "nullable",
+            "days" => "required|array|min:1",
+            "from" => "date_format:H:i",
+            "to" =>"date_format:H:i",
         ];
     }
 

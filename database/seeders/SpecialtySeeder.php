@@ -24,7 +24,6 @@ class SpecialtySeeder extends Seeder
                 'name_en' => $faker->sentence(2, true),
                 'name_ro' => $faker->sentence(2, true),
                 'icon' => 'images/doctor/specialty/'.random_int(1, 5).'.png',
-                'type' => 'Doctor',
                 'active' => rand(0, 1),
             ]);
         }
@@ -36,9 +35,20 @@ class SpecialtySeeder extends Seeder
                 'name_en' => $faker->sentence(2, true),
                 'name_ro' => $faker->sentence(2, true),
                 'icon' => 'images/doctor/specialty/'.random_int(1, 5).'.png',
-                'type' => 'Patient',
                 'active' => rand(0, 1),
             ]);
+        }
+
+        $specialties = Specialty::all();
+        foreach($specialties as $specialty){
+            for ($i = 1; $i < $specialties->count(); $i++) {
+                DB::table('category_specialties')->insert([
+                    [
+                        'category_id' => random_int(1, 6),
+                        'specialty_id' => $specialty->id,
+                    ],
+                ]);
+            }
         }
 
     }

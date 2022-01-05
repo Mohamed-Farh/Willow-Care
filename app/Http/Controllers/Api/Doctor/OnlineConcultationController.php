@@ -65,7 +65,6 @@ class OnlineConcultationController extends Controller
                 return $this->responseValidationJsonFailed('OnlineConcultation not belongs to this doctor');
             }else{
                 $online->update($request->all());
-
                 return $this->responseJson(200, "Updating OnlineConcultation Successfully", new OnlineConculationResource($online));
             }
         } catch (Throwable $e) {
@@ -93,6 +92,47 @@ class OnlineConcultationController extends Controller
                 return $this->responseJsonWithoutData();
             }
         } catch (Throwable $e) {
+            $this->responseJsonFailed();
+        }
+    }
+
+    public function getOnlineWorkTime(Request $request){
+        try{
+            $validator = Validator::make($request->all(), [
+                'online_id' => 'required|exists:online_concultations,id',
+            ]);
+            if ($validator->fails()) {
+                return $this->responseValidationJsonFailed('online_id is incorrect or required');
+            }
+
+            $online = OnlineConcultation::where(['id'=> $request->online_id ,'doctor_id' => Auth::user()->id])->first();
+            if(!$online){
+                $this->responseJsonFailed(422, "this doctor can't control on this online concultation");
+            }
+            
+            $worktime_days = [];
+            for($x=0 ; $x<7 ; $x++){
+                $workingTime = OnlineConcultationWorkingTime::where(['online_concultation_id' => $request->online_id , 'day' => $x])->get(['id','from','to']);
+                $from = OnlineConcultationWorkingTime::where(['online_concultation_id' => $request->online_id , 'day' => $x])->min('from');
+                $to = OnlineConcultationWorkingTime::where(['online_concultation_id' => $request->online_id , 'day' => $x])->max('to');
+                if ($workingTime->count() == 0 ) continue;
+                $work = (object)[
+                    "day" => $x ,
+                    "from" => $from,
+                    "to" => $to,
+                    "count" =>  $workingTime->count(),
+                    "shifts" => $workingTime,
+                ];
+                $worktime_days[] = $work;
+            }
+
+            $data = (object) [
+                "online_id" => $online->id,
+                "worktime_days" => $worktime_days
+            ];
+            return $this->responseJson(200, "Online concultation WorkingTimes", $data);
+
+        }catch (Throwable $e) {
             $this->responseJsonFailed();
         }
     }

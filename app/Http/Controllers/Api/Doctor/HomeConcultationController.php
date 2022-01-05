@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api\Doctor;
 
 use App\Http\Controllers\Controller;
-
+use App\Http\Controllers\HomeController;
 use App\Http\Requests\Api\Doctor\HomeConculationRequest;
 use App\Http\Requests\Api\Doctor\HomeConculationWorkingTimesRequest;
 use App\Http\Requests\Api\Doctor\UpdateHomeConculationRequest;
@@ -88,6 +88,48 @@ class HomeConcultationController extends Controller
                 return $this->responseJsonWithoutData();
             }
         } catch (Throwable $e) {
+            $this->responseJsonFailed();
+        }
+    }
+
+
+    public function getHomeWorkTime(Request $request){
+        try{
+            $validator = Validator::make($request->all(), [
+                'home_id' => 'required|exists:home_concultations,id',
+            ]);
+            if ($validator->fails()) {
+                return $this->responseValidationJsonFailed('home_id is incorrect or required');
+            }
+
+            $home = HomeConcultation::where(['id'=> $request->home_id ,'doctor_id' => Auth::user()->id])->first();
+            if(!$home){
+                $this->responseJsonFailed(422, "this doctor can't control on this home concultation");
+            }
+            
+            $worktime_days = [];
+            for($x=0 ; $x<7 ; $x++){
+                $workingTime = HomeConcultationWorkingTime::where(['home_concultation_id' => $request->home_id , 'day' => $x])->get(['id','from','to']);
+                $from = HomeConcultationWorkingTime::where(['home_concultation_id' => $request->home_id , 'day' => $x])->min('from');
+                $to = HomeConcultationWorkingTime::where(['home_concultation_id' => $request->home_id , 'day' => $x])->max('to');
+                if ($workingTime->count() == 0 ) continue;
+                $work = (object)[
+                    "day" => $x ,
+                    "from" => $from,
+                    "to" => $to,
+                    "count" =>  $workingTime->count(),
+                    "shifts" => $workingTime,
+                ];
+                $worktime_days[] = $work;
+            }
+
+            $data = (object) [
+                "home_id" => $home->id,
+                "worktime_days" => $worktime_days
+            ];
+            return $this->responseJson(200, "home concultation WorkingTimes", $data);
+
+        }catch (Throwable $e) {
             $this->responseJsonFailed();
         }
     }
