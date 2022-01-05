@@ -72,7 +72,7 @@ class BasicInformationController extends Controller
                 //update specialty
                 $doctor->specialties()->syncWithoutDetaching($request->specialty_id);
             }
-
+            
             //update Doctor Information
             $doctor->update($request->all());
             $doctor->refresh();
