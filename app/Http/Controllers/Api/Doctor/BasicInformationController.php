@@ -68,17 +68,21 @@ class BasicInformationController extends Controller
         try {
             $doctor = Doctor::whereId(Auth::guard('api-doctor')->id())->first();
 
-            //update specialty
-            $doctor->specialties()->syncWithoutDetaching($request->specialty_id);
+            if($request->specialty_id != ''){
+                //update specialty
+                $doctor->specialties()->syncWithoutDetaching($request->specialty_id);
+            }
 
             //update Doctor Information
             $doctor->update($request->all());
             $doctor->refresh();
 
             //Insert Licensce For Doctor
-            foreach ($request->license as $image) {
-                $img = $this->uploadImages($image, "images/doctor/license");
-                $doctor->licenses()->create(["image" => $img]);
+            if($request->license != ''){
+                foreach ($request->license as $image) {
+                    $img = $this->uploadImages($image, "images/doctor/license");
+                    $doctor->licenses()->create(["image" => $img]);
+                }
             }
 
             return $this->responseJson(200 , "data", new BasicInformationResource($doctor));
