@@ -26,7 +26,7 @@ class ClinicResource extends JsonResource
             "renewal_price" => strval($this->renewal_price),
             "duration" => strval($this->duration),
             "payment_method" => strval($this->payment_method),
-            "clinic_image" => "public/".strval($this->image),
+            "clinic_image" => env('APP_URL').'/public/'.strval($this->image),
             "active" => '1',
             "doctor_id" => strval($this->doctor_id),
             "created_at" => strval($this->created_at),

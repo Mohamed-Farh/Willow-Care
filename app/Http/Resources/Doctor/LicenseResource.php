@@ -16,7 +16,7 @@ class LicenseResource extends JsonResource
     {
         return [
             "id" => $this->id,
-            "image" => isset($this->image) ? 'public/'.$this->image : '',
+            "image" => isset($this->image) ? env('APP_URL').'/public/'.$this->image : '',
             "doctor_id" => strval($this->doctor_id),
             "created_at" => strval($this->created_at),
             "updated_at" => strval($this->updated_at),

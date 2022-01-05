@@ -33,7 +33,7 @@ class UpdateProfileRequest extends FormRequest
             "name" => "nullable",
             "gender" => "nullable|in:0,1",
             "professional_title_id" => "nullable|exists:professional_titles,id",
-            "graduation_year" => "nullable",
+            "graduation_year" => "nullable|numeric|min:1910",
             "about" => "nullable|min:8",
             "license" => "nullable",
             "speialty_id" => "nullable|exists:specialties,id",

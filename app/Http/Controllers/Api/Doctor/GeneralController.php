@@ -28,13 +28,12 @@ class GeneralController extends Controller
             if( $lang == 'ar' || $lang == 'en' || $lang =='ro'){
                 $category = Category::where('id',1)->first();
                 $ids = $category->specialties->pluck('id');
-                $Specialties = Specialty::withoutAppends()->select('id' ,'name_'.$lang.' as name' , 'icon')
-                                        ->whereIn('id', $ids)
+                $Specialties = Specialty::withoutAppends()->whereIn('id', $ids)
                                         ->where('active','1')
                                         ->get();
                 return $this->responseJson(200, "all Specialties In Doctor Category", SpecialtyResource::collection($Specialties));
             }else{
-                return $this->responseValidationJsonFailed('language code is incorrect');
+                return $this->responseValidationJsonFailed(422,'language code is incorrect');
             }
         } catch (Throwable $e) {
             return $this->responseJsonFailed();

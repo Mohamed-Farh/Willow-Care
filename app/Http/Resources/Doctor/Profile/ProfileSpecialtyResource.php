@@ -35,7 +35,7 @@ class ProfileSpecialtyResource extends JsonResource
         return [
             "id" => $this->id,
             "name" => isset($this->$name) ? $this->$name : '',
-            "image" => isset($this->icon) ? 'public/'.$this->icon : '',
+            "image" => isset($this->icon) ? env('APP_URL').'/public/'.$this->icon : '',
             "selected" => $selected,
             "created_at" => strval($this->created_at),
             "updated_at" => strval($this->updated_at),

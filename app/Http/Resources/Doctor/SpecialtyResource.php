@@ -23,8 +23,8 @@ class SpecialtyResource extends JsonResource
 
         return [
             "id" => $this->id,
-            "name" => isset($this->name) ? $this->name : '',
-            "image" => isset($this->icon) ? 'public/'.$this->icon : '',
+            "name" => isset($this->$name) ? $this->$name : '',
+            "image" => isset($this->icon) ? env('APP_URL').'/public/'.$this->icon : '',
             "created_at" => strval($this->created_at),
             "updated_at" => strval($this->updated_at),
         ];

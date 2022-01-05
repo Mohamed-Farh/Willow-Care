@@ -24,7 +24,7 @@ trait ApiTraits
     }
 
 
-    public function responseJsonFailed($status = 404 , $massage = "Fail")
+    public function responseJsonFailed($status = 422 , $massage = "Fail")
     {
         return response()->json([
             "success" => false,

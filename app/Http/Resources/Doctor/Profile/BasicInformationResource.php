@@ -33,7 +33,7 @@ class BasicInformationResource extends JsonResource
             "patients_count" => '1',
             "exp_years" => '5',
             "professional_title_id" =>isset($this->professional_title_id) ? $this->professional_title_id : '',
-            "profile_image"=>isset($this->image) ? 'public/'.$this->image : '',
+            "profile_image"=>isset($this->image) ? env('APP_URL').'/public/'.$this->image : '',
             "gender" => ($this->gender == 0) ? "male" : "female",
             "about" => isset($this->about) ? $this->about : '',
             // "user_token" => isset($this->api_token) ? $this->api_token : '',

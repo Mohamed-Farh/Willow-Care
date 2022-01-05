@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Doctor\ForgotPasswordRequest;
 use App\Http\Requests\Api\Doctor\RegisterRequest;
 use App\Http\Requests\Api\General\LoginRequest;
+use App\Http\Resources\Doctor\CountryResource;
 use App\Http\Resources\Doctor\LoginResource;
 use Laravel\Passport\HasApiTokens;
 use Illuminate\Http\Request;
@@ -46,11 +47,11 @@ class GeneralController extends Controller
                     $device_token = DeviceToken::where('token' , $request->device_token)->update(['type_token'=>$apiToke]);
                 };
             }else{
-                return $this->responseJsonFailed(404, 'the app type is incorrect');
+                return $this->responseJsonFailed(422, 'the app type is incorrect');
             }
 
             if (!Auth::guard('doctor')->attempt(["phone" => $request->phone, "password" => $request->password])) {
-                return $this->responseJsonFailed(404, 'the phone number or password is incorrect');
+                return $this->responseJsonFailed(422, 'the phone number or password is incorrect');
             }else{
                 $auth_user->api_token = $apiToke;
                 $auth_user->device_token = $request->device_token;
@@ -68,7 +69,8 @@ class GeneralController extends Controller
             $lang = $request->header('lang');
             if( $lang == 'ar' || $lang == 'en' || $lang =='ro'){
                 $countries = Country::withoutAppends()->select('id' ,'name_'.$lang.' as name', 'flag', 'code')->where('active','1')->get();
-                return $this->responseJson(200, "all countries data", $countries);
+                return $this->responseJson(200, "all countries data", CountryResource::collection($countries));
+                // return $this->responseJson(200, "all countries data", $countries);
             }else{
                 return $this->responseValidationJsonFailed('language code is incorrect');
             }
