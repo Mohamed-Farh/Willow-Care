@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
             CountrySeeder::class,
             ProTitleSeeder::class,
             SpecialtySeeder::class,
+            InsuranceCompaniesSeeder::class,
             DoctorSeeder::class,
             TermSeeder::class,
             CertificationSeeder::class,
