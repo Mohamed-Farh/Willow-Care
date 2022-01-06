@@ -4,41 +4,41 @@ namespace App\Traits;
 
 trait ApiTraits
 {
-    public function responseJson($status = 200, $massage = "Successfully Done", $data)
+    public function responseJson($status = 200, $message = "Successfully Done", $data)
     {
         return response()->json([
             "success" => true,
             "status" => $status,
-            "massage" => $massage,
+            "message" => $message,
             "data" => $data
         ], $status);
     }
 
-    public function responseJsonWithoutData($status = 200 , $massage = "Successfully Done")
+    public function responseJsonWithoutData($status = 200 , $message = "Successfully Done")
     {
         return response()->json([
             "success" => true,
             "status" => $status,
-            "massage" => $massage,
+            "message" => $message,
         ], $status);
     }
 
 
-    public function responseJsonFailed($status = 422 , $massage = "Fail")
+    public function responseJsonFailed($status = 422 , $message = "Fail")
     {
         return response()->json([
             "success" => false,
             "status" => $status,
-            "massage" => $massage,
+            "message" => $message,
         ], $status);
     }
 
-    public function responseValidationJsonFailed($massage = "Fail")
+    public function responseValidationJsonFailed($message = "Fail")
     {
         return response()->json([
             "success" => false,
             "status" => 200,
-            "massage" => $massage,
+            "message" => $message,
         ], 200);
     }
 
