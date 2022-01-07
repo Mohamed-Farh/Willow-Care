@@ -8,6 +8,7 @@ use App\Http\Requests\Api\Doctor\ClinicWorkTimeRequest;
 use App\Http\Requests\Api\Doctor\UpdateClinicRequest;
 use App\Http\Resources\Doctor\ClinicResource;
 use App\Http\Resources\Doctor\ClinicWorkingTimeResource;
+use App\Http\Resources\Doctor\WorkingTimeResource;
 use App\Models\Clinic;
 use App\Models\WorkingTime;
 use Laravel\Passport\HasApiTokens;
@@ -128,7 +129,7 @@ class ClinicController extends Controller
 
     public function getSingleClinicWorkTime(Request $request)
     {
-        try{
+        // try{
             $validator = Validator::make($request->all(), [
                 'clinic_id' => 'required|exists:clinics,id',
             ]);
@@ -148,12 +149,13 @@ class ClinicController extends Controller
                 $from = WorkingTime::where(['clinic_id' => $request->clinic_id , 'day' => $x])->min('from');
                 $to = WorkingTime::where(['clinic_id' => $request->clinic_id , 'day' => $x])->max('to');
                 if ($workingTime->count() == 0 ) continue;
+
                 $work = (object)[
                     "day" => $x ,
-                    "from" => $from,
-                    "to" => $to,
+                    "from" => \Carbon\Carbon::createFromTimeStamp(strtotime($from))->format('H:i'),
+                    "to" => \Carbon\Carbon::createFromTimeStamp(strtotime($to))->format('H:i'),
                     "count" =>  $workingTime->count(),
-                    "shifts" => $workingTime,
+                    "shifts" => WorkingTimeResource::collection($workingTime),
                 ];
                 $worktime_days[] = $work;
             }
@@ -165,9 +167,9 @@ class ClinicController extends Controller
             // return $this->responseJson(200, "Clinic WorkingTimes", ClinicWorkingTimeResource::collection($workingTime));
             return $this->responseJson(200, "Clinic WorkingTimes", $worktime_days);
 
-        }catch (Throwable $e) {
-            $this->responseJsonFailed();
-        }
+        // }catch (Throwable $e) {
+        //     $this->responseJsonFailed();
+        // }
     }
 
     ###############################################################################################################
