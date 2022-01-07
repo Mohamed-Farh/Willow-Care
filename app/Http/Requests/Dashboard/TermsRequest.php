@@ -4,7 +4,7 @@ namespace App\Http\Requests\Dashboard;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CategoryRequest extends FormRequest
+class TermsRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,22 +27,24 @@ class CategoryRequest extends FormRequest
             case 'POST':
             {
                 return [
-                    'name_ar' => 'required|max:255|string|regex:/^[\s\p{Arabic}]+$/u',
-                    'name_en' => 'required|max:255|string|regex:/^[\pL\s]+$/u',
-                    'name_ro' => ['required', 'max:255','string'],
+                    'text_ar' => 'required|max:1000|string|regex:/^[\s\p{Arabic}]+$/u',
+                    'text_en' => 'required|max:1000|string|regex:/^[\pL\s]+$/u',
+                    'text_ro' => ['required', 'max:1000','string'],
                     'active'=>'nullable',
-                    'image'=> ['nullable','file','mimes:jpeg,png,jpg,gif,svg|max:2048'],
+                    'category'=>'required|exists:categories,id'
+
                 ];
             }
             case 'PUT':
             case 'PATCH':
             {
                 return [
-                    'name_ar' => 'required|max:255|string|regex:/^[\s\p{Arabic}]+$/u',
-                    'name_en' => 'required|max:255|string|regex:/^[\pL\s]+$/u',
-                    'name_ro' => ['required', 'max:255','string'],
-                    'image'=> ['nullable','file','mimes:jpeg,png,jpg,gif,svg|max:2048'],
+                    'text_ar' => 'required|max:1000|string|regex:/^[\s\p{Arabic}]+$/u',
+                    'text_en' => 'required|max:1000|string|regex:/^[\pL\s]+$/u',
                     'active'=>'nullable',
+                    'text_ro' => ['required', 'max:1000','string'],
+                    'category'=>'required|exists:categories,id'
+
 
                 ];
             }

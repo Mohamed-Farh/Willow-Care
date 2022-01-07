@@ -89,41 +89,27 @@ var KTWizard3 = function () {
 			_formEl,
 			{
 				fields: {
-					address1: {
+					lang: {
 						validators: {
 							notEmpty: {
-								message: 'Address is required'
+								message: 'Language is required'
 							}
 						}
 					},
-					postcode: {
-						validators: {
-							notEmpty: {
-								message: 'Postcode is required'
-							}
-						}
-					},
-					city: {
-						validators: {
-							notEmpty: {
-								message: 'City is required'
-							}
-						}
-					},
-					state: {
-						validators: {
-							notEmpty: {
-								message: 'State is required'
-							}
-						}
-					},
-					country: {
-						validators: {
-							notEmpty: {
-								message: 'Country is required'
-							}
-						}
-					}
+                    country: {
+                        validators: {
+                            notEmpty: {
+                                message: 'Country is required'
+                            }
+                        }
+                    },
+                    title:{
+                        validators: {
+                            notEmpty: {
+                                message: 'Title is required'
+                            }
+                        }
+                    }
 				},
 				plugins: {
 					trigger: new FormValidation.plugins.Trigger(),
@@ -141,53 +127,68 @@ var KTWizard3 = function () {
 			_formEl,
 			{
 				fields: {
-					package: {
+					image: {
 						validators: {
 							notEmpty: {
-								message: 'Package details is required'
+								message: 'image is required'
 							}
 						}
 					},
-					weight: {
+					name: {
 						validators: {
 							notEmpty: {
-								message: 'Package weight is required'
+								message: 'name is required'
+							},
+
+						}
+					},
+					phone: {
+						validators: {
+							notEmpty: {
+								message: 'phone is required'
 							},
 							digits: {
 								message: 'The value added is not valid'
 							}
 						}
 					},
-					width: {
+					email: {
 						validators: {
 							notEmpty: {
-								message: 'Package width is required'
+								message: 'email is required'
 							},
-							digits: {
-								message: 'The value added is not valid'
-							}
+                            emailAddress: {
+                                message: 'The value is not a valid email address'
+                            },
+
+
 						}
 					},
-					height: {
+					password: {
 						validators: {
 							notEmpty: {
-								message: 'Package height is required'
+								message: 'Password is required'
 							},
-							digits: {
-								message: 'The value added is not valid'
-							}
+
 						}
 					},
-					packagelength: {
-						validators: {
-							notEmpty: {
-								message: 'Package length is required'
-							},
-							digits: {
-								message: 'The value added is not valid'
-							}
-						}
-					}
+                    password_confirmation: {
+                        validators: {
+                            notEmpty: {
+                                message: 'Confirm Password is required'
+                            },
+
+                        }
+                    },
+                    graduation_year:{
+                        validators: {
+                            notEmpty: {
+                                message: 'Graduation Year is required'
+                            },
+
+
+                        }
+                    }
 				},
 				plugins: {
 					trigger: new FormValidation.plugins.Trigger(),
@@ -205,27 +206,21 @@ var KTWizard3 = function () {
 			_formEl,
 			{
 				fields: {
-					delivery: {
+                    speciality: {
 						validators: {
 							notEmpty: {
-								message: 'Delivery type is required'
+								message: 'Speciality is required'
 							}
 						}
 					},
-					packaging: {
+					files: {
 						validators: {
 							notEmpty: {
-								message: 'Packaging type is required'
+								message: 'Files is required'
 							}
 						}
 					},
-					preferreddelivery: {
-						validators: {
-							notEmpty: {
-								message: 'Preferred delivery window is required'
-							}
-						}
-					}
+
 				},
 				plugins: {
 					trigger: new FormValidation.plugins.Trigger(),

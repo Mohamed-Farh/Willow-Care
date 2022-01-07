@@ -16,6 +16,9 @@ var KTImageInputDemo = function () {
 		// Example 4
 		var avatar4 = new KTImageInput('kt_image_4');
 
+
+
+
 		avatar4.on('cancel', function(imageInput) {
 			swal.fire({
                 title: 'Image successfully canceled !',
@@ -36,7 +39,14 @@ var KTImageInputDemo = function () {
             });
 		});
 
-		// avatar4.on('remove', function(imageInput) {
+
+
+
+
+
+
+
+        // avatar4.on('remove', function(imageInput) {
 		// 	swal.fire({
         //         title: 'Image successfully removed !',
         //         type: 'error',

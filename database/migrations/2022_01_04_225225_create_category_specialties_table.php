@@ -14,8 +14,10 @@ class CreateCategorySpecialtiesTable extends Migration
     public function up()
     {
         Schema::create('category_specialties', function (Blueprint $table) {
+            $table->id();
             $table->foreignId('category_id')->nullable()->constrained()->cascadeOnDelete();
             $table->foreignId('specialty_id')->nullable()->constrained()->cascadeOnDelete();
+            $table->timestamps();
         });
     }
 

@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Facades\Lang;
 
 class Term extends Model
 {
@@ -14,6 +15,9 @@ class Term extends Model
 
     protected $casts = [
     'id' => 'string',
+    ];
+    protected $appends =[
+        'term'
     ];
 
     public function active()
@@ -26,5 +30,8 @@ class Term extends Model
         return $this->belongsTo(Category::class);
     }
 
-
+    public function getTermAttribute()
+    {
+        return Lang::locale() == 'ar' ? $this->text_ar : (Lang::locale() == 'en' ? $this->text_en : $this->text_ro);
+    }
 }

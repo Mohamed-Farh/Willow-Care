@@ -28,7 +28,7 @@ class InsuranceCompanyRequest extends FormRequest
             {
                 return [
                     'name_ar' => 'required|max:255|string|regex:/^[\s\p{Arabic}]+$/u',
-                    'name_en' => 'required|max:255|string',
+                    'name_en' => 'required|max:255|string|regex:/^[\pL\s]+$/u',
                     'name_ro' => ['required', 'max:255','string'],
                     'active'=>'nullable',
                     'image'=> ['nullable','file','mimes:jpeg,png,jpg,gif,svg|max:2048'],
@@ -39,7 +39,7 @@ class InsuranceCompanyRequest extends FormRequest
             {
                 return [
                     'name_ar' => 'required|max:255|string|regex:/^[\s\p{Arabic}]+$/u',
-                    'name_en' => "required|max:255|string",
+                    'name_en' => 'required|max:255|string|regex:/^[\pL\s]+$/u',
                     'name_ro' => ['required', 'max:255','string'],
                     'image'=> ['nullable','file','mimes:jpeg,png,jpg,gif,svg|max:2048'],
                     'active'=>'nullable',

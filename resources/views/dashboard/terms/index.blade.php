@@ -3,7 +3,7 @@
     <style>
         table.dataTable tbody td.select-checkbox:before, table.dataTable tbody th.select-checkbox:before {
             content: " ";
-            margin-top: 22px;
+            margin-top: 10px;
             margin-left: 0;
             border: 1px solid darkblue;
             border-radius: 3px;
@@ -11,7 +11,7 @@
         table.dataTable tr.selected td.select-checkbox:after, table.dataTable tr.selected th.select-checkbox:after {
             content: "✓";
             font-size: 20px;
-            margin-top: 6px;
+            margin-top: -6px;
             margin-left: 0px;
             text-align: center;
             text-shadow: 1px 1px #b0bed9, -1px -1px #b0bed9, 1px -1px #b0bed9, -1px 1px #b0bed9;
@@ -25,7 +25,7 @@
 
             <div class="col-12 d-flex justify-content-end">
                 <!--begin::Button-->
-                <a href="{{route('speciality.create')}}" class="btn btn-primary font-weight-bolder">
+                <a href="{{route('terms.create')}}" class="btn btn-primary font-weight-bolder">
                         <span class="svg-icon svg-icon-md">
                             <!--begin::Svg Icon | path:assets/media/svg/icons/Design/Flatten.svg-->
                             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
@@ -47,26 +47,18 @@
                     <thead class="table-dark ">
                     <tr class="text-light" >
                         <th  class="text-light">No</th>
-                        <th  class="text-light">Name</th>
+                        <th  class="text-light">Content</th>
                         <th  class="text-light">Application Type</th>
-                        <th  class="text-light">Icon</th>
                         <th  class="text-light">Status</th>
                         <th  class="text-light">Action</th>
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach($specialities as $k=>$item)
+                    @foreach($terms as $k=>$item)
                         <tr data-entry-id="{{ $item->id }}">
                             <td>{{$item->id}}</td>
-                            <td >{{$item->speciality}}</td>
-
-                            <td  style="max-width: 200px" >
-                                @foreach($item->categories as $cat)
-                                   <li> {{$cat->category}} </li>
-                                @endforeach
-                            </td>
-
-                            <td class="text-center"><img class="rounded" width="60" height="60" src="{{asset($item->icon)}}"></td>
+                            <td style="max-width: 200px" class="text-truncate" >{{$item->term}}</td>
+                            <td style="width: 140px"  class="text-center">{{$item->category->category}}</td>
                             <td class="text-center">
                                 <input data-id="{{$item->id}}"
                                        class="toggle-class" type="checkbox" data-onstyle="success"
@@ -75,11 +67,13 @@
                                        data-off="Off" {{ $item->active ? 'checked' : '' }}>
 
                             </td>
-                            <td class="text-center">
+                            <td style="width: 200px" class="text-center">
                                 <div style="display: flex" class="text-center justify-content-between">
-                                    <a href="{{route("speciality.edit", $item->id)}}"
+                                    <a href="{{route("terms.edit", $item->id)}}"
                                        class="edit btn btn-secondary btn-sm"><i class="fas fa-edit"></i></a>
-                                    <form method="POST" action=" {{route("speciality.destroy", $item->id)}} ">
+                                    <a href="{{route("terms.show", $item->id)}}"
+                                       class="edit btn btn-success btn-sm"><i class="fas fa-eye"></i></a>
+                                    <form method="POST" action=" {{route("terms.destroy", $item->id)}} ">
                                         @csrf
                                         <input name="_method" type="hidden" value="DELETE">
                                         <button id="confirm" class="show_confirm destroy btn btn-danger btn-sm"
@@ -196,7 +190,7 @@
                     {
                         className: 'btn btn-danger',
                         text: 'Delete All',
-                        url: "{{ route('speciality.massDestroy') }}",
+                        url: "{{ route('terms.massDestroy') }}",
                         action: function (e, dt, node, config) {
 
                             var ids = $.map(dt.rows({ selected: true }).nodes(), function (entry) {
@@ -252,13 +246,13 @@
         $(function() {
             $('.toggle-class').change(function() {
                 var active = $(this).prop('checked') == true ? 1 : 0;
-                var spec_id = $(this).data('id');
+                var term_id = $(this).data('id');
 
                 $.ajax({
                     type: "GET",
                     dataType: "json",
-                    url: '{{route('changeSpecStatus')}}',
-                    data: {'active': active, 'spec_id': spec_id},
+                    url: '{{route('changeTermStatus')}}',
+                    data: {'active': active, 'term_id': term_id},
                     success: function(data){
                         Swal.fire({
                             title: 'Status Change Successfully',
