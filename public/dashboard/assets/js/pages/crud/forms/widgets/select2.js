@@ -4,7 +4,10 @@ var KTSelect2 = function() {
     var demos = function() {
         // basic
         $('#kt_select2_1, #kt_select2_1_validate').select2({
-            placeholder: 'Select a state'
+            placeholder: 'Select an option'
+        });
+        $('#kt_select2_100, #kt_select2_100_validate').select2({
+            placeholder: 'Select an option'
         });
 
         // nested

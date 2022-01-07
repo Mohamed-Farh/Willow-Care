@@ -31,7 +31,7 @@ class Specialty extends Model
         $model->setAppends([]);
         return $model->newQuery();
     }
-    
+
     public function active()
     {
         return $this->status ? 'Active' : 'Not Active';
@@ -46,9 +46,9 @@ class Specialty extends Model
         return Lang::locale() == 'ar' ? $this->name_ar : (Lang::locale() == 'en' ? $this->name_en : $this->name_ro);
     }
 
-    public function categories(): HasMany
+    public function categories(): BelongsToMany
     {
-        return $this->hasMany(Category::class, 'category_specialties');
+        return $this->belongsToMany(Category::class, 'category_specialties');
     }
 
 

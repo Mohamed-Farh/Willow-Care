@@ -11,6 +11,7 @@ use App\Http\Controllers\Dashboard\AdminController;
 use App\Http\Controllers\Dashboard\SpecialityController;
 use App\Http\Controllers\Dashboard\DoctorController;
 use App\Http\Controllers\Dashboard\InsuranceCompanyController;
+use App\Http\Controllers\Dashboard\TermsController;
 
 
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
@@ -72,14 +73,31 @@ Route::group(['prefix' => 'admin'], function(){
                 /* Speciality   */
                 Route::resource('/speciality', SpecialityController::class);
                 Route::get('changeStatusSpec', [SpecialityController::class,'changeStatus'])->name('changeSpecStatus');
-                /* Doctor   */
-                Route::resource('/doctor', DoctorController::class);
-                Route::get('changeStatusDoctor', [DoctorController::class,'changeStatus'])->name('changeDoctorStatus');
+                Route::post('delete-spec-img',[SpecialityController::class,'deleteattachment'])->name('delSpecImg');
+                Route::post('speciality/destroyAll', [SpecialityController::class,'massDestroy'])->name('speciality.massDestroy');
+
                 /* Insurance Company   */
                 Route::resource('/insurance-company', InsuranceCompanyController::class);
                 Route::get('changeStatusCompany', [InsuranceCompanyController::class,'changeStatus'])->name('changeCompanyStatus');
                 Route::post('delete-company-img',[InsuranceCompanyController::class,'deleteattachment'])->name('delCompanyImg');
                 Route::post('insurance-company/destroyAll', [InsuranceCompanyController::class,'massDestroy'])->name('company.massDestroy');
+                /* Terms   */
+                Route::resource('/terms', TermsController::class);
+                Route::get('changeStatusTerms', [TermsController::class,'changeStatus'])->name('changeTermStatus');
+                Route::post('terms/destroyAll', [TermsController::class,'massDestroy'])->name('terms.massDestroy');
+                 /////////////////////////////////////////////////////////
+
+
+                /*  Doctor   */
+                Route::resource('/doctor', DoctorController::class);
+                Route::get('changeStatusDoctor', [DoctorController::class,'changeStatus'])->name('changeDoctorStatus');
+                Route::get('create',\App\Http\Livewire\DoctorCreate::class )->name('create.multi');
+
+
+
+
+
+
             });
 
     });

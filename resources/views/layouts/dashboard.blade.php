@@ -50,40 +50,44 @@
     @endif
 
 
-    <!--end::Global Theme Styles-->
+<!--end::Global Theme Styles-->
     <!--begin::Layout Themes(used by all pages)-->
 
     <!--end::Layout Themes-->
     <link rel="shortcut icon" href="{{asset('dashboard/assets/media/logos/favicon.ico')}}"/>
-@yield('style')
+
+
+    @livewireStyles
+    @stack('styles')
 </head>
 
 <!--begin::Body-->
 <body id="kt_body"
       class="header-fixed header-mobile-fixed subheader-enabled subheader-fixed aside-enabled aside-fixed
       aside-minimize-hoverable page-loading">
-<!--begin::Main-->
-<!--begin::Header Mobile-->
-<div id="kt_header_mobile" class="header-mobile align-items-center header-mobile-fixed">
-    <!--begin::Logo-->
-    <a href="{{route('home')}}">
-        <img alt="Logo" src="{{asset('dashboard/assets/media/logos/logo-light.png')}}"/>
-    </a>
-    <!--end::Logo-->
-    <!--begin::Toolbar-->
-    <div class="d-flex align-items-center">
-        <!--begin::Aside Mobile Toggle-->
-        <button class="btn p-0 burger-icon burger-icon-left" id="kt_aside_mobile_toggle">
-            <span></span>
-        </button>
-        <!--end::Aside Mobile Toggle-->
-        <!--begin::Header Menu Mobile Toggle-->
-        <button class="btn p-0 burger-icon ml-4" id="kt_header_mobile_toggle">
-            <span></span>
-        </button>
-        <!--end::Header Menu Mobile Toggle-->
-        <!--begin::Topbar Mobile Toggle-->
-        <button class="btn btn-hover-text-primary p-0 ml-2" id="kt_header_mobile_topbar_toggle">
+<div id="app">
+    <!--begin::Main-->
+    <!--begin::Header Mobile-->
+    <div id="kt_header_mobile" class="header-mobile align-items-center header-mobile-fixed">
+        <!--begin::Logo-->
+        <a href="{{route('home')}}">
+            <img alt="Logo" src="{{asset('dashboard/assets/media/logos/logo-light.png')}}"/>
+        </a>
+        <!--end::Logo-->
+        <!--begin::Toolbar-->
+        <div class="d-flex align-items-center">
+            <!--begin::Aside Mobile Toggle-->
+            <button class="btn p-0 burger-icon burger-icon-left" id="kt_aside_mobile_toggle">
+                <span></span>
+            </button>
+            <!--end::Aside Mobile Toggle-->
+            <!--begin::Header Menu Mobile Toggle-->
+            <button class="btn p-0 burger-icon ml-4" id="kt_header_mobile_toggle">
+                <span></span>
+            </button>
+            <!--end::Header Menu Mobile Toggle-->
+            <!--begin::Topbar Mobile Toggle-->
+            <button class="btn btn-hover-text-primary p-0 ml-2" id="kt_header_mobile_topbar_toggle">
 					<span class="svg-icon svg-icon-xl">
 						<!--begin::Svg Icon | path:assets/media/svg/icons/General/User.svg-->
 						<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
@@ -100,79 +104,79 @@
 						</svg>
                         <!--end::Svg Icon-->
 					</span>
-        </button>
-        <!--end::Topbar Mobile Toggle-->
+            </button>
+            <!--end::Topbar Mobile Toggle-->
+        </div>
+        <!--end::Toolbar-->
     </div>
-    <!--end::Toolbar-->
-</div>
-<!--end::Header Mobile-->
+    <!--end::Header Mobile-->
 
 
-<!--begin::Main-->
-<div class="d-flex flex-column flex-root">
-    <!--begin::Page-->
-    <div class="d-flex flex-row flex-column-fluid page">
-        <!--begin::Aside-->
-       @include('dashboard.common.sidebar')
+    <!--begin::Main-->
+    <div class="d-flex flex-column flex-root">
+        <!--begin::Page-->
+        <div class="d-flex flex-row flex-column-fluid page">
+            <!--begin::Aside-->
+        @include('dashboard.common.sidebar')
         <!--end::Aside-->
-        <!--begin::Wrapper-->
-        <div class="d-flex flex-column flex-row-fluid wrapper" id="kt_wrapper">
-          @include('dashboard.common.navbar')
+            <!--begin::Wrapper-->
+            <div class="d-flex flex-column flex-row-fluid wrapper" id="kt_wrapper">
+            @include('dashboard.common.navbar')
             <!--begin::Content-->
-            <div style="margin-top: -60px!important;" class="content d-flex flex-column flex-column-fluid" id="kt_content">
-                <!--begin::Entry-->
-                <div class="d-flex flex-column-fluid">
-                    <!--begin::Container-->
-                    <div class="container ">
+                <div style="margin-top: -60px!important;" class="content d-flex flex-column flex-column-fluid" id="kt_content">
+                    <!--begin::Entry-->
+                    <div class="d-flex flex-column-fluid">
+                        <!--begin::Container-->
+                        <div class="container ">
 
-                        <!--begin::Dashboard-->
-                      @yield('content')
+                            <!--begin::Dashboard-->
+                        @yield('content')
                         <!--end::Dashboard-->
 
+                        </div>
+                        <!--end::Container-->
                     </div>
-                    <!--end::Container-->
+                    <!--end::Entry-->
                 </div>
-                <!--end::Entry-->
-            </div>
-            <!--end::Content-->
+                <!--end::Content-->
 
-            <!--begin::Footer-->
-           @include('dashboard.common.footer')
+                <!--begin::Footer-->
+            @include('dashboard.common.footer')
             <!--end::Footer-->
-        </div>
-        <!--end::Wrapper-->
-    </div>
-    <!--end::Page-->
-</div>
-<!--end::Main-->
-
-
-<!-- begin::User Panel-->
-<div id="kt_quick_user" class="offcanvas offcanvas-right p-10">
-    <!--begin::Header-->
-    <div class="offcanvas-header d-flex align-items-center justify-content-between pb-5">
-        <h3 class="font-weight-bold m-0">Admin Profile</h3>
-        <a href="#" class="btn btn-xs btn-icon btn-light btn-hover-primary" id="kt_quick_user_close">
-            <i class="ki ki-close icon-xs text-muted"></i>
-        </a>
-    </div>
-    <!--end::Header-->
-    <!--begin::Content-->
-    <div class="offcanvas-content pr-5 mr-n5">
-        <!--begin::Header-->
-        <div class="d-flex align-items-center mt-5">
-            <div class="symbol symbol-100 mr-5">
-                <div class="symbol-label"
-                     style="background-image:url({{asset(auth()->user()->image ? auth()->user()->image : "")}})">
-
-                </div>
-                <i class="symbol-badge bg-success"></i>
             </div>
-            <div class="d-flex flex-column">
-                <a href="{{route('admin.show',auth()->user()->id)}}" class="font-weight-bold font-size-h5 text-dark-75 text-hover-primary">{{auth()->user()->name}}</a>
-                <div class="text-muted mt-1">{{auth()->user()->role == 0 ? 'Super Admin' : 'Admin' }}</div>
-                <div class="navi mt-2">
-                    <a href="{{route('admin.show',auth()->user()->id)}}" class="navi-item">
+            <!--end::Wrapper-->
+        </div>
+        <!--end::Page-->
+    </div>
+    <!--end::Main-->
+
+
+    <!-- begin::User Panel-->
+    <div id="kt_quick_user" class="offcanvas offcanvas-right p-10">
+        <!--begin::Header-->
+        <div class="offcanvas-header d-flex align-items-center justify-content-between pb-5">
+            <h3 class="font-weight-bold m-0">Admin Profile</h3>
+            <a href="#" class="btn btn-xs btn-icon btn-light btn-hover-primary" id="kt_quick_user_close">
+                <i class="ki ki-close icon-xs text-muted"></i>
+            </a>
+        </div>
+        <!--end::Header-->
+        <!--begin::Content-->
+        <div class="offcanvas-content pr-5 mr-n5">
+            <!--begin::Header-->
+            <div class="d-flex align-items-center mt-5">
+                <div class="symbol symbol-100 mr-5">
+                    <div class="symbol-label"
+                         style="background-image:url({{asset(auth()->user()->image ? auth()->user()->image : "")}})">
+
+                    </div>
+                    <i class="symbol-badge bg-success"></i>
+                </div>
+                <div class="d-flex flex-column">
+                    <a href="{{route('admin.show',auth()->user()->id)}}" class="font-weight-bold font-size-h5 text-dark-75 text-hover-primary">{{auth()->user()->name}}</a>
+                    <div class="text-muted mt-1">{{auth()->user()->role == 0 ? 'Super Admin' : 'Admin' }}</div>
+                    <div class="navi mt-2">
+                        <a href="{{route('admin.show',auth()->user()->id)}}" class="navi-item">
                     <span class="navi-link p-0 pb-2">
                         <span class="navi-icon mr-1">
                             <span class="svg-icon svg-icon-lg svg-icon-primary">
@@ -193,30 +197,30 @@
                         </span>
                         <span class="navi-text text-muted text-hover-primary">{{auth()->user()->email}}</span>
                     </span>
-                    </a>
-                    <a href="{{ route('logout') }}"
-                       class="btn btn-sm btn-light-primary font-weight-bolder py-2 px-5"
-                       onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                        Sign Out
-                    </a>
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                        @csrf
-                    </form>
+                        </a>
+                        <a href="{{ route('logout') }}"
+                           class="btn btn-sm btn-light-primary font-weight-bolder py-2 px-5"
+                           onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            Sign Out
+                        </a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                            @csrf
+                        </form>
+                    </div>
                 </div>
             </div>
+            <!--end::Header-->
+            <!--begin::Separator-->
+            <div class="separator separator-dashed mt-8 mb-5"></div>
+            <!--end::Separator-->
+
         </div>
-        <!--end::Header-->
-        <!--begin::Separator-->
-        <div class="separator separator-dashed mt-8 mb-5"></div>
-        <!--end::Separator-->
-
+        <!--end::Content-->
     </div>
-    <!--end::Content-->
-</div>
-<!-- end::User Panel-->
+    <!-- end::User Panel-->
 
-<!--begin::Scrolltop-->
-<div id="kt_scrolltop" class="scrolltop">
+    <!--begin::Scrolltop-->
+    <div id="kt_scrolltop" class="scrolltop">
 			<span class="svg-icon">
 				<!--begin::Svg Icon | path:assets/media/svg/icons/Navigation/Up-2.svg-->
 				<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
@@ -231,8 +235,9 @@
 				</svg>
                 <!--end::Svg Icon-->
 			</span>
+    </div>
+    <!--end::Scrolltop-->
 </div>
-<!--end::Scrolltop-->
 
 
 <script>
@@ -308,13 +313,10 @@
 
 <!--begin::Page Scripts(used by this page)-->
 
+@livewireScripts
+@stack('scripts')
 
 
-
-
-<!--end::Page Scripts-->
-@yield('scripts')
-<!--end::Page Scripts-->
 
 </body>
 <!--end::Body-->

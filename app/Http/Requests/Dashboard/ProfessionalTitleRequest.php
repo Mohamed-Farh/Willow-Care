@@ -28,7 +28,7 @@ class ProfessionalTitleRequest extends FormRequest
             {
                 return [
                     'name_ar' => 'required|max:255|string|regex:/^[\s\p{Arabic}]+$/u',
-                    'name_en' => 'required|max:255|string|regex:/^[A-Za-z]*$/i',
+                    'name_en' => 'required|max:255|string|regex:/^[\pL\s]+$/u',
                     'name_ro' => ['required', 'max:255','string'],
                     'active'=>'nullable',
 
@@ -39,7 +39,7 @@ class ProfessionalTitleRequest extends FormRequest
             {
                 return [
                     'name_ar' => 'required|max:255|string|regex:/^[\s\p{Arabic}]+$/u',
-                    'name_en' => 'required|max:255|string|regex:/^[A-Za-z]*$/i',
+                    'name_en' => 'required|max:255|string|regex:/^[\pL\s]+$/u',
                     'active'=>'nullable',
                     'name_ro' => ['required', 'max:255','string'],
 

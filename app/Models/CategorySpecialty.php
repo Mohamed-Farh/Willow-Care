@@ -13,6 +13,6 @@ class CategorySpecialty extends Model
 
     protected $table = 'category_specialties';
 
-    public $timestamps = false;
-    public $incrementing = false;
+//    public $timestamps = false;
+//    public $incrementing = false;
 }

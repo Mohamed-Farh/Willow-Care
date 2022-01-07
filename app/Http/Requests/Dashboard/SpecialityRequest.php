@@ -4,7 +4,7 @@ namespace App\Http\Requests\Dashboard;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CategoryRequest extends FormRequest
+class SpecialityRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -31,7 +31,9 @@ class CategoryRequest extends FormRequest
                     'name_en' => 'required|max:255|string|regex:/^[\pL\s]+$/u',
                     'name_ro' => ['required', 'max:255','string'],
                     'active'=>'nullable',
-                    'image'=> ['nullable','file','mimes:jpeg,png,jpg,gif,svg|max:2048'],
+                    'icon'=> ['nullable','file','mimes:jpeg,png,jpg,gif,svg|max:2048'],
+                    'category'=>'required|min:1',
+                    "category.*"  => "required|distinct|min:1",
                 ];
             }
             case 'PUT':
@@ -41,8 +43,10 @@ class CategoryRequest extends FormRequest
                     'name_ar' => 'required|max:255|string|regex:/^[\s\p{Arabic}]+$/u',
                     'name_en' => 'required|max:255|string|regex:/^[\pL\s]+$/u',
                     'name_ro' => ['required', 'max:255','string'],
-                    'image'=> ['nullable','file','mimes:jpeg,png,jpg,gif,svg|max:2048'],
+                    'icon'=> ['nullable','file','mimes:jpeg,png,jpg,gif,svg|max:2048'],
                     'active'=>'nullable',
+                    'category'=>'required|min:1',
+                    "category.*"  => "required|distinct|min:1",
 
                 ];
             }

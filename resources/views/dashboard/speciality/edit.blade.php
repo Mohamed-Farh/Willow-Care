@@ -14,23 +14,23 @@
                         </div>
                     </div>
                     <!--begin::Form-->
-                    <form class="form" action="{{route('speciality.store')}}" method="POST" enctype="multipart/form-data">
+                    <form class="form" action="{{route('speciality.update',$specialty->id)}}" method="POST" enctype="multipart/form-data">
                         @csrf
+                        @method('PUT')
                         <div class="card-body">
                             <div class="form-group">
                                 <label>Arabic Name:</label>
-                                <input type="text" class="form-control" name="name_ar" value="{{old('name_ar')}}"/>
+                                <input type="text" class="form-control" name="name_ar" value="{{old('name_ar',$specialty->name_ar)}}"/>
                                 @error('name_ar')<span class="text-danger">{{ $message }}</span>@enderror
-
                             </div>
                             <div class="form-group">
                                 <label>English Name:</label>
-                                <input type="text" class="form-control" name="name_en" value="{{old('name_en')}}"/>
+                                <input type="text" class="form-control" name="name_en" value="{{old('name_en',$specialty->name_en)}}"/>
                                 @error('name_en')<span class="text-danger">{{ $message }}</span>@enderror
                             </div>
                             <div class="form-group">
                                 <label>Roman Name:</label>
-                                <input type="text" class="form-control" name="name_ro" value="{{old('name_ro')}}"/>
+                                <input type="text" class="form-control" name="name_ro" value="{{old('name_ro',$specialty->name_ro)}}"/>
                                 @error('name_ro')<span class="text-danger">{{ $message }}</span>@enderror
                             </div>
                             <div class="form-group row ">
@@ -39,8 +39,9 @@
                                     <select class="form-control select2" id="kt_select2_3" name="category[]" multiple="multiple">
                                         @foreach($category as $item)
                                             <option  value="{{$item['id']}}"
-                                                {{ (collect(old('category'))->contains($item->id)) ? 'selected':'' }} >
-                                                {{$item['category']}}</option>
+                                                     @if($specialty->categories->containsStrict('id', $item->id)) selected="selected" @endif >
+                                                {{$item['category']}}
+                                            </option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -50,17 +51,20 @@
                                 <label>Active</label>
                                 <div class="checkbox-list">
                                     <label class="checkbox checkbox-outline">
-                                        <input @if(old('active')) checked @endif name="active" type="checkbox"/>
+                                        <input @if($specialty->active==1) checked @endif name="active" type="checkbox"/>
                                         <span></span></label>
                                 </div>
+
                             </div>
                             <div class="card-body">
                                 <div class="form-group row">
                                     <div class="col-lg-9 col-xl-6">
-                                        <div class="image-input image-input-outline" id="kt_image_4"
-                                             style="background-image: url({{asset('dashboard/assets/js/pages/crud/file-upload/image-input.js')}})">
+                                        <div  class="image-input image-input-outline" id="kt_image_4"
+                                              style="background-image: url({{asset($specialty->icon)}})">
                                             <div class="image-input-wrapper"
-                                                 style="background-image: url({{asset('dashboard/assets/media/users/100_1.jpg')}})"></div>
+                                                 style="background-image: url({{asset($specialty->icon)}})">
+
+                                            </div>
                                             <label
                                                 class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
                                                 data-action="change" data-toggle="tooltip" title=""
@@ -80,8 +84,8 @@
 															<i class="ki ki-bold-close icon-xs text-muted"></i>
 														</span>
                                         </div>
+                                        @error('icon')<span class="text-danger">{{ $message }}</span>@enderror
                                     </div>
-                                    @error('icon')<span class="text-danger">{{ $message }}</span>@enderror
                                 </div>
                                 <!--begin::Code-->
                                 <div class="example-code">
@@ -146,15 +150,7 @@
                                                                });
                                                               });
 
-                                                              avatar4.on('remove', function(imageInput) {
-                                                               swal.fire({
-                                                                title: 'Image successfully removed !',
-                                                                type: 'error',
-                                                                buttonsStyling: false,
-                                                                confirmButtonText: 'Got it!',
-                                                                confirmButtonClass: 'btn btn-primary font-weight-bold'
-                                                               });
-                                                              });
+
                                                                     </code>
                                                          </pre>
                                             </div>
@@ -188,6 +184,44 @@
 
 @endsection
 @section('scripts')
-    <script src="{{asset('dashboard/assets/js/pages/crud/file-upload/image-input.js')}}"></script>
     <script src="{{asset('dashboard/assets/js/pages/crud/forms/widgets/select2.js')}}"></script>
+    <script src="{{asset('dashboard/assets/js/pages/crud/file-upload/image-input.js')}}"></script>
+
+    <script>
+        var avatar4 = new KTImageInput('kt_image_4');
+
+        avatar4.on('remove', function(imageInput) {
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            })
+            var confirmed= swal.fire({
+                title: 'Image successfully removed !',
+                type: 'confirmed',
+                buttonsStyling: false,
+                confirmButtonText: 'Got it!',
+                confirmButtonClass: 'btn btn-primary font-weight-bold'
+            });
+            if(confirmed){
+                $.ajax({
+                    url: "{{ route('delSpecImg', ['id'=>$specialty->id]) }}",
+                    type: "POST",
+                    success: function(data) {
+                        setTimeout(function() {
+                            window.location.reload();
+                        },500);
+                    }
+                });
+            }
+
+
+        })
+
+    </script>
+
+
+
+
 @endsection
