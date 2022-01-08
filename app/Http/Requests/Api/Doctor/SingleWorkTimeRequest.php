@@ -33,6 +33,7 @@ class SingleWorkTimeRequest extends FormRequest
             "booking_type" => "required|in:0,1,2", ## 0 => clinic , 1=> home , 2=> online
             "type_id" => "required",
             "day_id" => "required|in:0,1,2,3,4,5,6",
+            "shifts" => "required|array|min:1",
             "shifts.*.from" => "required|date_format:H:i",
             "shifts.*.to" =>"required|date_format:H:i|after:shifts.*.from",
         ];

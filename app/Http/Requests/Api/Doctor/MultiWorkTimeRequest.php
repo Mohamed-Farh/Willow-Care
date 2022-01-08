@@ -33,6 +33,7 @@ class MultiWorkTimeRequest extends FormRequest
             "booking_type" => "required|in:0,1,2", ## 0 => clinic , 1=> home , 2=> online
             "type_id" => "required",
             "days_ids" => "required|array|min:1",
+            "shifts" => "required|array|min:1",
             "shifts.*.from" => "required|date_format:H:i",
             "shifts.*.to" =>"required|date_format:H:i|after:shifts.*.from",
         ];
