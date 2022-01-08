@@ -43,7 +43,10 @@ class Doctor extends Authenticatable
     {
         return $this->belongsTo(Country::class);
     }
-
+    public function profTitle(): BelongsTo
+    {
+        return $this->belongsTo(ProfessionalTitle::class,'professional_title_id');
+    }
     public function specialties(): BelongsToMany
     {
         return $this->belongsToMany(Specialty::class, 'doctor_specialty');

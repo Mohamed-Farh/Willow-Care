@@ -24,6 +24,11 @@ class ProfessionalTitle extends Model
         return $this->status ? 'Active' : 'Not Active';
     }
 
+    public function doctors(){
+
+        return $this->hasMany(Doctor::class,'professional_title_id');
+    }
+
     public function getTitleAttribute()
     {
         return Lang::locale() == 'ar' ? $this->name_ar : (Lang::locale() == 'en' ? $this->name_en : $this->name_ro);
