@@ -131,7 +131,7 @@ class WorkTimeController extends Controller
                     ->where('to', '>', $request->from)
                     ->get();
                     if($check_from->count() > 0){
-                        return $this->responseJsonFailed('200' ,'This time conflicts with another online time');
+                        return $this->responseJsonFailed(200 ,'This time conflicts with another online time');
                     }
                 }elseif($request->to != ""){
                     $check_to = $singleOnline->workingTimes()->where('day', $request->day)
@@ -139,10 +139,10 @@ class WorkTimeController extends Controller
                         ->where('to', '>=', $request->to)
                         ->get();
                     if($check_to->count() > 0){
-                        return $this->responseJsonFailed('200' ,'This time conflicts with another online time');
+                        return $this->responseJsonFailed(200 ,'This time conflicts with another online time');
                     }
                 }else{
-                    return $this->responseJsonFailed('200' ,'The from or to fields are required.');
+                    return $this->responseJsonFailed(200 ,'The from or to fields are required.');
                 }
             }
         ############## check in home times
@@ -154,7 +154,7 @@ class WorkTimeController extends Controller
                     ->where('to', '>', $request->from)
                     ->get();
                     if($check_from->count() > 0){
-                        return $this->responseJsonFailed('200' ,'This time conflicts with another home time');
+                        return $this->responseJsonFailed(200 ,'This time conflicts with another home time');
                     }
                 }elseif($request->to != ""){
                     $check_to = $singleHome->workingTimes()->where('day', $request->day)
@@ -162,10 +162,10 @@ class WorkTimeController extends Controller
                         ->where('to', '>=', $request->to)
                         ->get();
                     if($check_to->count() > 0){
-                        return $this->responseJsonFailed('200' ,'This time conflicts with another home time');
+                        return $this->responseJsonFailed(200 ,'This time conflicts with another home time');
                     }
                 }else{
-                    return $this->responseJsonFailed('200' ,'The from or to fields are required.');
+                    return $this->responseJsonFailed(200 ,'The from or to fields are required.');
                 }
             }
         ############## check in clinic times
@@ -177,7 +177,7 @@ class WorkTimeController extends Controller
                 ->where('to', '>', $request->from)
                 ->get();
                 if($check_from->count() > 0){
-                    return $this->responseJsonFailed('200' ,'This time conflicts with another Clinic time');
+                    return $this->responseJsonFailed(200 ,'This time conflicts with another Clinic time');
                 }
             }elseif($request->to != ""){
                 $check_to = $singleClinic->workingTimes()->where('day', $request->day)
@@ -185,10 +185,10 @@ class WorkTimeController extends Controller
                     ->where('to', '>=', $request->to)
                     ->get();
                 if($check_to->count() > 0){
-                    return $this->responseJsonFailed('200' ,'This time conflicts with another clinic time');
+                    return $this->responseJsonFailed(200 ,'This time conflicts with another clinic time');
                 }
             }else{
-                return $this->responseJsonFailed('200' ,'The from or to fields are required.');
+                return $this->responseJsonFailed(200 ,'The from or to fields are required.');
             }
         }
         return $this->responseJsonWithoutData();
@@ -204,7 +204,7 @@ class WorkTimeController extends Controller
                     ->where('to', '>', $request->from)
                     ->get();
                     if($check_from->count() > 0){
-                        return $this->responseJsonFailed('200' ,'This time conflicts with another online time');
+                        return $this->responseJsonFailed(200 ,'This time conflicts with another online time');
                     }
                 }elseif($request->to != ""){
                     $check_to = $singleOnline->workingTimes()->whereIn('day', $request->days)
@@ -212,10 +212,10 @@ class WorkTimeController extends Controller
                         ->where('to', '>=', $request->to)
                         ->get();
                     if($check_to->count() > 0){
-                        return $this->responseJsonFailed('200' ,'This time conflicts with another online time');
+                        return $this->responseJsonFailed(200 ,'This time conflicts with another online time');
                     }
                 }else{
-                    return $this->responseJsonFailed('200' ,'The from or to fields are required.');
+                    return $this->responseJsonFailed(200 ,'The from or to fields are required.');
                 }
             }
         ############## check in home times
@@ -227,7 +227,7 @@ class WorkTimeController extends Controller
                     ->where('to', '>', $request->from)
                     ->get();
                     if($check_from->count() > 0){
-                        return $this->responseJsonFailed('200' ,'This time conflicts with another home time');
+                        return $this->responseJsonFailed(200 ,'This time conflicts with another home time');
                     }
                 }elseif($request->to != ""){
                     $check_to = $singleHome->workingTimes()->whereIn('day', $request->days)
@@ -235,10 +235,10 @@ class WorkTimeController extends Controller
                         ->where('to', '>=', $request->to)
                         ->get();
                     if($check_to->count() > 0){
-                        return $this->responseJsonFailed('200' ,'This time conflicts with another home time');
+                        return $this->responseJsonFailed(200 ,'This time conflicts with another home time');
                     }
                 }else{
-                    return $this->responseJsonFailed('200' ,'The from or to fields are required.');
+                    return $this->responseJsonFailed(200 ,'The from or to fields are required.');
                 }
             }
         ############## check in clinic times
@@ -250,7 +250,7 @@ class WorkTimeController extends Controller
                 ->where('to', '>', $request->from)
                 ->get();
                 if($check_from->count() > 0){
-                    return $this->responseJsonFailed('200' ,'This time conflicts with another Clinic time');
+                    return $this->responseJsonFailed(200 ,'This time conflicts with another Clinic time');
                 }
             }elseif($request->to != ""){
                 $check_to = $singleClinic->workingTimes()->whereIn('day', $request->days)
@@ -258,10 +258,10 @@ class WorkTimeController extends Controller
                     ->where('to', '>=', $request->to)
                     ->get();
                 if($check_to->count() > 0){
-                    return $this->responseJsonFailed('200' ,'This time conflicts with another clinic time');
+                    return $this->responseJsonFailed(200 ,'This time conflicts with another clinic time');
                 }
             }else{
-                return $this->responseJsonFailed('200' ,'The from or to fields are required.');
+                return $this->responseJsonFailed(200 ,'The from or to fields are required.');
             }
         }
         return $this->responseJsonWithoutData();
