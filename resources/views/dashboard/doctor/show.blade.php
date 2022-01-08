@@ -150,7 +150,7 @@
                                 <div class="d-flex flex-wrap mb-4">
                                     <a href="{{route('doctor.show',$doctor->id)}}"
                                        class="text-dark-50 text-hover-primary font-weight-bold mr-lg-8 mr-5 mb-lg-0 mb-2">
-                                        <i class="flaticon-profile mr-2 font-size-lg"></i>{{$doctor->profTitle->title}}
+                                        <i class="flaticon-profile mr-2 font-size-lg"></i>{{$doctor->profTitle->title ?? ""}}
                                     </a>
                                     <a href="{{route('doctor.show',$doctor->id)}}"
                                        class="text-dark-50 text-hover-primary font-weight-bold mr-lg-8 mr-5 mb-lg-0 mb-2">
