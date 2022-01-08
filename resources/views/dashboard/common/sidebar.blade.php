@@ -208,7 +208,15 @@
                                     <i class="menu-bullet menu-bullet-dot">
                                         <span></span>
                                     </i>
-                                    <span class="menu-text">Doctor</span>
+                                    <span class="menu-text">Approved Doctor</span>
+                                </a>
+                            </li>
+                            <li class="menu-item" aria-haspopup="true">
+                                <a href="{{route('doctor.disapproved')}}" class="menu-link">
+                                    <i class="menu-bullet menu-bullet-dot">
+                                        <span></span>
+                                    </i>
+                                    <span class="menu-text">DisApproved Doctor</span>
                                 </a>
                             </li>
                         </ul>

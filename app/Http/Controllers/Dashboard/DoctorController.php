@@ -22,8 +22,15 @@ class DoctorController extends Controller
      */
     public function index()
     {
-        $doctors=Doctor::all();
+        $doctors=Doctor::where('is_approved',1)->get();
        return  view('dashboard.doctor.index',compact('doctors'));
+    }
+
+    public function disApproved(){
+
+        $doctors=Doctor::where('is_approved',0)->get();
+
+        return  view('dashboard.doctor.dis-approved',compact('doctors'));
     }
     public function changeStatus(Request $request){
         $doctor = Doctor::find($request->doctor_id);

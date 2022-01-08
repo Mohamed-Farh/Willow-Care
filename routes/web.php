@@ -91,7 +91,8 @@ Route::group(['prefix' => 'admin'], function(){
                 /*  Doctor   */
                 Route::resource('/doctor', DoctorController::class);
                 Route::get('changeStatusDoctor', [DoctorController::class,'changeStatus'])->name('changeDoctorStatus');
-                Route::get('create',\App\Http\Livewire\DoctorCreate::class )->name('create.multi');
+//                Route::get('create',\App\Http\Livewire\DoctorCreate::class )->name('create.multi');
+                Route::get('dis-approved', [DoctorController::class,'disApproved'] )->name('doctor.disapproved');
 
 
 
