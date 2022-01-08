@@ -10,7 +10,7 @@ use App\Models\ProfessionalTitle;
 use App\Models\Specialty;
 use App\Traits\HelperTrait;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
+use Validator;
 
 class DoctorController extends Controller
 {
@@ -130,5 +130,61 @@ class DoctorController extends Controller
     public function destroy($id)
     {
         //
+    }
+    /**
+     * check for email address
+     *
+     * @param $request
+     * @return json
+     */
+    public function checkEmail(Request $request)
+    {
+        $input = $request->only(['email']);
+
+        $request_data = [
+            'email' => 'required|email|unique:doctors,email',
+        ];
+
+        $validator = Validator::make($input, $request_data);
+
+        // json is null
+        if ($validator->fails()) {
+            $errors = json_decode(json_encode($validator->errors()), 1);
+            return response()->json([
+                'success' => false,
+                'message' => array_reduce($errors, 'array_merge', array()),
+            ]);
+        } else {
+            return response()->json([
+                'success' => true,
+                'message' => 'The email is available'
+            ]);
+        }
+    }
+
+
+    public function checkPhone(Request $request)
+    {
+        $input = $request->only(['phone']);
+
+        $request_data = [
+            'phone' => 'required|numeric|unique:doctors,phone',
+        ];
+
+        $validator = Validator::make($input, $request_data);
+
+        // json is null
+        if ($validator->fails()) {
+            $errors = json_decode(json_encode($validator->errors()), 1);
+            return response()->json([
+                'success' => false,
+                'message' => array_reduce($errors, 'array_merge', array()),
+            ]);
+        } else {
+            return response()->json([
+                'success' => true,
+                'message' => 'The number is available'
+            ]);
+        }
     }
 }

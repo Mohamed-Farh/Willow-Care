@@ -142,28 +142,7 @@ var KTWizard3 = function () {
 
 						}
 					},
-					phone: {
-						validators: {
-							notEmpty: {
-								message: 'phone is required'
-							},
-							digits: {
-								message: 'The value added is not valid'
-							}
-						}
-					},
-					email: {
-						validators: {
-							notEmpty: {
-								message: 'email is required'
-							},
-                            emailAddress: {
-                                message: 'The value is not a valid email address'
-                            },
 
-
-						}
-					},
 					password: {
 						validators: {
 							notEmpty: {
