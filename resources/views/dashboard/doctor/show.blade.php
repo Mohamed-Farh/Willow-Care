@@ -434,8 +434,521 @@
                 </div>
             </div>
         </div>
+
+        <div class="row mt-5">
+            <div class="col-12 mb-3 ">
+                <div class="card text-center py-3">
+                    <h1>Home & Online Consultation</h1>
+                </div>
+            </div>
+            <div class="col-xl-6">
+                <!--begin::Card-->
+                @if(count($doctor->homeConcultations)>0)
+                <div class="card card-custom ">
+                    <!--begin::Body-->
+                    <div class="card-body">
+                        <!--begin::Section-->
+                        <div class="d-flex align-items-center">
+                            <!--begin::Pic-->
+                            <div class="flex-shrink-0 mr-4 symbol symbol-65 symbol-circle">
+                                <i class="fas fa-home fa-3x text-primary"></i>
+                            </div>
+                            <!--end::Pic-->
+                            <!--begin::Info-->
+                            <div class="d-flex flex-column mr-auto">
+                                <!--begin: Title-->
+                                <a href=""
+                                   class="card-title text-hover-primary font-weight-bolder font-size-h5 text-dark mb-1">
+                                    Home Consultation
+                                </a>
+
+                                <!--end::Title-->
+                            </div>
+                            <!--end::Info-->
+                            <!--begin::Toolbar-->
+                            <div class="card-toolbar mb-auto">
+                                  <button  type="button" data-toggle="modal" data-target="#exampleModalSizeDefault-3" class="btn btn-primary">Shifts</button>
+                            </div>
+                            <!--end::Toolbar-->
+                            <!--begin::Modal-->
+                            <div class="modal fade" id="exampleModalSizeDefault-3" tabindex="-1" role="dialog"
+                                 aria-labelledby="exampleModalSizeDefault" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Working Hours</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <i aria-hidden="true" class="ki ki-close"></i>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <ul>
+                                                @if(count($doctor->homeConcultations)>0)
+                                                    @foreach($doctor->homeConcultations[0]->workingTimes as $home)
+                                                        <div class="row">
+
+                                                            <p class="col-10" style="list-style:none; padding: 5px">
+                                                                {{array_flip((new \ReflectionClass(\App\Enum\WeekDaysEnum::class))->getConstants())[$home->day]}} =>
+                                                                {{\Carbon\Carbon::parse($home->from)->format('H:i')}}
+                                                                 ,
+                                                                {{\Carbon\Carbon::parse($home->to)->format('H:i')}}
+
+                                                            </p>
+                                                        </div>
+
+                                                    @endforeach
+                                                @endif
+                                            </ul>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-light-primary font-weight-bold"
+                                                    data-dismiss="modal">Close
+                                            </button>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--end::Modal-->
+                        </div>
+                        <!--end::Section-->
+                        <!--begin::Content-->
+                        <div class="d-flex flex-wrap mt-14">
+                            <div class="mr-12 d-flex flex-column mb-7">
+                                <span class="d-block font-weight-bold mb-4">Price</span>
+                                <span class="btn btn-light-primary btn-sm font-weight-bold btn-upper btn-text">{{$doctor->homeConcultations[0]->price}} $</span>
+                            </div>
+                            <div class="mr-12 d-flex flex-column mb-7">
+                                <span class="d-block font-weight-bold mb-4">Renwal Price</span>
+                                <span
+                                    class="btn btn-light-warning btn-sm font-weight-bold btn-upper btn-text">{{$doctor->homeConcultations[0]->renewal_price}} $</span>
+                            </div>
+                            <!--begin::Progress-->
+                            <div class="flex-row-fluid mb-7">
+
+                            </div>
+                            <!--end::Progress-->
+                        </div>
+                        <!--end::Content-->
+                        <!--begin::Text-->
+                        <p class="mb-7 mt-3">Payment Method : <span><i class="fab fa-cc-visa mr-2"></i>{{$doctor->homeConcultations[0]->payment_method ==1 ?  'Online' :($doctor->homeConcultations[0]->payment_method ==2 ? 'Cash':'Both')}}</span></p>
+                        <!--end::Text-->
+                        <!--begin::Blog-->
+                        <div class="d-flex flex-wrap">
+                            <!--begin: Item-->
+                            <div class="mr-12 d-flex flex-column mb-7">
+                                <span class="font-weight-bolder mb-4">Budget</span>
+                                <span class="font-weight-bolder font-size-h5 pt-1">
+														<span
+                                                            class="font-weight-bold text-dark-50">$</span>249,500</span>
+                            </div>
+                            <!--end::Item-->
+                            <!--begin::Item-->
+                            <div class="mr-12 d-flex flex-column mb-7">
+                                <span class="font-weight-bolder mb-4">Expenses</span>
+                                <span class="font-weight-bolder font-size-h5 pt-1">
+														<span
+                                                            class="font-weight-bold text-dark-50">$</span>439,500</span>
+                            </div>
+                            <!--end::Item-->
+                            <!--begin::Item-->
+                            <div class="d-flex flex-column flex-lg-fill float-left mb-7">
+                                <span class="font-weight-bolder mb-4">Members</span>
+                                <div class="symbol-group symbol-hover">
+                                    <div class="symbol symbol-30 symbol-circle" data-toggle="tooltip"
+                                         title="Mark Stone">
+                                        <img alt="Pic" src="{{asset('dashboard/assets/media/users/300_25.jpg')}}"/>
+                                    </div>
+                                    <div class="symbol symbol-30 symbol-circle" data-toggle="tooltip"
+                                         title="Charlie Stone">
+                                        <img alt="Pic" src="{{asset('dashboard/assets/media/users/300_19.jpg')}}"/>
+                                    </div>
+                                    <div class="symbol symbol-30 symbol-circle" data-toggle="tooltip"
+                                         title="Luca Doncic">
+                                        <img alt="Pic" src="{{asset('dashboard/assets/media/users/300_22.jpg')}}"/>
+                                    </div>
+                                    <div class="symbol symbol-30 symbol-circle" data-toggle="tooltip" title="Nick Mana">
+                                        <img alt="Pic" src="{{asset('dashboard/assets/media/users/300_23.jpg')}}"/>
+                                    </div>
+                                    <div class="symbol symbol-30 symbol-circle symbol-light">
+                                        <span class="symbol-label font-weight-bold">4+</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--end::Item-->
+                        </div>
+                        <!--end::Blog-->
+                    </div>
+                    <!--end::Body-->
+
+                </div>
+                <!--end::Card-->
+                @endif
+            </div>
+            <div class="col-xl-6">
+                <!--begin::Card-->
+                @if(count($doctor->onlineConcultations)>0)
+                <div class="card card-custom ">
+                    <!--begin::Body-->
+                    <div class="card-body">
+                        <!--begin::Section-->
+                        <div class="d-flex align-items-center">
+                            <!--begin::Pic-->
+                            <div class="flex-shrink-0 mr-4 symbol symbol-65 symbol-circle">
+                                <i class="fab fa-internet-explorer fa-3x text-primary"></i>
+                            </div>
+                            <!--end::Pic-->
+                            <!--begin::Info-->
+                            <div class="d-flex flex-column mr-auto">
+                                <!--begin: Title-->
+                                <a href=""
+                                   class="card-title text-hover-primary font-weight-bolder font-size-h5 text-dark mb-1">
+                                   Online Consultation
+                                </a>
+
+                                <!--end::Title-->
+                            </div>
+                            <!--end::Info-->
+                            <!--begin::Toolbar-->
+                            <div class="card-toolbar mb-auto">
+                                <button data-toggle="modal" data-target="#exampleModalSizeDefault-4" class="btn btn-primary">Shifts</button>
+                            </div>
+                            <!--end::Toolbar-->
+                            <!--begin::Modal-->
+                            <div class="modal fade" id="exampleModalSizeDefault-4" tabindex="-1" role="dialog"
+                                 aria-labelledby="exampleModalSizeDefault" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Working Hours</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <i aria-hidden="true" class="ki ki-close"></i>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <ul>
+                                                @if(count($doctor->onlineConcultations)>0)
+                                                    @foreach($doctor->onlineConcultations[0]->workingTimes as $online)
+                                                        <div class="row">
+
+                                                            <p class="col-10" style="list-style:none; padding: 5px">
+                                                                {{array_flip((new \ReflectionClass(\App\Enum\WeekDaysEnum::class))->getConstants())[$online->day]}} =>
+                                                                {{\Carbon\Carbon::parse($online->from)->format('H:i')}}
+
+                                                                ,
+                                                                {{\Carbon\Carbon::parse($online->to)->format('H:i')}}
+
+                                                            </p>
+                                                        </div>
+
+                                                    @endforeach
+                                                @endif
+                                            </ul>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-light-primary font-weight-bold"
+                                                    data-dismiss="modal">Close
+                                            </button>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--end::Modal-->
+                        </div>
+                        <!--end::Section-->
+                        <!--begin::Content-->
+                        <div class="d-flex flex-wrap mt-14">
+                            <div class="mr-12 d-flex flex-column mb-7">
+                                <span class="d-block font-weight-bold mb-4">Price</span>
+                                <span class="btn btn-light-primary btn-sm font-weight-bold btn-upper btn-text">{{$doctor->onlineConcultations[0]->price}} $</span>
+                            </div>
+                            <div class="mr-12 d-flex flex-column mb-7">
+                                <span class="d-block font-weight-bold mb-4">Renwal Price</span>
+                                <span
+                                    class="btn btn-light-warning btn-sm font-weight-bold btn-upper btn-text">{{$doctor->onlineConcultations[0]->renewal_price}} $</span>
+                            </div>
+                            <!--begin::Progress-->
+                            <div class="flex-row-fluid mb-7">
+
+                            </div>
+                            <!--end::Progress-->
+                        </div>
+                        <!--end::Content-->
+                        <!--begin::Text-->
+                        <p class="mb-7 mt-3">Payment Method : <span><i class="fas fa-money-bill mr-2"></i>Cash</span></p>
+                        <!--end::Text-->
+                        <!--begin::Blog-->
+                        <div class="d-flex flex-wrap">
+                            <!--begin: Item-->
+                            <div class="mr-12 d-flex flex-column mb-7">
+                                <span class="font-weight-bolder mb-4">Budget</span>
+                                <span class="font-weight-bolder font-size-h5 pt-1">
+														<span
+                                                            class="font-weight-bold text-dark-50">$</span>249,500</span>
+                            </div>
+                            <!--end::Item-->
+                            <!--begin::Item-->
+                            <div class="mr-12 d-flex flex-column mb-7">
+                                <span class="font-weight-bolder mb-4">Expenses</span>
+                                <span class="font-weight-bolder font-size-h5 pt-1">
+														<span
+                                                            class="font-weight-bold text-dark-50">$</span>439,500</span>
+                            </div>
+                            <!--end::Item-->
+                            <!--begin::Item-->
+                            <div class="d-flex flex-column flex-lg-fill float-left mb-7">
+                                <span class="font-weight-bolder mb-4">Members</span>
+                                <div class="symbol-group symbol-hover">
+                                    <div class="symbol symbol-30 symbol-circle" data-toggle="tooltip"
+                                         title="Mark Stone">
+                                        <img alt="Pic" src="{{asset('dashboard/assets/media/users/300_25.jpg')}}"/>
+                                    </div>
+                                    <div class="symbol symbol-30 symbol-circle" data-toggle="tooltip"
+                                         title="Charlie Stone">
+                                        <img alt="Pic" src="{{asset('dashboard/assets/media/users/300_19.jpg')}}"/>
+                                    </div>
+                                    <div class="symbol symbol-30 symbol-circle" data-toggle="tooltip"
+                                         title="Luca Doncic">
+                                        <img alt="Pic" src="{{asset('dashboard/assets/media/users/300_22.jpg')}}"/>
+                                    </div>
+                                    <div class="symbol symbol-30 symbol-circle" data-toggle="tooltip" title="Nick Mana">
+                                        <img alt="Pic" src="{{asset('dashboard/assets/media/users/300_23.jpg')}}"/>
+                                    </div>
+                                    <div class="symbol symbol-30 symbol-circle symbol-light">
+                                        <span class="symbol-label font-weight-bold">4+</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--end::Item-->
+                        </div>
+                        <!--end::Blog-->
+                    </div>
+                    <!--end::Body-->
+
+                </div>
+                <!--end::Card-->
+                @endif
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col-12 mb-3 ">
+                <div class="card text-center py-3">
+                    <h1>Clinics</h1>
+                </div>
+            </div>
+            @if(count($doctor->clinics)>0)
+            @foreach($doctor->clinics as $clinic)
+
+            <div class="col-xl-6">
+                <!--begin::Card-->
+                <div class="card card-custom gutter-b card-stretch">
+                    <!--begin::Body-->
+                    <div class="card-body">
+                        <!--begin::Section-->
+                        <div class="d-flex align-items-center">
+                            <!--begin::Pic-->
+                            <div class="flex-shrink-0 mr-4 symbol symbol-65 symbol-circle">
+                                <img src="{{asset($clinic->image)}}" alt="image"/>
+                            </div>
+                            <!--end::Pic-->
+                            <!--begin::Info-->
+                            <div class="d-flex flex-column mr-auto">
+                                <!--begin: Title-->
+                                <a href="#"
+                                   class="card-title text-hover-primary font-weight-bolder font-size-h5 text-dark mb-1">{{$clinic->name}}</a>
+                                <span class="text-muted font-weight-bold">{{$clinic->location}}</span>
+                                <!--end::Title-->
+                            </div>
+                            <!--end::Info-->
+                            <!--begin::Toolbar-->
+                            <div class="card-toolbar mb-auto">
+
+                            </div>
+                            <!--end::Toolbar-->
+                        </div>
+                        <!--end::Section-->
+                        <!--begin::Content-->
+                        <div class="d-flex flex-wrap mt-14">
+                            <div class="mr-12 d-flex flex-column mb-7">
+                                <span class="d-block font-weight-bold mb-4">Price</span>
+                                <span class="btn btn-light-primary btn-sm font-weight-bold btn-upper btn-text">{{$clinic->price}} $</span>
+                            </div>
+                            <div class="mr-12 d-flex flex-column mb-7">
+                                <span class="d-block font-weight-bold mb-4">Renewal Price</span>
+                                <span
+                                    class="btn btn-light-warning btn-sm font-weight-bold btn-upper btn-text">{{$clinic->renewal_price}} $</span>
+                            </div>
+                            <!--begin::Progress-->
+                            <div class="flex-row-fluid mb-7">
+                              <p>Waiting Time: <i class="fas fa-user-clock text-warning mr-2"></i>{{\Carbon\Carbon::parse($clinic->duration)->format('H:i')}}</p>
+                              <p>Phone: <i class="fas fa-phone-square-alt text-primary mr-2"></i>{{$clinic->phone}}</p>
+                            </div>
+                            <!--end::Progress-->
+                        </div>
+                        <!--end::Content-->
+                        <!--begin::Text-->
+                        <p class="mb-7 mt-3"></p>
+                        <!--end::Text-->
+                        <!--begin::Blog-->
+                        <div class="d-flex flex-wrap">
+                            <!--begin: Item-->
+                            <div class="mr-12 d-flex flex-column mb-7">
+                                <span class="font-weight-bolder mb-4">Budget</span>
+                                <span class="font-weight-bolder font-size-h5 pt-1">
+														<span
+                                                            class="font-weight-bold text-dark-50">$</span>249,500</span>
+                            </div>
+                            <!--end::Item-->
+                            <!--begin::Item-->
+                            <div class="mr-12 d-flex flex-column mb-7">
+                                <span class="font-weight-bolder mb-4">Expenses</span>
+                                <span class="font-weight-bolder font-size-h5 pt-1">
+														<span
+                                                            class="font-weight-bold text-dark-50">$</span>439,500</span>
+                            </div>
+                            <!--end::Item-->
+                            <!--begin::Item-->
+                            <div class="d-flex flex-column flex-lg-fill float-left mb-7">
+                                <span class="font-weight-bolder mb-4">Members</span>
+                                <div class="symbol-group symbol-hover">
+                                    <div class="symbol symbol-30 symbol-circle" data-toggle="tooltip"
+                                         title="Mark Stone">
+                                        <img alt="Pic" src="{{asset('dashboard/assets/media/users/300_25.jpg')}}"/>
+                                    </div>
+                                    <div class="symbol symbol-30 symbol-circle" data-toggle="tooltip"
+                                         title="Charlie Stone">
+                                        <img alt="Pic" src="{{asset('dashboard/assets/media/users/300_25.jpg')}}"/>
+                                    </div>
+                                    <div class="symbol symbol-30 symbol-circle" data-toggle="tooltip"
+                                         title="Luca Doncic">
+                                        <img alt="Pic" src="{{asset('dashboard/assets/media/users/300_25.jpg')}}"/>
+                                    </div>
+                                    <div class="symbol symbol-30 symbol-circle" data-toggle="tooltip" title="Nick Mana">
+                                        <img alt="Pic" src="{{asset('dashboard/assets/media/users/300_25.jpg')}}"/>
+                                    </div>
+                                    <div class="symbol symbol-30 symbol-circle" data-toggle="tooltip"
+                                         title="Teresa Fox">
+                                        <img alt="Pic" src="{{asset('dashboard/assets/media/users/300_25.jpg')}}"/>
+                                    </div>
+                                    <div class="symbol symbol-30 symbol-circle symbol-light">
+                                        <span class="symbol-label font-weight-bold">5+</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--end::Item-->
+                        </div>
+                        <!--end::Blog-->
+                    </div>
+                    <!--end::Body-->
+                    <!--begin::Footer-->
+                    <div class="card-footer d-flex align-items-center">
+                        <div class="d-flex">
+                            <div class="d-flex align-items-center mr-7">
+                                    <span class="svg-icon svg-icon-gray-500">
+
+                                                                     <!--begin::Svg Icon | path:C:\wamp64\www\keenthemes\themes\metronic\theme\html\demo1\dist/../src/media/svg/icons\Communication\Clipboard-check.svg--><svg
+                                                                        xmlns="http://www.w3.org/2000/svg"
+                                                                        xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"
+                                                                        viewBox="0 0 24 24" version="1.1">
+                                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                        <rect x="0" y="0" width="24" height="24"/>
+                                        <path
+                                        d="M8,3 L8,3.5 C8,4.32842712 8.67157288,5 9.5,5 L14.5,5 C15.3284271,5 16,4.32842712 16,3.5 L16,3 L18,3 C19.1045695,3 20,3.8954305 20,5 L20,21 C20,22.1045695 19.1045695,23 18,23 L6,23 C4.8954305,23 4,22.1045695 4,21 L4,5 C4,3.8954305 4.8954305,3 6,3 L8,3 Z"
+                                        fill="#000000" opacity="0.3"/>
+                                        <path
+                                        d="M10.875,15.75 C10.6354167,15.75 10.3958333,15.6541667 10.2041667,15.4625 L8.2875,13.5458333 C7.90416667,13.1625 7.90416667,12.5875 8.2875,12.2041667 C8.67083333,11.8208333 9.29375,11.8208333 9.62916667,12.2041667 L10.875,13.45 L14.0375,10.2875 C14.4208333,9.90416667 14.9958333,9.90416667 15.3791667,10.2875 C15.7625,10.6708333 15.7625,11.2458333 15.3791667,11.6291667 L11.5458333,15.4625 C11.3541667,15.6541667 11.1145833,15.75 10.875,15.75 Z"
+                                        fill="#000000"/>
+                                        <path
+                                        d="M11,2 C11,1.44771525 11.4477153,1 12,1 C12.5522847,1 13,1.44771525 13,2 L14.5,2 C14.7761424,2 15,2.22385763 15,2.5 L15,3.5 C15,3.77614237 14.7761424,4 14.5,4 L9.5,4 C9.22385763,4 9,3.77614237 9,3.5 L9,2.5 C9,2.22385763 9.22385763,2 9.5,2 L11,2 Z"
+                                        fill="#000000"/>
+                                        </g>
+                                        </svg>
+
+                                    </span>
+                                <a href="#" class="font-weight-bolder text-primary ml-2">72 Bookings</a>
+                            </div>
+                            <div class="d-flex align-items-center mr-7">
+                            <span class="svg-icon svg-icon-gray-500">
+                                <!--begin::Svg Icon | path:assets/media/svg/icons/Communication/Group-chat.svg-->
+                                <svg xmlns="http://www.w3.org/2000/svg"
+                                     xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
+                                     height="24px" viewBox="0 0 24 24" version="1.1">
+                                    <g stroke="none" stroke-width="1" fill="none"
+                                       fill-rule="evenodd">
+                                        <rect x="0" y="0" width="24" height="24"/>
+                                        <path
+                                            d="M16,15.6315789 L16,12 C16,10.3431458 14.6568542,9 13,9 L6.16183229,9 L6.16183229,5.52631579 C6.16183229,4.13107011 7.29290239,3 8.68814808,3 L20.4776218,3 C21.8728674,3 23.0039375,4.13107011 23.0039375,5.52631579 L23.0039375,13.1052632 L23.0206157,17.786793 C23.0215995,18.0629336 22.7985408,18.2875874 22.5224001,18.2885711 C22.3891754,18.2890457 22.2612702,18.2363324 22.1670655,18.1421277 L19.6565168,15.6315789 L16,15.6315789 Z"
+                                            fill="#000000"/>
+                                        <path
+                                            d="M1.98505595,18 L1.98505595,13 C1.98505595,11.8954305 2.88048645,11 3.98505595,11 L11.9850559,11 C13.0896254,11 13.9850559,11.8954305 13.9850559,13 L13.9850559,18 C13.9850559,19.1045695 13.0896254,20 11.9850559,20 L4.10078614,20 L2.85693427,21.1905292 C2.65744295,21.3814685 2.34093638,21.3745358 2.14999706,21.1750444 C2.06092565,21.0819836 2.01120804,20.958136 2.01120804,20.8293182 L2.01120804,18.32426 C1.99400175,18.2187196 1.98505595,18.1104045 1.98505595,18 Z M6.5,14 C6.22385763,14 6,14.2238576 6,14.5 C6,14.7761424 6.22385763,15 6.5,15 L11.5,15 C11.7761424,15 12,14.7761424 12,14.5 C12,14.2238576 11.7761424,14 11.5,14 L6.5,14 Z M9.5,16 C9.22385763,16 9,16.2238576 9,16.5 C9,16.7761424 9.22385763,17 9.5,17 L11.5,17 C11.7761424,17 12,16.7761424 12,16.5 C12,16.2238576 11.7761424,16 11.5,16 L9.5,16 Z"
+                                            fill="#000000" opacity="0.3"/>
+                                    </g>
+                                </svg>
+                                <!--end::Svg Icon-->
+                            </span>
+                                <a href="#" class="font-weight-bolder text-primary ml-2">648 Comments</a>
+                            </div>
+                        </div>
+                        <button data-toggle="modal" data-target="#modal-{{$clinic->id}}"
+                                class="btn btn-primary btn-sm text-uppercase font-weight-bolder mt-5 mt-sm-0
+                                mr-auto mr-sm-0 ml-sm-auto">
+                            Shifts
+                        </button>
+                    </div>
+                    <!--end::Footer-->
+                    <!--begin::Modal-->
+                    <div class="modal fade" id="modal-{{$clinic->id}}" tabindex="-1" role="dialog"
+                         aria-labelledby="exampleModalSizeDefault" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Working Hours</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <i aria-hidden="true" class="ki ki-close"></i>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <ul>
+                                        @if(count($clinic->workingTimes)>0)
+                                            @foreach($clinic->workingTimes as $time)
+                                                <div class="row">
+
+                                                    <p class="col-10" style="list-style:none; padding: 5px">
+                                                        {{array_flip((new \ReflectionClass(\App\Enum\WeekDaysEnum::class))->getConstants())[$time->day]}} =>
+                                                        {{\Carbon\Carbon::parse($time->from)->format('H:i')}}
+                                                        ,
+                                                        {{\Carbon\Carbon::parse($time->to)->format('H:i')}}
+
+                                                    </p>
+                                                </div>
+
+                                            @endforeach
+                                        @endif
+                                    </ul>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-light-primary font-weight-bold"
+                                            data-dismiss="modal">Close
+                                    </button>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--end::Modal-->
+                </div>
+                <!--end::Card-->
+            </div>
+            @endforeach
+            @endif
+        </div>
     </div>
 @endsection
+
+
+
+
 @section('scripts')
     <script>
         // create references to the modal...
@@ -464,6 +977,4 @@
             modal.style.display = "none";
         }
     </script>
-
-
 @endsection

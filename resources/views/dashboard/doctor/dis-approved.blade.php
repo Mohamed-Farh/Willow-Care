@@ -77,14 +77,14 @@
                                 <div style="display: flex" class="text-center justify-content-between">
                                     <a href="{{route("doctor.show", $item->id)}}"
                                        class="edit btn btn-secondary btn-sm"><i class="fas fa-eye"></i></a>
-{{--                                    <form method="POST" action=" {{route("doctor.destroy", $item->id)}} ">--}}
-{{--                                        @csrf--}}
-{{--                                        <input name="_method" type="hidden" value="DELETE">--}}
-{{--                                        <button id="confirm" class="show_confirm destroy btn btn-danger btn-sm"--}}
-{{--                                                style="border: none" type="submit">--}}
-{{--                                            <i class="fas fa-trash"></i>--}}
-{{--                                        </button>--}}
-{{--                                    </form>--}}
+                                    {{--                                    <form method="POST" action=" {{route("doctor.destroy", $item->id)}} ">--}}
+                                    {{--                                        @csrf--}}
+                                    {{--                                        <input name="_method" type="hidden" value="DELETE">--}}
+                                    {{--                                        <button id="confirm" class="show_confirm destroy btn btn-danger btn-sm"--}}
+                                    {{--                                                style="border: none" type="submit">--}}
+                                    {{--                                            <i class="fas fa-trash"></i>--}}
+                                    {{--                                        </button>--}}
+                                    {{--                                    </form>--}}
                                 </div>
                             </td>
                         </tr>
@@ -258,6 +258,7 @@
                     url: '{{route('changeDoctorStatus')}}',
                     data: {'active': active, 'doctor_id': doctor_id},
                     success: function(data){
+
                         setTimeout(function() {
                             Swal.fire({
                                 title: 'Doctor Activation  change successfully',

@@ -242,7 +242,7 @@
                                                 <!--begin::Input-->
                                                 <div class="form-group">
                                                     <label>Graduation Year</label>
-                                                    <input type="number" class="form-control" name="graduation_year"  min="1900" max="2099" step="1" value="{{date("Y")}}" />
+                                                    <input type="number" class="form-control" name="graduation_year"  min="1910" max="2099" step="1" value="{{date("Y")}}" />
                                                 </div>
                                                 <!--end::Input-->
                                             </div>
