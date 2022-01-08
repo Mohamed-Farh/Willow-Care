@@ -31,8 +31,8 @@ class CheckTimesRequest extends FormRequest
     {
         return [
             "days" => "required|array|min:1",
-            "from" => "date_format:H:i",
-            "to" =>"date_format:H:i",
+            "from" => "nullable|date_format:H:i",
+            "to" =>"nullable|date_format:H:i",
         ];
     }
 
