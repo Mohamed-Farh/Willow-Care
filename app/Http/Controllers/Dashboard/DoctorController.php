@@ -63,7 +63,7 @@ class DoctorController extends Controller
         $input=$request->except(['country','title','password','speciality[]','addMoreInputFields[]']);
         $input['country_id']=$request->country;
         $input['professional_title_id']=$request->title;
-        $input['password']=Hash::make($request->password);
+        $input['password']=$request->password;
         $input['phone_verification']=1;
         $input['is_approved']=1;
         $input['activation']=1;
