@@ -94,6 +94,7 @@ class BasicInformationController extends Controller
 
     public function doctorInfo(Request $request){
         $doctor = Doctor::whereId(Auth::guard('api-doctor')->id())->first();
+        return $doctor;
         $doctor->api_token = $request->bearerToken();
         $device_token = DeviceToken::where('type_token', $request->bearerToken())->first();
         $doctor->device_token = $device_token->token;
