@@ -234,7 +234,8 @@
                                         <!--begin::Input-->
                                         <div class="form-group">
                                             <label>Phone Number</label>
-                                            <input type="text" class="form-control" name="phone"  value="{{old('phone')}}" />
+                                            <input id="phone" type="text" class="form-control" name="phone"  value="{{old('phone')}}" />
+                                            @error('phone')<span class="text-danger">{{ $message }}</span>@enderror
                                         </div>
                                         <!--end::Input-->
                                         <div class="row">
@@ -270,8 +271,8 @@
                                                 <!--begin::Input-->
                                                 <div class="form-group">
                                                     <label>Email</label>
-                                                    <input type="email" class="form-control" name="email"  value="{{old('email')}}" />
-
+                                                    <input id="email" type="email" class="form-control" name="email"  value="{{old('email')}}" />
+                                                    @error('email')<span class="text-danger">{{ $message }}</span>@enderror
                                                 </div>
                                                 <!--end::Input-->
                                             </div>
@@ -364,6 +365,84 @@
     <script src="{{asset('dashboard/assets/js/pages/custom/wizard/wizard-3.js')}}"></script>
     <script src="{{asset('dashboard/assets/js/pages/crud/forms/widgets/select2.js')}}"></script>
     <script src="{{asset('dashboard/assets/js/pages/crud/file-upload/image-input.js')}}"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            var startTimer;
+            $('#email').on('keyup', function () {
+                clearTimeout(startTimer);
+                let email = $(this).val();
+                startTimer = setTimeout(checkEmail, 500, email);
+            });
+
+            $('#email').on('keydown', function () {
+                clearTimeout(startTimer);
+            });
+
+            function checkEmail(email) {
+                $('#email-error').remove();
+                if (email.length > 1) {
+                    $.ajax({
+                        type: 'post',
+                        url: "{{ route('checkEmail') }}",
+                        data: {
+                            email: email,
+                            _token: "{{ csrf_token() }}"
+                        },
+                        success: function(data) {
+                            if (data.success == false) {
+                                $('#email').after('<div id="email-error" class="text-danger" <strong>'+data.message[0]+'<strong></div>');
+                            } else {
+                                $('#email').after('<div id="email-error" class="text-success" <strong>'+data.message+'<strong></div>');
+                            }
+
+                        }
+                    });
+                } else {
+                    $('#email').after('<div id="email-error" class="text-danger" <strong>Email address can not be empty.<strong></div>');
+                }
+            }
+        });
+    </script>
+
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            var startTimer;
+            $('#phone').on('keyup', function () {
+                clearTimeout(startTimer);
+                let phone = $(this).val();
+                startTimer = setTimeout(checkPhone, 500, phone);
+            });
+
+            $('#phone').on('keydown', function () {
+                clearTimeout(startTimer);
+            });
+
+            function checkPhone(phone) {
+                $('#phone-error').remove();
+                if (phone.length > 1) {
+                    $.ajax({
+                        type: 'post',
+                        url: "{{ route('checkPhone') }}",
+                        data: {
+                            phone: phone,
+                            _token: "{{ csrf_token() }}"
+                        },
+                        success: function(data) {
+                            if (data.success == false) {
+                                $('#phone').after('<div id="phone-error" class="text-danger" <strong>'+data.message[0]+'<strong></div>');
+                            } else {
+                                $('#phone').after('<div id="phone-error" class="text-success" <strong>'+data.message+'<strong></div>');
+                            }
+
+                        }
+                    });
+                } else {
+                    $('#phone').after('<div id="phone-error" class="text-danger" <strong>Phone can not be empty.<strong></div>');
+                }
+            }
+        });
+    </script>
     <script>
         $('#password, #confirm_password').on('keyup', function () {
             if ($('#password').val() == $('#confirm_password').val()) {

@@ -93,7 +93,8 @@ Route::group(['prefix' => 'admin'], function(){
                 Route::get('changeStatusDoctor', [DoctorController::class,'changeStatus'])->name('changeDoctorStatus');
 //                Route::get('create',\App\Http\Livewire\DoctorCreate::class )->name('create.multi');
                 Route::get('dis-approved', [DoctorController::class,'disApproved'] )->name('doctor.disapproved');
-
+                Route::post('email-validate', [DoctorController::class, 'checkEmail'])->name('checkEmail');
+                Route::post('phone-validate', [DoctorController::class, 'checkPhone'])->name('checkPhone');
 
 
 
