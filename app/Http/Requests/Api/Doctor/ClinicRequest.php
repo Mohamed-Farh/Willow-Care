@@ -30,17 +30,29 @@ class ClinicRequest extends FormRequest
     public function rules()
     {
         return [
-            "name" => "required",
-            "phone" => "required",
+            // "name" => "required",
+            // "phone" => "required",
+            // "another_phone" => "nullable",
+            // "lat" => "required|numeric",
+            // "long" => "required|numeric",
+            // "location" => "required",
+            // "concultation_price" => "required",
+            // "renewal_price" => "required",
+            // "duration" => "required",
+            // "payment_method" => "required|in:1,2,3",
+            // "clinic_image" => "nullable|file|mimes:png,jpg,svg,gif",
+
+            "name" => "nullable",
+            "phone" => "nullable",
             "another_phone" => "nullable",
-            "lat" => "required|numeric",
-            "long" => "required|numeric",
-            "location" => "required",
-            "concultation_price" => "required",
-            "renewal_price" => "required",
-            "duration" => "required",
-            "payment_method" => "required|in:1,2,3",
-            "clinic_image" => "required|file|mimes:png,jpg,svg,gif",
+            "lat" => "nullable|numeric",
+            "long" => "nullable|numeric",
+            "location" => "nullable",
+            "concultation_price" => "nullable",
+            "renewal_price" => "nullable",
+            "duration" => "nullable",
+            "payment_method" => "nullable|in:1,2,3",
+            "clinic_image" => "nullable|file|mimes:png,jpg,svg,gif",
         ];
     }
 

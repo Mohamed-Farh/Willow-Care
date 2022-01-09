@@ -40,7 +40,8 @@ class ClinicController extends Controller
     public function addClinic(ClinicRequest $request)
     {
         try {
-            $img = $this->uploadImages($request->clinic_image, "images/doctor/clinic");
+            // $img = $this->uploadImages($request->clinic_image, "images/doctor/clinic");
+
             $clinic = Clinic::create([
                 "name" => $request->name,
                 "phone" => $request->phone,
@@ -52,9 +53,17 @@ class ClinicController extends Controller
                 "renewal_price" => $request->renewal_price,
                 "duration" => $request->duration,
                 "payment_method" => $request->payment_method,
-                "image" => $img,
+                // "image" => $img,
                 "doctor_id" => Auth::user()->id,
             ]);
+
+            if($request->image){
+                $img = $this->uploadImages($request->clinic_image, "images/doctor/clinic");
+                $clinic->update([
+                    'image' => $img,
+                ]);
+            }
+
             return $this->responseJson(200, "Addning New Clinic Successfully", new ClinicResource($clinic));
         } catch (Throwable $e) {
             $this->responseJsonFailed();
