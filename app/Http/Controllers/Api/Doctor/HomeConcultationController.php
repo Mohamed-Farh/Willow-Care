@@ -28,12 +28,15 @@ class HomeConcultationController extends Controller
 
     public function getHomeConcultation(Request $request)
     {
-        try {
-            $HomeConcultation = HomeConcultation::where('doctor_id', Auth::user()->id)->get();
-            return $this->responseJson(200, "Doctor Home Concultation", HomeConculationResource::collection($HomeConcultation));
-        } catch (Throwable $e) {
-            return $this->responseJsonFailed();
-        }
+        // try {
+            // $HomeConcultation = HomeConcultation::where('doctor_id', Auth::user()->id)->get();
+            // return $this->responseJson(200, "Doctor Home Concultation", HomeConculationResource::collection($HomeConcultation));
+            $HomeConcultation = HomeConcultation::where('doctor_id', Auth::user()->id)->first();
+            
+            return $this->responseJson(200, "Doctor Home Concultation", new HomeConculationResource($HomeConcultation));
+        // } catch (Throwable $e) {
+            // return $this->responseJsonFailed();
+        // }
     }
 
     public function addHomeConcultation(HomeConculationRequest $request)

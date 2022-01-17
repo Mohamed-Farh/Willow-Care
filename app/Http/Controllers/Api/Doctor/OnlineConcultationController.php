@@ -35,8 +35,8 @@ class OnlineConcultationController extends Controller
     public function getOnlineConcultation(Request $request)
     {
         try {
-            $OlineConcultation = OnlineConcultation::where('doctor_id', Auth::user()->id)->get();
-            return $this->responseJson(200, "Doctor Online Concultation", OnlineConculationResource::collection($OlineConcultation));
+            $OlineConcultation = OnlineConcultation::where('doctor_id', Auth::user()->id)->first();
+            return $this->responseJson(200, "Doctor Online Concultation", new OnlineConculationResource($OlineConcultation));
         } catch (Throwable $e) {
             return $this->responseJsonFailed();
         }

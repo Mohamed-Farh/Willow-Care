@@ -15,12 +15,12 @@ class OnlineConculationResource extends JsonResource
     public function toArray($request)
     {
         return [
-            "id" => $this->id,
+            "id" => isset($this->id) ? $this->i : 0 ,
             "price" => isset($this->price) ? strval($this->price) : '',
             "renewal_price" => isset($this->renewal_price) ? strval($this->renewal_price) : '',
-            "doctor_id" => strval($this->doctor_id),
-            "created_at" => strval($this->created_at),
-            "updated_at" => strval($this->updated_at),
+            "doctor_id" => isset($this->doctor_id) ? strval($this->doctor_id) : '',
+            "created_at" => isset($this->created_at) ? strval($this->created_at) : '',
+            "updated_at" => isset($this->updated_at) ? strval($this->updated_at) : '',
         ];
     }
 }
