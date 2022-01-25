@@ -32,7 +32,7 @@ class CreateDoctorsTable extends Migration
             $table->string('lang')->default('en')->comment('ro => Romanian','en => English', 'ar => Arabic');
             $table->boolean('activation')->default(1)->comment('0 => Not Active', '1 => Active');
             $table->tinyInteger('country_id');
-            $table->string('phone_code');
+            $table->string('phone_code')->nullable();
             $table->timestamps();
         });
     }
