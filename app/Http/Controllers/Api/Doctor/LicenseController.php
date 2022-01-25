@@ -28,7 +28,7 @@ class LicenseController extends Controller
             $doctor = Doctor::whereId(Auth::guard('api-doctor')->id())->first();
             foreach ($request->license_image as $image) {
                 $img = $this->uploadImages($image, "images/doctor/license");
-                $doctor->licenses()->create(["image" => $image]);
+                $doctor->licenses()->create(["image" => $img]);
             }
             $doctor->specialties()->syncWithoutDetaching($request->specialty_id);
             return $this->responseJsonWithoutData();

@@ -116,16 +116,19 @@ class OnlineConcultationController extends Controller
                 $from = OnlineConcultationWorkingTime::where(['online_concultation_id' => $request->online_id , 'day' => $x])->min('from');
                 $to = OnlineConcultationWorkingTime::where(['online_concultation_id' => $request->online_id , 'day' => $x])->max('to');
                 if ($workingTime->count() == 0 ) continue;
+                foreach($workingTime as $single){
+                    $single->from = \Carbon\Carbon::createFromTimeStamp(strtotime($single->from))->format('H:i');
+                    $single->to = \Carbon\Carbon::createFromTimeStamp(strtotime($single->to))->format('H:i');
+                }
                 $work = (object)[
                     "day" => $x ,
-                    "from" => $from,
-                    "to" => $to,
+                    "from" => \Carbon\Carbon::createFromTimeStamp(strtotime($from))->format('H:i'),
+                    "to" => \Carbon\Carbon::createFromTimeStamp(strtotime($to))->format('H:i'),
                     "count" =>  $workingTime->count(),
                     "shifts" => $workingTime,
                 ];
                 $worktime_days[] = $work;
             }
-
             $data = (object) [
                 "online_id" => $online->id,
                 "worktime_days" => $worktime_days

@@ -116,10 +116,14 @@ class HomeConcultationController extends Controller
                 $from = HomeConcultationWorkingTime::where(['home_concultation_id' => $request->home_id , 'day' => $x])->min('from');
                 $to = HomeConcultationWorkingTime::where(['home_concultation_id' => $request->home_id , 'day' => $x])->max('to');
                 if ($workingTime->count() == 0 ) continue;
+                foreach($workingTime as $single){
+                    $single->from = \Carbon\Carbon::createFromTimeStamp(strtotime($single->from))->format('H:i');
+                    $single->to = \Carbon\Carbon::createFromTimeStamp(strtotime($single->to))->format('H:i');
+                }
                 $work = (object)[
                     "day" => $x ,
-                    "from" => $from,
-                    "to" => $to,
+                    "from" => \Carbon\Carbon::createFromTimeStamp(strtotime($from))->format('H:i'),
+                    "to" => \Carbon\Carbon::createFromTimeStamp(strtotime($to))->format('H:i'),
                     "count" =>  $workingTime->count(),
                     "shifts" => $workingTime,
                 ];

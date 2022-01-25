@@ -29,5 +29,4 @@ class HomeConcultationWorkingTime extends Model
 
 
 
-
 }

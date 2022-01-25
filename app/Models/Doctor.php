@@ -32,6 +32,7 @@ class Doctor extends Authenticatable
         'lang',
         'activation',
         'country_id',
+        'phone_code',
     ];
 
     public function setPasswordAttribute($value)
