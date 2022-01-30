@@ -126,9 +126,9 @@ class ClinicController extends Controller
                     }elseif($clinic->image != null && File::exists('../'.$clinic->image)){
                         $old_file = $clinic->image; //get old photo
                         unlink('../'.$old_file);  //To Check If I'm On Server
-                    }
-                    $clinic->delete();
+                    }   
                 }
+                $clinic->delete();
                 return $this->responseJsonWithoutData();
             }
         } catch (Throwable $e) {
