@@ -47,7 +47,7 @@ class LoginResource extends JsonResource
             "profile_view" => '1',
             "patients_count" => '1',
             "exp_years" => isset($exp_years) ? strval($exp_years) : '',
-            "professional_title" => isset($this->professional_title_id) ? new ProfessionalTitleResource($pro) : '',
+            // "professional_title" => isset($this->professional_title_id) ? new ProfessionalTitleResource($pro) : '',
             "profile_image"=>isset($this->image) ? env('APP_URL').'/public/'.$this->image : '',
             "gender" => ($this->gender == 0) ? "male" : "female",
             "about" => isset($this->about) ? $this->about : '',

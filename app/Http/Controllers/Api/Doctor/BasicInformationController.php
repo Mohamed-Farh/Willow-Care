@@ -98,6 +98,6 @@ class BasicInformationController extends Controller
         $t = $request->bearerToken();
         $device_token = DeviceToken::where('type_token', $t)->first();
         $doctor->device_token = $device_token->token;
-        return $this->responseJson(200 , "Doctor Info", new LoginResource($doctor));
+        return $this->responseJson(200 , "Doctor Info", new BasicInformationResource($doctor));
     }
 }
