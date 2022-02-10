@@ -22,6 +22,7 @@ class LoginResource extends JsonResource
         $grad_year = $this->graduation_year;
         $exp_years = round(date("Y") - $grad_year);
 
+        
         // if(request()->user()->lang){
         //     $title = "name_". request()->user()->lang;
         // }else{
