@@ -2,8 +2,10 @@
 
 namespace App\Http\Resources\Doctor\Profile;
 
+use App\Http\Resources\Doctor\Profile\ProfessionalTitleResource;
 use App\Http\Resources\Doctor\LicenseResource;
 use App\Models\License;
+use App\Models\ProfessionalTitle;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class BasicInformationResource extends JsonResource
@@ -16,6 +18,15 @@ class BasicInformationResource extends JsonResource
      */
     public function toArray($request)
     {
+        // $dateString='9-02-2022';
+        // $years = round((time()-strtotime($dateString))/(3600*24*365.25));
+
+        $grad_year = $this->graduation_year;
+        $exp_years = round(date("Y") - $grad_year);
+
+        $pro = ProfessionalTitle::whereId($this->professional_title_id)->first();
+
+
         return [
             "id" => $this->id,
             "name" => $this->name,
@@ -31,8 +42,8 @@ class BasicInformationResource extends JsonResource
             "rate" => '1',
             "profile_view" => '1',
             "patients_count" => '1',
-            "exp_years" => '5',
-            "professional_title_id" =>isset($this->professional_title_id) ? $this->professional_title_id : '',
+            "exp_years" => isset($exp_years) ? strval($exp_years) : '',
+            "professional_title_id" => isset($this->professional_title_id) ? new ProfessionalTitleResource($pro) : '',
             "profile_image"=>isset($this->image) ? env('APP_URL').'/public/'.$this->image : '',
             "gender" => ($this->gender == 0) ? "male" : "female",
             "about" => isset($this->about) ? $this->about : '',

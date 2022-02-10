@@ -8,7 +8,7 @@
 		background-size: 100% 96%;
 	} */
     html {
-        background: url('images/clinic.jpg') no-repeat center center fixed;
+        background: url('asset(images/clinic.jpg)') no-repeat center center fixed;
         -webkit-background-size: cover;
         -moz-background-size: cover;
         -o-background-size: cover;
@@ -54,7 +54,7 @@
 
 	<script>
 		// Set the date of launching
-		var RemainingTime = new Date("Feb 01, 2022 00:00:00");
+		var RemainingTime = new Date("Mar 01, 2022 00:00:00");
 
 		var RemainingTime = RemainingTime.getTime();
 

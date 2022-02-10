@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\Doctor;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Doctor\SpecialtyResource;
+use App\Http\Resources\Doctor\TermResource;
 use App\Models\Category;
 use Laravel\Passport\HasApiTokens;
 use Illuminate\Http\Request;
@@ -55,7 +56,8 @@ class GeneralController extends Controller
                                         ->where('active','1')
                                         ->where('category_id','1')
                                         ->get();
-                return $this->responseJson(200, "all Terms and conditions In Doctor Category", $terms);
+                                        
+                return $this->responseJson(200, "Terms & Conditions", TermResource::collection($terms));
             }else{
                 return $this->responseValidationJsonFailed('language code is incorrect');
             }

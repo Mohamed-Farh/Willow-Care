@@ -126,7 +126,7 @@ class ClinicController extends Controller
                     }elseif($clinic->image != null && File::exists('../'.$clinic->image)){
                         $old_file = $clinic->image; //get old photo
                         unlink('../'.$old_file);  //To Check If I'm On Server
-                    }   
+                    }
                 }
                 $clinic->delete();
                 return $this->responseJsonWithoutData();
@@ -154,7 +154,7 @@ class ClinicController extends Controller
 
             $worktime_days = [];
             for($x=0 ; $x<7 ; $x++){
-                $workingTime = WorkingTime::where(['clinic_id' => $request->clinic_id , 'day' => $x])->get(['from','to']);
+                $workingTime = WorkingTime::where(['clinic_id' => $request->clinic_id , 'day' => $x])->get(['id','from','to']);
                 $from = WorkingTime::where(['clinic_id' => $request->clinic_id , 'day' => $x])->min('from');
                 $to = WorkingTime::where(['clinic_id' => $request->clinic_id , 'day' => $x])->max('to');
                 if ($workingTime->count() == 0 ) continue;

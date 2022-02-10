@@ -4,7 +4,7 @@ namespace App\Http\Resources\Doctor;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class WorkingTimeResource extends JsonResource
+class TermResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,9 +16,8 @@ class WorkingTimeResource extends JsonResource
     {
 
         return [
-            "id" => isset($this->id) ? $this->id : '',
-            "from" => isset($this->from) ? \Carbon\Carbon::createFromTimeStamp(strtotime($this->from))->format('H:i') : '',
-            "to" => isset($this->to) ? \Carbon\Carbon::createFromTimeStamp(strtotime($this->to))->format('H:i') : '',
+            "id" => $this->id,
+            "text" => isset($this->text) ? $this->text : '',
         ];
 
     }
