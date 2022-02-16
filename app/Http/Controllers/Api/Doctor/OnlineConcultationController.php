@@ -122,6 +122,8 @@ class OnlineConcultationController extends Controller
                 }
                 $work = (object)[
                     "day" => $x ,
+                    "booking_type" => '1',
+                    "type_id" => $request->online_id,
                     "from" => \Carbon\Carbon::createFromTimeStamp(strtotime($from))->format('H:i'),
                     "to" => \Carbon\Carbon::createFromTimeStamp(strtotime($to))->format('H:i'),
                     "count" =>  $workingTime->count(),

@@ -32,7 +32,7 @@ class HomeConcultationController extends Controller
             // $HomeConcultation = HomeConcultation::where('doctor_id', Auth::user()->id)->get();
             // return $this->responseJson(200, "Doctor Home Concultation", HomeConculationResource::collection($HomeConcultation));
             $HomeConcultation = HomeConcultation::where('doctor_id', Auth::user()->id)->first();
-            
+
             return $this->responseJson(200, "Doctor Home Concultation", new HomeConculationResource($HomeConcultation));
         // } catch (Throwable $e) {
             // return $this->responseJsonFailed();
@@ -122,6 +122,8 @@ class HomeConcultationController extends Controller
                 }
                 $work = (object)[
                     "day" => $x ,
+                    "booking_type" => '2',
+                    "type_id" => $request->home_id,
                     "from" => \Carbon\Carbon::createFromTimeStamp(strtotime($from))->format('H:i'),
                     "to" => \Carbon\Carbon::createFromTimeStamp(strtotime($to))->format('H:i'),
                     "count" =>  $workingTime->count(),

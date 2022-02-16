@@ -161,6 +161,8 @@ class ClinicController extends Controller
 
                 $work = (object)[
                     "day" => $x ,
+                    "booking_type" => '0',
+                    "type_id" => $request->clinic_id,
                     "from" => \Carbon\Carbon::createFromTimeStamp(strtotime($from))->format('H:i'),
                     "to" => \Carbon\Carbon::createFromTimeStamp(strtotime($to))->format('H:i'),
                     "count" =>  $workingTime->count(),
