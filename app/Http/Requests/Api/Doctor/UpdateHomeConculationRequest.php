@@ -31,7 +31,7 @@ class UpdateHomeConculationRequest extends FormRequest
             "home_concultation_id" => "required",
             "price" => "nullable",
             "renewal_price" => "nullable",
-            "payment_method" => "nullable|in:1,2",
+            "payment_method" => "nullable|in:1,2,3",
         ];
     }
 

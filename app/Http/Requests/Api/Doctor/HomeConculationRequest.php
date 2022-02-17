@@ -30,7 +30,7 @@ class HomeConculationRequest extends FormRequest
         return [
             "price" => "required",
             "renewal_price" => "nullable",
-            "payment_method" => "required|in:1,2",
+            "payment_method" => "required|in:1,2,3",
         ];
     }
 
